@@ -7,6 +7,7 @@
   __fxstatat;
   __fxstatat64;
   __getdelim;
+  __getrlimit;
   __interceptor___bzero;
   __interceptor___cxa_atexit;
   __interceptor___fprintf_chk;
@@ -15,6 +16,7 @@
   __interceptor___fxstatat;
   __interceptor___fxstatat64;
   __interceptor___getdelim;
+  __interceptor___getrlimit;
   __interceptor___isoc99_fprintf;
   __interceptor___isoc99_fscanf;
   __interceptor___isoc99_printf;
