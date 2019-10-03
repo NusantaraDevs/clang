@@ -587,6 +587,7 @@
   __sanitizer_get_unmapped_bytes;
   __sanitizer_install_malloc_and_free_hooks;
   __sanitizer_malloc_hook;
+  __sanitizer_on_print;
   __sanitizer_print_stack_trace;
   __sanitizer_report_error_summary;
   __sanitizer_sandbox_on_notify;

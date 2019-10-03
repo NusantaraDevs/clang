@@ -63,6 +63,7 @@
   __sanitizer_malloc_usable_size;
   __sanitizer_mallopt;
   __sanitizer_memalign;
+  __sanitizer_on_print;
   __sanitizer_posix_memalign;
   __sanitizer_print_stack_trace;
   __sanitizer_pvalloc;
