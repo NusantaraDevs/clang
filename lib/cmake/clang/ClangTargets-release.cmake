@@ -322,6 +322,15 @@ set_target_properties(clang-import-test PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS clang-import-test )
 list(APPEND _IMPORT_CHECK_FILES_FOR_clang-import-test "${_IMPORT_PREFIX}/bin/clang-import-test" )
 
+# Import target "clang-offload-bundler" for configuration "Release"
+set_property(TARGET clang-offload-bundler APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(clang-offload-bundler PROPERTIES
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/bin/clang-offload-bundler"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS clang-offload-bundler )
+list(APPEND _IMPORT_CHECK_FILES_FOR_clang-offload-bundler "${_IMPORT_PREFIX}/bin/clang-offload-bundler" )
+
 # Import target "clang-scan-deps" for configuration "Release"
 set_property(TARGET clang-scan-deps APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(clang-scan-deps PROPERTIES
