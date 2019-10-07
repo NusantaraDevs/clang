@@ -36,9 +36,7 @@ SECTIONS
   .rel.plt        :
     {
       *(.rel.plt)
-      PROVIDE_HIDDEN (__rel_iplt_start = .);
       *(.rel.iplt)
-      PROVIDE_HIDDEN (__rel_iplt_end = .);
     }
   . = ALIGN(CONSTANT (MAXPAGESIZE));
   .init           :
@@ -55,7 +53,7 @@ SECTIONS
     *(.text.startup .text.startup.*)
     *(.text.hot .text.hot.*)
     *(.text .stub .text.* .gnu.linkonce.t.*)
-    /* .gnu.warning sections are handled specially by elf32.em.  */
+    /* .gnu.warning sections are handled specially by elf.em.  */
     *(.gnu.warning)
   }
   .fini           :

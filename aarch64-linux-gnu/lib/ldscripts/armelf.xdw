@@ -35,9 +35,7 @@ SECTIONS
       *(.rel.dtors)
       *(.rel.got)
       *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*)
-      PROVIDE_HIDDEN (__rel_iplt_start = .);
       *(.rel.iplt)
-      PROVIDE_HIDDEN (__rel_iplt_end = .);
     }
   .rela.dyn       :
     {
@@ -52,9 +50,7 @@ SECTIONS
       *(.rela.dtors)
       *(.rela.got)
       *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
-      PROVIDE_HIDDEN (__rela_iplt_start = .);
       *(.rela.iplt)
-      PROVIDE_HIDDEN (__rela_iplt_end = .);
     }
   .rel.plt        :
     {
@@ -77,7 +73,7 @@ SECTIONS
     *(.text.startup .text.startup.*)
     *(.text.hot .text.hot.*)
     *(.text .stub .text.* .gnu.linkonce.t.*)
-    /* .gnu.warning sections are handled specially by elf32.em.  */
+    /* .gnu.warning sections are handled specially by elf.em.  */
     *(.gnu.warning)
     *(.glue_7t) *(.glue_7) *(.vfp11_veneer) *(.v4_bx)
   }
@@ -243,6 +239,16 @@ SECTIONS
   .debug_macro    0 : { *(.debug_macro) }
   .debug_addr     0 : { *(.debug_addr) }
   .ARM.attributes 0 : { KEEP (*(.ARM.attributes)) KEEP (*(.gnu.attributes)) }
-  .note.gnu.arm.ident 0 : { KEEP (*(.note.gnu.arm.ident)) }
+.note.gnu.arm.ident 0 : { KEEP (*(.note.gnu.arm.ident)) }
+/* This section contains data that is not initialised during load
+   *or* application reset.  */
+ .noinit (NOLOAD) :
+ {
+   . = ALIGN(2);
+   PROVIDE (__noinit_start = .);
+   *(.noinit)
+   . = ALIGN(2);
+   PROVIDE (__noinit_end = .);
+ }
   /DISCARD/ : { *(.note.GNU-stack) *(.gnu_debuglink) *(.gnu.lto_*) }
 }

@@ -51,7 +51,7 @@ SECTIONS
   .text         0 :
   {
     *(.text .stub)
-    /* .gnu.warning sections are handled specially by elf32.em.  */
+    /* .gnu.warning sections are handled specially by elf.em.  */
     *(.gnu.warning)
   }
   .fini         0 :
