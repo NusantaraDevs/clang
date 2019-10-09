@@ -87,6 +87,8 @@
   __interceptor_connect;
   __interceptor_creat;
   __interceptor_creat64;
+  __interceptor_crypt;
+  __interceptor_crypt_r;
   __interceptor_ctermid;
   __interceptor_ctime;
   __interceptor_ctime_r;
@@ -1327,6 +1329,8 @@
   connect;
   creat;
   creat64;
+  crypt;
+  crypt_r;
   ctermid;
   ctime;
   ctime_r;

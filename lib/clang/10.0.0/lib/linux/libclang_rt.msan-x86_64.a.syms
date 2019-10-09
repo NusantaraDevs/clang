@@ -111,6 +111,8 @@
   __interceptor_clock_gettime;
   __interceptor_clock_settime;
   __interceptor_confstr;
+  __interceptor_crypt;
+  __interceptor_crypt_r;
   __interceptor_ctermid;
   __interceptor_ctime;
   __interceptor_ctime_r;
@@ -1360,6 +1362,8 @@
   clock_gettime;
   clock_settime;
   confstr;
+  crypt;
+  crypt_r;
   ctermid;
   ctime;
   ctime_r;
