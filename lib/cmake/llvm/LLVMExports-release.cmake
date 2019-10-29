@@ -254,6 +254,16 @@ set_target_properties(LLVMCoroutines PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS LLVMCoroutines )
 list(APPEND _IMPORT_CHECK_FILES_FOR_LLVMCoroutines "${_IMPORT_PREFIX}/lib/libLLVMCoroutines.a" )
 
+# Import target "LLVMCFGuard" for configuration "Release"
+set_property(TARGET LLVMCFGuard APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(LLVMCFGuard PROPERTIES
+  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libLLVMCFGuard.a"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS LLVMCFGuard )
+list(APPEND _IMPORT_CHECK_FILES_FOR_LLVMCFGuard "${_IMPORT_PREFIX}/lib/libLLVMCFGuard.a" )
+
 # Import target "LLVMLinker" for configuration "Release"
 set_property(TARGET LLVMLinker APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(LLVMLinker PROPERTIES
