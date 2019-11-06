@@ -1,10 +1,45 @@
+case ARM::BI__builtin_arm_mve_vldrwq_gather_base_f32:
+case ARM::BI__builtin_arm_mve_vldrwq_gather_base_s32:
+case ARM::BI__builtin_arm_mve_vldrwq_gather_base_u32:
 case ARM::BI__builtin_arm_mve_vldrwq_gather_base_wb_f32:
 case ARM::BI__builtin_arm_mve_vldrwq_gather_base_wb_s32:
 case ARM::BI__builtin_arm_mve_vldrwq_gather_base_wb_u32:
+case ARM::BI__builtin_arm_mve_vldrwq_gather_base_wb_z_f32:
+case ARM::BI__builtin_arm_mve_vldrwq_gather_base_wb_z_s32:
+case ARM::BI__builtin_arm_mve_vldrwq_gather_base_wb_z_u32:
+case ARM::BI__builtin_arm_mve_vldrwq_gather_base_z_f32:
+case ARM::BI__builtin_arm_mve_vldrwq_gather_base_z_s32:
+case ARM::BI__builtin_arm_mve_vldrwq_gather_base_z_u32:
+case ARM::BI__builtin_arm_mve_vstrwq_scatter_base_f32:
+case ARM::BI__builtin_arm_mve_vstrwq_scatter_base_p_f32:
+case ARM::BI__builtin_arm_mve_vstrwq_scatter_base_p_s32:
+case ARM::BI__builtin_arm_mve_vstrwq_scatter_base_p_u32:
+case ARM::BI__builtin_arm_mve_vstrwq_scatter_base_s32:
+case ARM::BI__builtin_arm_mve_vstrwq_scatter_base_u32:
+case ARM::BI__builtin_arm_mve_vstrwq_scatter_base_wb_f32:
+case ARM::BI__builtin_arm_mve_vstrwq_scatter_base_wb_p_f32:
+case ARM::BI__builtin_arm_mve_vstrwq_scatter_base_wb_p_s32:
+case ARM::BI__builtin_arm_mve_vstrwq_scatter_base_wb_p_u32:
+case ARM::BI__builtin_arm_mve_vstrwq_scatter_base_wb_s32:
+case ARM::BI__builtin_arm_mve_vstrwq_scatter_base_wb_u32:
   return SemaBuiltinConstantArgRange(TheCall, 1, 0x0, 0x1FC) ||
          SemaBuiltinConstantArgMultiple(TheCall, 1, 4);
+case ARM::BI__builtin_arm_mve_vldrdq_gather_base_s64:
+case ARM::BI__builtin_arm_mve_vldrdq_gather_base_u64:
+case ARM::BI__builtin_arm_mve_vldrdq_gather_base_wb_s64:
+case ARM::BI__builtin_arm_mve_vldrdq_gather_base_wb_u64:
 case ARM::BI__builtin_arm_mve_vldrdq_gather_base_wb_z_s64:
 case ARM::BI__builtin_arm_mve_vldrdq_gather_base_wb_z_u64:
+case ARM::BI__builtin_arm_mve_vldrdq_gather_base_z_s64:
+case ARM::BI__builtin_arm_mve_vldrdq_gather_base_z_u64:
+case ARM::BI__builtin_arm_mve_vstrdq_scatter_base_p_s64:
+case ARM::BI__builtin_arm_mve_vstrdq_scatter_base_p_u64:
+case ARM::BI__builtin_arm_mve_vstrdq_scatter_base_s64:
+case ARM::BI__builtin_arm_mve_vstrdq_scatter_base_u64:
+case ARM::BI__builtin_arm_mve_vstrdq_scatter_base_wb_p_s64:
+case ARM::BI__builtin_arm_mve_vstrdq_scatter_base_wb_p_u64:
+case ARM::BI__builtin_arm_mve_vstrdq_scatter_base_wb_s64:
+case ARM::BI__builtin_arm_mve_vstrdq_scatter_base_wb_u64:
   return SemaBuiltinConstantArgRange(TheCall, 1, 0x0, 0x3F8) ||
          SemaBuiltinConstantArgMultiple(TheCall, 1, 8);
 case ARM::BI__builtin_arm_mve_urshrl:

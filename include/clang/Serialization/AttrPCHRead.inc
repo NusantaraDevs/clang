@@ -1492,7 +1492,6 @@
     Expr * variantFuncRef = Record.readExpr();
     Expr * score = Record.readExpr();
     OMPDeclareVariantAttr::CtxSelectorSetType ctxSelectorSet(static_cast<OMPDeclareVariantAttr::CtxSelectorSetType>(Record.readInt()));
-    OMPDeclareVariantAttr::ScoreType ctxScore(static_cast<OMPDeclareVariantAttr::ScoreType>(Record.readInt()));
     OMPDeclareVariantAttr::CtxSelectorType ctxSelector(static_cast<OMPDeclareVariantAttr::CtxSelectorType>(Record.readInt()));
     unsigned implVendorsSize = Record.readInt();
     SmallVector<StringRef, 4> implVendors;
@@ -1503,7 +1502,7 @@
       implVendorsStorage.push_back(Record.readString());
     for (unsigned i = 0; i != implVendorsSize; ++i)
       implVendors.push_back(implVendorsStorage[i]);
-    New = new (Context) OMPDeclareVariantAttr(Context, Info, variantFuncRef, score, ctxSelectorSet, ctxScore, ctxSelector, implVendors.data(), implVendorsSize);
+    New = new (Context) OMPDeclareVariantAttr(Context, Info, variantFuncRef, score, ctxSelectorSet, ctxSelector, implVendors.data(), implVendorsSize);
     cast<InheritableAttr>(New)->setInherited(isInherited);
     New->setImplicit(isImplicit);
     break;

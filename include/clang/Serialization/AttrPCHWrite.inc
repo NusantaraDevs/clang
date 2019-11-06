@@ -1123,7 +1123,6 @@ Record.push_back(SA->getDevType());
     Record.AddStmt(SA->getVariantFuncRef());
     Record.AddStmt(SA->getScore());
 Record.push_back(SA->getCtxSelectorSet());
-Record.push_back(SA->getCtxScore());
 Record.push_back(SA->getCtxSelector());
     Record.push_back(SA->implVendors_size());
     for (auto &Val : SA->implVendors())

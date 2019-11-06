@@ -8948,14 +8948,6 @@ private:
   CtxSelectorSetType ctxSelectorSet;
 
 public:
-  enum ScoreType {
-    ScoreUnknown,
-    ScoreSpecified
-  };
-private:
-  ScoreType ctxScore;
-
-public:
   enum CtxSelectorType {
     CtxUnknown,
     CtxVendor
@@ -8967,34 +8959,33 @@ private:
   StringRef *implVendors_;
 
 public:
-  static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, Expr * Score, CtxSelectorSetType CtxSelectorSet, ScoreType CtxScore, CtxSelectorType CtxSelector, StringRef *ImplVendors, unsigned ImplVendorsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
-    auto *A = new (Ctx) OMPDeclareVariantAttr(Ctx, CommonInfo, VariantFuncRef, Score, CtxSelectorSet, CtxScore, CtxSelector, ImplVendors, ImplVendorsSize);
+  static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, Expr * Score, CtxSelectorSetType CtxSelectorSet, CtxSelectorType CtxSelector, StringRef *ImplVendors, unsigned ImplVendorsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) OMPDeclareVariantAttr(Ctx, CommonInfo, VariantFuncRef, Score, CtxSelectorSet, CtxSelector, ImplVendors, ImplVendorsSize);
     A->setImplicit(true);
     if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
       A->setAttributeSpellingListIndex(0);
     return A;
   }
 
-  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, Expr * Score, CtxSelectorSetType CtxSelectorSet, ScoreType CtxScore, CtxSelectorType CtxSelector, StringRef *ImplVendors, unsigned ImplVendorsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
-    auto *A = new (Ctx) OMPDeclareVariantAttr(Ctx, CommonInfo, VariantFuncRef, Score, CtxSelectorSet, CtxScore, CtxSelector, ImplVendors, ImplVendorsSize);
+  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, Expr * Score, CtxSelectorSetType CtxSelectorSet, CtxSelectorType CtxSelector, StringRef *ImplVendors, unsigned ImplVendorsSize, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) OMPDeclareVariantAttr(Ctx, CommonInfo, VariantFuncRef, Score, CtxSelectorSet, CtxSelector, ImplVendors, ImplVendorsSize);
     if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
       A->setAttributeSpellingListIndex(0);
     return A;
   }
 
-  static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, Expr * Score, CtxSelectorSetType CtxSelectorSet, ScoreType CtxScore, CtxSelectorType CtxSelector, StringRef *ImplVendors, unsigned ImplVendorsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+  static OMPDeclareVariantAttr *CreateImplicit(ASTContext &Ctx, Expr * VariantFuncRef, Expr * Score, CtxSelectorSetType CtxSelectorSet, CtxSelectorType CtxSelector, StringRef *ImplVendors, unsigned ImplVendorsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
     AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
-    return CreateImplicit(Ctx, VariantFuncRef, Score, CtxSelectorSet, CtxScore, CtxSelector, ImplVendors, ImplVendorsSize, I);
+    return CreateImplicit(Ctx, VariantFuncRef, Score, CtxSelectorSet, CtxSelector, ImplVendors, ImplVendorsSize, I);
   }
-  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, Expr * Score, CtxSelectorSetType CtxSelectorSet, ScoreType CtxScore, CtxSelectorType CtxSelector, StringRef *ImplVendors, unsigned ImplVendorsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+  static OMPDeclareVariantAttr *Create(ASTContext &Ctx, Expr * VariantFuncRef, Expr * Score, CtxSelectorSetType CtxSelectorSet, CtxSelectorType CtxSelector, StringRef *ImplVendors, unsigned ImplVendorsSize, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
     AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
-    return Create(Ctx, VariantFuncRef, Score, CtxSelectorSet, CtxScore, CtxSelector, ImplVendors, ImplVendorsSize, I);
+    return Create(Ctx, VariantFuncRef, Score, CtxSelectorSet, CtxSelector, ImplVendors, ImplVendorsSize, I);
   }
   OMPDeclareVariantAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
               , Expr * VariantFuncRef
               , Expr * Score
               , CtxSelectorSetType CtxSelectorSet
-              , ScoreType CtxScore
               , CtxSelectorType CtxSelector
               , StringRef *ImplVendors, unsigned ImplVendorsSize
              )
@@ -9002,7 +8993,6 @@ public:
               , variantFuncRef(VariantFuncRef)
               , score(Score)
               , ctxSelectorSet(CtxSelectorSet)
-              , ctxScore(CtxScore)
               , ctxSelector(CtxSelector)
               , implVendors_Size(ImplVendorsSize), implVendors_(new (Ctx, 16) StringRef[implVendors_Size])
   {
@@ -9021,14 +9011,12 @@ public:
               , Expr * VariantFuncRef
               , Expr * Score
               , CtxSelectorSetType CtxSelectorSet
-              , ScoreType CtxScore
               , CtxSelectorType CtxSelector
              )
     : InheritableAttr(Ctx, CommonInfo, attr::OMPDeclareVariant, false, true)
               , variantFuncRef(VariantFuncRef)
               , score(Score)
               , ctxSelectorSet(CtxSelectorSet)
-              , ctxScore(CtxScore)
               , ctxSelector(CtxSelector)
               , implVendors_Size(0), implVendors_(nullptr)
   {
@@ -9066,29 +9054,6 @@ public:
     switch(Val) {
     case OMPDeclareVariantAttr::CtxSetUnknown: return "";
     case OMPDeclareVariantAttr::CtxSetImplementation: return "implementation";
-    }
-    llvm_unreachable("No enumerator with that value");
-  }
-  ScoreType getCtxScore() const {
-    return ctxScore;
-  }
-
-  static bool ConvertStrToScoreType(StringRef Val, ScoreType &Out) {
-    Optional<ScoreType> R = llvm::StringSwitch<Optional<ScoreType>>(Val)
-      .Case("", OMPDeclareVariantAttr::ScoreUnknown)
-      .Case("score", OMPDeclareVariantAttr::ScoreSpecified)
-      .Default(Optional<ScoreType>());
-    if (R) {
-      Out = *R;
-      return true;
-    }
-    return false;
-  }
-
-  static const char *ConvertScoreTypeToStr(ScoreType Val) {
-    switch(Val) {
-    case OMPDeclareVariantAttr::ScoreUnknown: return "";
-    case OMPDeclareVariantAttr::ScoreSpecified: return "score";
     }
     llvm_unreachable("No enumerator with that value");
   }

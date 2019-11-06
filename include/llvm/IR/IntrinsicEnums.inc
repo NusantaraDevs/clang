@@ -492,9 +492,23 @@
     aarch64_sve_clz,                           // llvm.aarch64.sve.clz
     aarch64_sve_cnot,                          // llvm.aarch64.sve.cnot
     aarch64_sve_cnt,                           // llvm.aarch64.sve.cnt
+    aarch64_sve_fabd,                          // llvm.aarch64.sve.fabd
+    aarch64_sve_fadd,                          // llvm.aarch64.sve.fadd
     aarch64_sve_fcvtzs_i32f16,                 // llvm.aarch64.sve.fcvtzs.i32f16
+    aarch64_sve_fdiv,                          // llvm.aarch64.sve.fdiv
+    aarch64_sve_fdivr,                         // llvm.aarch64.sve.fdivr
+    aarch64_sve_fmax,                          // llvm.aarch64.sve.fmax
+    aarch64_sve_fmaxnm,                        // llvm.aarch64.sve.fmaxnm
+    aarch64_sve_fmin,                          // llvm.aarch64.sve.fmin
+    aarch64_sve_fminnm,                        // llvm.aarch64.sve.fminnm
+    aarch64_sve_fmul,                          // llvm.aarch64.sve.fmul
+    aarch64_sve_fmulx,                         // llvm.aarch64.sve.fmulx
     aarch64_sve_frecps_x,                      // llvm.aarch64.sve.frecps.x
     aarch64_sve_frsqrts_x,                     // llvm.aarch64.sve.frsqrts.x
+    aarch64_sve_fscale,                        // llvm.aarch64.sve.fscale
+    aarch64_sve_fsub,                          // llvm.aarch64.sve.fsub
+    aarch64_sve_fsubr,                         // llvm.aarch64.sve.fsubr
+    aarch64_sve_ftsmul_x,                      // llvm.aarch64.sve.ftsmul.x
     aarch64_sve_neg,                           // llvm.aarch64.sve.neg
     aarch64_sve_not,                           // llvm.aarch64.sve.not
     aarch64_sve_punpkhi,                       // llvm.aarch64.sve.punpkhi
@@ -1251,10 +1265,20 @@
     arm_mve_vcvt_narrow_predicated,            // llvm.arm.mve.vcvt.narrow.predicated
     arm_mve_vld2q,                             // llvm.arm.mve.vld2q
     arm_mve_vld4q,                             // llvm.arm.mve.vld4q
+    arm_mve_vldr_gather_base,                  // llvm.arm.mve.vldr.gather.base
+    arm_mve_vldr_gather_base_predicated,       // llvm.arm.mve.vldr.gather.base.predicated
     arm_mve_vldr_gather_base_wb,               // llvm.arm.mve.vldr.gather.base.wb
     arm_mve_vldr_gather_base_wb_predicated,    // llvm.arm.mve.vldr.gather.base.wb.predicated
+    arm_mve_vldr_gather_offset,                // llvm.arm.mve.vldr.gather.offset
+    arm_mve_vldr_gather_offset_predicated,     // llvm.arm.mve.vldr.gather.offset.predicated
     arm_mve_vst2q,                             // llvm.arm.mve.vst2q
     arm_mve_vst4q,                             // llvm.arm.mve.vst4q
+    arm_mve_vstr_scatter_base,                 // llvm.arm.mve.vstr.scatter.base
+    arm_mve_vstr_scatter_base_predicated,      // llvm.arm.mve.vstr.scatter.base.predicated
+    arm_mve_vstr_scatter_base_wb,              // llvm.arm.mve.vstr.scatter.base.wb
+    arm_mve_vstr_scatter_base_wb_predicated,   // llvm.arm.mve.vstr.scatter.base.wb.predicated
+    arm_mve_vstr_scatter_offset,               // llvm.arm.mve.vstr.scatter.offset
+    arm_mve_vstr_scatter_offset_predicated,    // llvm.arm.mve.vstr.scatter.offset.predicated
     arm_neon_aesd,                             // llvm.arm.neon.aesd
     arm_neon_aese,                             // llvm.arm.neon.aese
     arm_neon_aesimc,                           // llvm.arm.neon.aesimc
@@ -5907,14 +5931,19 @@
     wasm_atomic_wait_i64,                      // llvm.wasm.atomic.wait.i64
     wasm_bitselect,                            // llvm.wasm.bitselect
     wasm_data_drop,                            // llvm.wasm.data.drop
+    wasm_dot,                                  // llvm.wasm.dot
     wasm_extract_exception,                    // llvm.wasm.extract.exception
     wasm_get_ehselector,                       // llvm.wasm.get.ehselector
     wasm_get_exception,                        // llvm.wasm.get.exception
     wasm_landingpad_index,                     // llvm.wasm.landingpad.index
     wasm_lsda,                                 // llvm.wasm.lsda
+    wasm_max_signed,                           // llvm.wasm.max.signed
+    wasm_max_unsigned,                         // llvm.wasm.max.unsigned
     wasm_memory_grow,                          // llvm.wasm.memory.grow
     wasm_memory_init,                          // llvm.wasm.memory.init
     wasm_memory_size,                          // llvm.wasm.memory.size
+    wasm_min_signed,                           // llvm.wasm.min.signed
+    wasm_min_unsigned,                         // llvm.wasm.min.unsigned
     wasm_narrow_signed,                        // llvm.wasm.narrow.signed
     wasm_narrow_unsigned,                      // llvm.wasm.narrow.unsigned
     wasm_qfma,                                 // llvm.wasm.qfma

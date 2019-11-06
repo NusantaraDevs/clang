@@ -488,14 +488,6 @@
       OS << " CtxSetImplementation";
       break;
     }
-    switch(SA->getCtxScore()) {
-    case OMPDeclareVariantAttr::ScoreUnknown:
-      OS << " ScoreUnknown";
-      break;
-    case OMPDeclareVariantAttr::ScoreSpecified:
-      OS << " ScoreSpecified";
-      break;
-    }
     switch(SA->getCtxSelector()) {
     case OMPDeclareVariantAttr::CtxUnknown:
       OS << " CtxUnknown";

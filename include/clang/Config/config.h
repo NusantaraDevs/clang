@@ -9,7 +9,7 @@
 #define BUG_REPORT_URL "https://bugs.llvm.org/"
 
 /* Default linker to use. */
-#define CLANG_DEFAULT_LINKER "lld"
+#define CLANG_DEFAULT_LINKER ""
 
 /* Default C/ObjC standard to use. */
 /* #undef CLANG_DEFAULT_STD_C */

@@ -46,6 +46,7 @@ DIAG(err_opencl_unknown_type_specifier, CLASS_ERROR, (unsigned)diag::Severity::E
 DIAG(err_openclcxx_not_supported, CLASS_ERROR, (unsigned)diag::Severity::Error, "'%0' is not supported in C++ for OpenCL", 0, SFINAE_SubstitutionFailure, false, true, 0)
 DIAG(err_opt_not_valid_on_target, CLASS_ERROR, (unsigned)diag::Severity::Error, "option '%0' cannot be specified on this target", 0, SFINAE_SubstitutionFailure, false, true, 0)
 DIAG(err_opt_not_valid_with_opt, CLASS_ERROR, (unsigned)diag::Severity::Error, "option '%0' cannot be specified with '%1'", 0, SFINAE_SubstitutionFailure, false, true, 0)
+DIAG(err_opt_not_valid_without_opt, CLASS_ERROR, (unsigned)diag::Severity::Error, "option '%0' cannot be specified without '%1'", 0, SFINAE_SubstitutionFailure, false, true, 0)
 DIAG(err_param_redefinition, CLASS_ERROR, (unsigned)diag::Severity::Error, "redefinition of parameter %0", 0, SFINAE_SubstitutionFailure, false, true, 4)
 DIAG(err_seh___except_block, CLASS_ERROR, (unsigned)diag::Severity::Error, "%0 only allowed in __except block or filter expression", 0, SFINAE_SubstitutionFailure, false, true, 0)
 DIAG(err_seh___except_filter, CLASS_ERROR, (unsigned)diag::Severity::Error, "%0 only allowed in __except filter expression", 0, SFINAE_SubstitutionFailure, false, true, 0)

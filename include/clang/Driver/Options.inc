@@ -1867,7 +1867,7 @@ OPTION(prefix_1, "fsanitize-coverage-type=", fsanitize_coverage_type, Joined, IN
 OPTION(prefix_1, "fsanitize-coverage=", fsanitize_coverage, CommaJoined, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Specify the type of coverage instrumentation for Sanitizers", nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-hwaddress-abi=", fsanitize_hwaddress_abi_EQ, Joined, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
-       "Select the HWAddressSanitizer ABI to target (interceptor or platform, default interceptor)", nullptr, nullptr)
+       "Select the HWAddressSanitizer ABI to target (interceptor or platform, default interceptor). This option is currently unused.", nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-link-c++-runtime", fsanitize_link_cxx_runtime, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-link-runtime", fsanitize_link_runtime, Flag, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fsanitize-memory-track-origins=", fsanitize_memory_track_origins_EQ, Joined, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
@@ -2135,7 +2135,8 @@ OPTION(prefix_1, "gdwarf-4", gdwarf_4, Flag, g_Group, INVALID, nullptr, 0, 0,
 OPTION(prefix_1, "gdwarf-5", gdwarf_5, Flag, g_Group, INVALID, nullptr, 0, 0,
        "Generate source-level debug information with dwarf version 5", nullptr, nullptr)
 OPTION(prefix_1, "gdwarf-aranges", gdwarf_aranges, Flag, g_flags_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "gdwarf", gdwarf, Flag, INVALID, gdwarf_4, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "gdwarf", gdwarf, Flag, g_Group, INVALID, nullptr, CoreOption, 0,
+       "Generate source-level debug information with the default dwarf version", nullptr, nullptr)
 OPTION(prefix_2, "Gd", _SLASH_Gd, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0,
        "Set __cdecl as a default calling convention", nullptr, nullptr)
 OPTION(prefix_1, "gembed-source", gembed_source, Flag, g_flags_Group, INVALID, nullptr, CC1Option, 0,
@@ -2158,6 +2159,7 @@ OPTION(prefix_1, "ggdb", ggdb, Flag, gTune_Group, INVALID, nullptr, 0, 0, nullpt
 OPTION(prefix_1, "ggnu-pubnames", ggnu_pubnames, Flag, g_flags_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_2, "GH", _SLASH_GH, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_2, "Gh", _SLASH_Gh, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "ginline-line-tables", ginline_line_tables, Flag, INVALID, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_2, "GL-", _SLASH_GL_, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "gline-directives-only", gline_directives_only, Flag, gN_Group, INVALID, nullptr, CoreOption, 0,
        "Emit debug line info directives only", nullptr, nullptr)
@@ -2175,6 +2177,8 @@ OPTION(prefix_1, "gno-column-info", gno_column_info, Flag, g_flags_Group, INVALI
 OPTION(prefix_1, "gno-embed-source", gno_embed_source, Flag, g_flags_Group, INVALID, nullptr, DriverOption, 0,
        "Restore the default behavior of not embedding source text in DWARF debug sections", nullptr, nullptr)
 OPTION(prefix_1, "gno-gnu-pubnames", gno_gnu_pubnames, Flag, g_flags_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "gno-inline-line-tables", gno_inline_line_tables, Flag, INVALID, INVALID, nullptr, CC1Option | CoreOption, 0,
+       "Don't emit inline line tables", nullptr, nullptr)
 OPTION(prefix_1, "gno-pubnames", gno_pubnames, Flag, g_flags_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "gno-record-command-line", gno_record_command_line, Flag, g_flags_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "gno-record-gcc-switches", anonymous_29, Flag, INVALID, gno_record_command_line, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -2844,6 +2848,7 @@ OPTION(prefix_1, "mno-virt", mno_virt, Flag, m_mips_Features_Group, INVALID, nul
 OPTION(prefix_1, "mno-vpclmulqdq", mno_vpclmulqdq, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-vsx", mno_vsx, Flag, m_ppc_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-vx", mno_vx, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mno-vzeroupper", mno_vzeroupper, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-waitpkg", mno_waitpkg, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-warn-nonportable-cfstrings", mno_warn_nonportable_cfstrings, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-wavefrontsize64", mno_wavefrontsize64, Flag, m_Group, INVALID, nullptr, 0, 0,
@@ -2866,6 +2871,8 @@ OPTION(prefix_1, "mnocrc", mnocrc, Flag, m_arm_Features_Group, INVALID, nullptr,
 OPTION(prefix_1, "mnoexecstack", mno_exec_stack, Flag, INVALID, INVALID, nullptr, CC1Option | CC1AsOption | NoDriverOption, 0,
        "Mark the file as not needing an executable stack", nullptr, nullptr)
 OPTION(prefix_1, "mnontrapping-fptoint", mnontrapping_fptoint, Flag, m_wasm_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mnop-mcount", mnop_mcount, Flag, m_Group, INVALID, nullptr, CC1Option, 0,
+       "Generate mcount/__fentry__ calls as nops. To activate they need to be patched in.", nullptr, nullptr)
 OPTION(prefix_1, "mnvj", mnvj, Flag, m_hexagon_Features_Group, INVALID, nullptr, CC1Option, 0,
        "Enable generation of new-value jumps", nullptr, nullptr)
 OPTION(prefix_1, "mnvs", mnvs, Flag, m_hexagon_Features_Group, INVALID, nullptr, CC1Option, 0,
@@ -3022,6 +3029,7 @@ OPTION(prefix_1, "mvirt", mvirt, Flag, m_mips_Features_Group, INVALID, nullptr, 
 OPTION(prefix_1, "mvpclmulqdq", mvpclmulqdq, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mvsx", mvsx, Flag, m_ppc_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mvx", mvx, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mvzeroupper", mvzeroupper, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "MV", MV, Flag, M_Group, INVALID, nullptr, CC1Option, 0,
        "Use NMake/Jom format for the depfile", nullptr, nullptr)
 OPTION(prefix_1, "mwaitpkg", mwaitpkg, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
