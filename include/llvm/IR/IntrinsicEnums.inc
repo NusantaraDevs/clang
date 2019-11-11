@@ -487,7 +487,9 @@
     aarch64_subp,                              // llvm.aarch64.subp
     aarch64_sve_abs,                           // llvm.aarch64.sve.abs
     aarch64_sve_add,                           // llvm.aarch64.sve.add
+    aarch64_sve_and,                           // llvm.aarch64.sve.and
     aarch64_sve_bic,                           // llvm.aarch64.sve.bic
+    aarch64_sve_bic_pred,                      // llvm.aarch64.sve.bic.pred
     aarch64_sve_cls,                           // llvm.aarch64.sve.cls
     aarch64_sve_clz,                           // llvm.aarch64.sve.clz
     aarch64_sve_cnot,                          // llvm.aarch64.sve.cnot
@@ -509,12 +511,24 @@
     aarch64_sve_fsub,                          // llvm.aarch64.sve.fsub
     aarch64_sve_fsubr,                         // llvm.aarch64.sve.fsubr
     aarch64_sve_ftsmul_x,                      // llvm.aarch64.sve.ftsmul.x
+    aarch64_sve_mad,                           // llvm.aarch64.sve.mad
+    aarch64_sve_mla,                           // llvm.aarch64.sve.mla
+    aarch64_sve_mls,                           // llvm.aarch64.sve.mls
+    aarch64_sve_msb,                           // llvm.aarch64.sve.msb
+    aarch64_sve_mul,                           // llvm.aarch64.sve.mul
     aarch64_sve_neg,                           // llvm.aarch64.sve.neg
     aarch64_sve_not,                           // llvm.aarch64.sve.not
+    aarch64_sve_or,                            // llvm.aarch64.sve.or
     aarch64_sve_punpkhi,                       // llvm.aarch64.sve.punpkhi
     aarch64_sve_punpklo,                       // llvm.aarch64.sve.punpklo
+    aarch64_sve_sabd,                          // llvm.aarch64.sve.sabd
+    aarch64_sve_sdiv,                          // llvm.aarch64.sve.sdiv
+    aarch64_sve_sdivr,                         // llvm.aarch64.sve.sdivr
     aarch64_sve_sdot,                          // llvm.aarch64.sve.sdot
     aarch64_sve_sdot_lane,                     // llvm.aarch64.sve.sdot.lane
+    aarch64_sve_smax,                          // llvm.aarch64.sve.smax
+    aarch64_sve_smin,                          // llvm.aarch64.sve.smin
+    aarch64_sve_smulh,                         // llvm.aarch64.sve.smulh
     aarch64_sve_sub,                           // llvm.aarch64.sve.sub
     aarch64_sve_subr,                          // llvm.aarch64.sve.subr
     aarch64_sve_sunpkhi,                       // llvm.aarch64.sve.sunpkhi
@@ -522,13 +536,20 @@
     aarch64_sve_sxtb,                          // llvm.aarch64.sve.sxtb
     aarch64_sve_sxth,                          // llvm.aarch64.sve.sxth
     aarch64_sve_sxtw,                          // llvm.aarch64.sve.sxtw
+    aarch64_sve_uabd,                          // llvm.aarch64.sve.uabd
+    aarch64_sve_udiv,                          // llvm.aarch64.sve.udiv
+    aarch64_sve_udivr,                         // llvm.aarch64.sve.udivr
     aarch64_sve_udot,                          // llvm.aarch64.sve.udot
     aarch64_sve_udot_lane,                     // llvm.aarch64.sve.udot.lane
+    aarch64_sve_umax,                          // llvm.aarch64.sve.umax
+    aarch64_sve_umin,                          // llvm.aarch64.sve.umin
+    aarch64_sve_umulh,                         // llvm.aarch64.sve.umulh
     aarch64_sve_uunpkhi,                       // llvm.aarch64.sve.uunpkhi
     aarch64_sve_uunpklo,                       // llvm.aarch64.sve.uunpklo
     aarch64_sve_uxtb,                          // llvm.aarch64.sve.uxtb
     aarch64_sve_uxth,                          // llvm.aarch64.sve.uxth
     aarch64_sve_uxtw,                          // llvm.aarch64.sve.uxtw
+    aarch64_sve_xor,                           // llvm.aarch64.sve.xor
     aarch64_tagp,                              // llvm.aarch64.tagp
     aarch64_tcancel,                           // llvm.aarch64.tcancel
     aarch64_tcommit,                           // llvm.aarch64.tcommit

@@ -135,6 +135,7 @@ DIAG(err_func_def_no_params, CLASS_ERROR, (unsigned)diag::Severity::Error, "func
 DIAG(err_function_declared_typedef, CLASS_ERROR, (unsigned)diag::Severity::Error, "function definition declared 'typedef'", 0, SFINAE_SubstitutionFailure, false, true, 4)
 DIAG(err_function_definition_not_allowed, CLASS_ERROR, (unsigned)diag::Severity::Error, "function definition is not allowed here", 0, SFINAE_SubstitutionFailure, false, true, 4)
 DIAG(err_function_is_not_record, CLASS_ERROR, (unsigned)diag::Severity::Error, "unexpected %0 in function call; perhaps remove the %0?", 0, SFINAE_SubstitutionFailure, false, true, 4)
+DIAG(err_function_scope_depth_exceeded, CLASS_ERROR, (unsigned)diag::Severity::Fatal, "function scope depth exceeded maximum of %0", 0, SFINAE_SubstitutionFailure, false, true, 4)
 DIAG(err_global_module_introducer_not_at_start, CLASS_ERROR, (unsigned)diag::Severity::Error, "'module;' introducing a global module fragment can appear only at the start of the translation unit", 0, SFINAE_SubstitutionFailure, false, true, 13)
 DIAG(err_gnu_inline_asm_disabled, CLASS_ERROR, (unsigned)diag::Severity::Error, "GNU-style inline assembly is disabled", 0, SFINAE_SubstitutionFailure, false, true, 12)
 DIAG(err_id_after_template_in_nested_name_spec, CLASS_ERROR, (unsigned)diag::Severity::Error, "expected template name after 'template' keyword in nested name specifier", 0, SFINAE_SubstitutionFailure, false, true, 4)
