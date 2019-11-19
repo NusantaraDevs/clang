@@ -583,7 +583,7 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       break;
     }
     break;
-  case 11:	 // 19 strings to match.
+  case 11:	 // 20 strings to match.
     switch (Name[0]) {
     default: break;
     case 'a':	 // 2 strings to match.
@@ -656,13 +656,24 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
         return AttributeCommonInfo::AT_NSConsumed;	 // "ns_consumed"
       }
       break;
-    case 'o':	 // 2 strings to match.
+    case 'o':	 // 3 strings to match.
       switch (Name[1]) {
       default: break;
-      case 'b':	 // 1 string to match.
-        if (memcmp(Name.data()+2, "jc_bridge", 9) != 0)
+      case 'b':	 // 2 strings to match.
+        if (memcmp(Name.data()+2, "jc_", 3) != 0)
           break;
-        return AttributeCommonInfo::AT_ObjCBridge;	 // "objc_bridge"
+        switch (Name[5]) {
+        default: break;
+        case 'b':	 // 1 string to match.
+          if (memcmp(Name.data()+6, "ridge", 5) != 0)
+            break;
+          return AttributeCommonInfo::AT_ObjCBridge;	 // "objc_bridge"
+        case 'd':	 // 1 string to match.
+          if (memcmp(Name.data()+6, "irect", 5) != 0)
+            break;
+          return AttributeCommonInfo::AT_ObjCDirect;	 // "objc_direct"
+        }
+        break;
       case 's':	 // 1 string to match.
         if (memcmp(Name.data()+2, "_consumed", 9) != 0)
           break;
@@ -1184,7 +1195,7 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_WarnUnusedResult;	 // "warn_unused_result"
     }
     break;
-  case 19:	 // 11 strings to match.
+  case 19:	 // 12 strings to match.
     switch (Name[0]) {
     default: break;
     case 'a':	 // 1 string to match.
@@ -1223,10 +1234,10 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
         return AttributeCommonInfo::AT_NSReturnsRetained;	 // "ns_returns_retained"
       }
       break;
-    case 'o':	 // 4 strings to match.
+    case 'o':	 // 5 strings to match.
       switch (Name[1]) {
       default: break;
-      case 'b':	 // 3 strings to match.
+      case 'b':	 // 4 strings to match.
         if (memcmp(Name.data()+2, "jc_", 3) != 0)
           break;
         switch (Name[5]) {
@@ -1246,6 +1257,10 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
             return AttributeCommonInfo::AT_ObjCBridgeRelated;	 // "objc_bridge_related"
           }
           break;
+        case 'd':	 // 1 string to match.
+          if (memcmp(Name.data()+6, "irect_members", 13) != 0)
+            break;
+          return AttributeCommonInfo::AT_ObjCDirectMembers;	 // "objc_direct_members"
         case 'r':	 // 1 string to match.
           if (memcmp(Name.data()+6, "equires_super", 13) != 0)
             break;
@@ -1289,7 +1304,7 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_WorkGroupSizeHint;	 // "work_group_size_hint"
     }
     break;
-  case 21:	 // 9 strings to match.
+  case 21:	 // 10 strings to match.
     switch (Name[0]) {
     default: break;
     case '_':	 // 1 string to match.
@@ -1308,10 +1323,19 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       if (memcmp(Name.data()+1, "bjc_precise_lifetime", 20) != 0)
         break;
       return AttributeCommonInfo::AT_ObjCPreciseLifetime;	 // "objc_precise_lifetime"
-    case 'p':	 // 1 string to match.
-      if (memcmp(Name.data()+1, "ointer_with_type_tag", 20) != 0)
-        break;
-      return AttributeCommonInfo::AT_ArgumentWithTypeTag;	 // "pointer_with_type_tag"
+    case 'p':	 // 2 strings to match.
+      switch (Name[1]) {
+      default: break;
+      case 'o':	 // 1 string to match.
+        if (memcmp(Name.data()+2, "inter_with_type_tag", 19) != 0)
+          break;
+        return AttributeCommonInfo::AT_ArgumentWithTypeTag;	 // "pointer_with_type_tag"
+      case 'r':	 // 1 string to match.
+        if (memcmp(Name.data()+2, "eserve_access_index", 19) != 0)
+          break;
+        return AttributeCommonInfo::AT_BPFPreserveAccessIndex;	 // "preserve_access_index"
+      }
+      break;
     case 's':	 // 2 strings to match.
       switch (Name[1]) {
       default: break;
@@ -2459,10 +2483,10 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_VectorCall;	 // "clang::vectorcall"
     }
     break;
-  case 18:	 // 15 strings to match.
+  case 18:	 // 16 strings to match.
     switch (Name[0]) {
     default: break;
-    case 'c':	 // 12 strings to match.
+    case 'c':	 // 13 strings to match.
       if (memcmp(Name.data()+1, "lang::", 6) != 0)
         break;
       switch (Name[7]) {
@@ -2505,13 +2529,24 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
           return AttributeCommonInfo::AT_NSConsumed;	 // "clang::ns_consumed"
         }
         break;
-      case 'o':	 // 2 strings to match.
+      case 'o':	 // 3 strings to match.
         switch (Name[8]) {
         default: break;
-        case 'b':	 // 1 string to match.
-          if (memcmp(Name.data()+9, "jc_bridge", 9) != 0)
+        case 'b':	 // 2 strings to match.
+          if (memcmp(Name.data()+9, "jc_", 3) != 0)
             break;
-          return AttributeCommonInfo::AT_ObjCBridge;	 // "clang::objc_bridge"
+          switch (Name[12]) {
+          default: break;
+          case 'b':	 // 1 string to match.
+            if (memcmp(Name.data()+13, "ridge", 5) != 0)
+              break;
+            return AttributeCommonInfo::AT_ObjCBridge;	 // "clang::objc_bridge"
+          case 'd':	 // 1 string to match.
+            if (memcmp(Name.data()+13, "irect", 5) != 0)
+              break;
+            return AttributeCommonInfo::AT_ObjCDirect;	 // "clang::objc_direct"
+          }
+          break;
         case 's':	 // 1 string to match.
           if (memcmp(Name.data()+9, "_consumed", 9) != 0)
             break;
@@ -2984,7 +3019,7 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_WarnUnusedResult;	 // "clang::warn_unused_result"
     }
     break;
-  case 26:	 // 10 strings to match.
+  case 26:	 // 11 strings to match.
     if (memcmp(Name.data()+0, "clang::", 7) != 0)
       break;
     switch (Name[7]) {
@@ -3016,10 +3051,10 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       if (memcmp(Name.data()+8, "s_returns_retained", 18) != 0)
         break;
       return AttributeCommonInfo::AT_NSReturnsRetained;	 // "clang::ns_returns_retained"
-    case 'o':	 // 4 strings to match.
+    case 'o':	 // 5 strings to match.
       switch (Name[8]) {
       default: break;
-      case 'b':	 // 3 strings to match.
+      case 'b':	 // 4 strings to match.
         if (memcmp(Name.data()+9, "jc_", 3) != 0)
           break;
         switch (Name[12]) {
@@ -3039,6 +3074,10 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
             return AttributeCommonInfo::AT_ObjCBridgeRelated;	 // "clang::objc_bridge_related"
           }
           break;
+        case 'd':	 // 1 string to match.
+          if (memcmp(Name.data()+13, "irect_members", 13) != 0)
+            break;
+          return AttributeCommonInfo::AT_ObjCDirectMembers;	 // "clang::objc_direct_members"
         case 'r':	 // 1 string to match.
           if (memcmp(Name.data()+13, "equires_super", 13) != 0)
             break;
@@ -3081,10 +3120,10 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_NoInstrumentFunction;	 // "gnu::no_instrument_function"
     }
     break;
-  case 28:	 // 9 strings to match.
+  case 28:	 // 10 strings to match.
     switch (Name[0]) {
     default: break;
-    case 'c':	 // 8 strings to match.
+    case 'c':	 // 9 strings to match.
       if (memcmp(Name.data()+1, "lang::", 6) != 0)
         break;
       switch (Name[7]) {
@@ -3101,10 +3140,19 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
         if (memcmp(Name.data()+8, "bjc_precise_lifetime", 20) != 0)
           break;
         return AttributeCommonInfo::AT_ObjCPreciseLifetime;	 // "clang::objc_precise_lifetime"
-      case 'p':	 // 1 string to match.
-        if (memcmp(Name.data()+8, "ointer_with_type_tag", 20) != 0)
-          break;
-        return AttributeCommonInfo::AT_ArgumentWithTypeTag;	 // "clang::pointer_with_type_tag"
+      case 'p':	 // 2 strings to match.
+        switch (Name[8]) {
+        default: break;
+        case 'o':	 // 1 string to match.
+          if (memcmp(Name.data()+9, "inter_with_type_tag", 19) != 0)
+            break;
+          return AttributeCommonInfo::AT_ArgumentWithTypeTag;	 // "clang::pointer_with_type_tag"
+        case 'r':	 // 1 string to match.
+          if (memcmp(Name.data()+9, "eserve_access_index", 19) != 0)
+            break;
+          return AttributeCommonInfo::AT_BPFPreserveAccessIndex;	 // "clang::preserve_access_index"
+        }
+        break;
       case 's':	 // 2 strings to match.
         switch (Name[8]) {
         default: break;
@@ -3526,7 +3574,7 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_VectorCall;	 // "clang::vectorcall"
     }
     break;
-  case 18:	 // 9 strings to match.
+  case 18:	 // 10 strings to match.
     if (memcmp(Name.data()+0, "clang::", 7) != 0)
       break;
     switch (Name[7]) {
@@ -3561,13 +3609,24 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
         return AttributeCommonInfo::AT_NSConsumed;	 // "clang::ns_consumed"
       }
       break;
-    case 'o':	 // 2 strings to match.
+    case 'o':	 // 3 strings to match.
       switch (Name[8]) {
       default: break;
-      case 'b':	 // 1 string to match.
-        if (memcmp(Name.data()+9, "jc_bridge", 9) != 0)
+      case 'b':	 // 2 strings to match.
+        if (memcmp(Name.data()+9, "jc_", 3) != 0)
           break;
-        return AttributeCommonInfo::AT_ObjCBridge;	 // "clang::objc_bridge"
+        switch (Name[12]) {
+        default: break;
+        case 'b':	 // 1 string to match.
+          if (memcmp(Name.data()+13, "ridge", 5) != 0)
+            break;
+          return AttributeCommonInfo::AT_ObjCBridge;	 // "clang::objc_bridge"
+        case 'd':	 // 1 string to match.
+          if (memcmp(Name.data()+13, "irect", 5) != 0)
+            break;
+          return AttributeCommonInfo::AT_ObjCDirect;	 // "clang::objc_direct"
+        }
+        break;
       case 's':	 // 1 string to match.
         if (memcmp(Name.data()+9, "_consumed", 9) != 0)
           break;
@@ -3831,7 +3890,7 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_SwiftErrorResult;	 // "clang::swift_error_result"
     }
     break;
-  case 26:	 // 8 strings to match.
+  case 26:	 // 9 strings to match.
     if (memcmp(Name.data()+0, "clang::", 7) != 0)
       break;
     switch (Name[7]) {
@@ -3859,10 +3918,10 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       if (memcmp(Name.data()+8, "s_returns_retained", 18) != 0)
         break;
       return AttributeCommonInfo::AT_NSReturnsRetained;	 // "clang::ns_returns_retained"
-    case 'o':	 // 4 strings to match.
+    case 'o':	 // 5 strings to match.
       switch (Name[8]) {
       default: break;
-      case 'b':	 // 3 strings to match.
+      case 'b':	 // 4 strings to match.
         if (memcmp(Name.data()+9, "jc_", 3) != 0)
           break;
         switch (Name[12]) {
@@ -3882,6 +3941,10 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
             return AttributeCommonInfo::AT_ObjCBridgeRelated;	 // "clang::objc_bridge_related"
           }
           break;
+        case 'd':	 // 1 string to match.
+          if (memcmp(Name.data()+13, "irect_members", 13) != 0)
+            break;
+          return AttributeCommonInfo::AT_ObjCDirectMembers;	 // "clang::objc_direct_members"
         case 'r':	 // 1 string to match.
           if (memcmp(Name.data()+13, "equires_super", 13) != 0)
             break;
@@ -3911,7 +3974,7 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       return AttributeCommonInfo::AT_ObjCRuntimeVisible;	 // "clang::objc_runtime_visible"
     }
     break;
-  case 28:	 // 7 strings to match.
+  case 28:	 // 8 strings to match.
     if (memcmp(Name.data()+0, "clang::", 7) != 0)
       break;
     switch (Name[7]) {
@@ -3928,10 +3991,19 @@ static AttributeCommonInfo::Kind getAttrKind(StringRef Name, AttributeCommonInfo
       if (memcmp(Name.data()+8, "bjc_precise_lifetime", 20) != 0)
         break;
       return AttributeCommonInfo::AT_ObjCPreciseLifetime;	 // "clang::objc_precise_lifetime"
-    case 'p':	 // 1 string to match.
-      if (memcmp(Name.data()+8, "ointer_with_type_tag", 20) != 0)
-        break;
-      return AttributeCommonInfo::AT_ArgumentWithTypeTag;	 // "clang::pointer_with_type_tag"
+    case 'p':	 // 2 strings to match.
+      switch (Name[8]) {
+      default: break;
+      case 'o':	 // 1 string to match.
+        if (memcmp(Name.data()+9, "inter_with_type_tag", 19) != 0)
+          break;
+        return AttributeCommonInfo::AT_ArgumentWithTypeTag;	 // "clang::pointer_with_type_tag"
+      case 'r':	 // 1 string to match.
+        if (memcmp(Name.data()+9, "eserve_access_index", 19) != 0)
+          break;
+        return AttributeCommonInfo::AT_BPFPreserveAccessIndex;	 // "clang::preserve_access_index"
+      }
+      break;
     case 's':	 // 1 string to match.
       if (memcmp(Name.data()+8, "wift_indirect_result", 20) != 0)
         break;

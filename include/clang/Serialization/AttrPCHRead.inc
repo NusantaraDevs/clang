@@ -364,6 +364,14 @@
     New->setImplicit(isImplicit);
     break;
   }
+  case attr::BPFPreserveAccessIndex: {
+    bool isInherited = Record.readInt();
+    bool isImplicit = Record.readInt();
+    New = new (Context) BPFPreserveAccessIndexAttr(Context, Info);
+    cast<InheritableAttr>(New)->setInherited(isInherited);
+    New->setImplicit(isImplicit);
+    break;
+  }
   case attr::Blocks: {
     bool isInherited = Record.readInt();
     bool isImplicit = Record.readInt();
@@ -1490,9 +1498,21 @@
     bool isInherited = Record.readInt();
     bool isImplicit = Record.readInt();
     Expr * variantFuncRef = Record.readExpr();
-    Expr * score = Record.readExpr();
-    OMPDeclareVariantAttr::CtxSelectorSetType ctxSelectorSet(static_cast<OMPDeclareVariantAttr::CtxSelectorSetType>(Record.readInt()));
-    OMPDeclareVariantAttr::CtxSelectorType ctxSelector(static_cast<OMPDeclareVariantAttr::CtxSelectorType>(Record.readInt()));
+    unsigned scoresSize = Record.readInt();
+    SmallVector<Expr *, 4> scores;
+    scores.reserve(scoresSize);
+    for (unsigned i = 0; i != scoresSize; ++i)
+      scores.push_back(Record.readExpr());
+    unsigned ctxSelectorSetsSize = Record.readInt();
+    SmallVector<unsigned, 4> ctxSelectorSets;
+    ctxSelectorSets.reserve(ctxSelectorSetsSize);
+    for (unsigned i = 0; i != ctxSelectorSetsSize; ++i)
+      ctxSelectorSets.push_back(Record.readInt());
+    unsigned ctxSelectorsSize = Record.readInt();
+    SmallVector<unsigned, 4> ctxSelectors;
+    ctxSelectors.reserve(ctxSelectorsSize);
+    for (unsigned i = 0; i != ctxSelectorsSize; ++i)
+      ctxSelectors.push_back(Record.readInt());
     unsigned implVendorsSize = Record.readInt();
     SmallVector<StringRef, 4> implVendors;
     implVendors.reserve(implVendorsSize);
@@ -1502,7 +1522,7 @@
       implVendorsStorage.push_back(Record.readString());
     for (unsigned i = 0; i != implVendorsSize; ++i)
       implVendors.push_back(implVendorsStorage[i]);
-    New = new (Context) OMPDeclareVariantAttr(Context, Info, variantFuncRef, score, ctxSelectorSet, ctxSelector, implVendors.data(), implVendorsSize);
+    New = new (Context) OMPDeclareVariantAttr(Context, Info, variantFuncRef, scores.data(), scoresSize, ctxSelectorSets.data(), ctxSelectorSetsSize, ctxSelectors.data(), ctxSelectorsSize, implVendors.data(), implVendorsSize);
     cast<InheritableAttr>(New)->setInherited(isInherited);
     New->setImplicit(isImplicit);
     break;
@@ -1614,6 +1634,18 @@
   case attr::ObjCDesignatedInitializer: {
     bool isImplicit = Record.readInt();
     New = new (Context) ObjCDesignatedInitializerAttr(Context, Info);
+    New->setImplicit(isImplicit);
+    break;
+  }
+  case attr::ObjCDirect: {
+    bool isImplicit = Record.readInt();
+    New = new (Context) ObjCDirectAttr(Context, Info);
+    New->setImplicit(isImplicit);
+    break;
+  }
+  case attr::ObjCDirectMembers: {
+    bool isImplicit = Record.readInt();
+    New = new (Context) ObjCDirectMembersAttr(Context, Info);
     New->setImplicit(isImplicit);
     break;
   }

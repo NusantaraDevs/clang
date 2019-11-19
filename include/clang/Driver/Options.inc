@@ -871,8 +871,18 @@ OPTION(prefix_1, "ffixed-form", fixed_form_f, Flag, gfortran_Group, INVALID, nul
 OPTION(prefix_1, "ffixed-line-length-", ffixed_line_length_VALUE, Joined, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "ffixed-point", ffixed_point, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Enable fixed point types", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-r10", ffixed_r10, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
+       "Reserve the r10 register (ARM only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-r11", ffixed_r11, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
+       "Reserve the r11 register (ARM only)", nullptr, nullptr)
 OPTION(prefix_1, "ffixed-r19", ffixed_r19, Flag, INVALID, INVALID, nullptr, 0, 0,
        "Reserve register r19 (Hexagon only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-r6", ffixed_r6, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
+       "Reserve the r6 register (ARM only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-r7", ffixed_r7, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
+       "Reserve the r7 register (ARM only)", nullptr, nullptr)
+OPTION(prefix_1, "ffixed-r8", ffixed_r8, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
+       "Reserve the r8 register (ARM only)", nullptr, nullptr)
 OPTION(prefix_1, "ffixed-r9", ffixed_r9, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
        "Reserve the r9 register (ARM only)", nullptr, nullptr)
 OPTION(prefix_1, "ffixed-x10", ffixed_x10, Flag, m_Group, INVALID, nullptr, 0, 0,
@@ -952,10 +962,6 @@ OPTION(prefix_1, "fforce-experimental-new-constant-interpreter", fforce_experime
        "Force the use of the experimental new constant interpreter, failing on missing features", nullptr, nullptr)
 OPTION(prefix_1, "ffp-contract=", ffp_contract, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
        "Form fused FP ops (e.g. FMAs): fast (everywhere) | on (according to FP_CONTRACT pragma) | off (never fuse). Default is 'fast' for CUDA/HIP and 'on' otherwise.", nullptr, "fast,on,off")
-OPTION(prefix_1, "ffp-exception-behavior=", ffp_exception_behavior_EQ, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
-       "Specifies the exception behavior of floating-point operations.", nullptr, nullptr)
-OPTION(prefix_1, "ffp-model=", ffp_model_EQ, Joined, f_Group, INVALID, nullptr, DriverOption, 0,
-       "Controls the semantics of floating-point calculations.", nullptr, nullptr)
 OPTION(prefix_1, "ffpe-trap=", ffpe_trap_EQ, Joined, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "ffree-form", free_form_f, Flag, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "ffree-line-length-", ffree_line_length_VALUE, Joined, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -1470,7 +1476,7 @@ OPTION(prefix_1, "fno-rewrite-imports", fno_rewrite_imports, Flag, f_Group, INVA
 OPTION(prefix_1, "fno-rewrite-includes", fno_rewrite_includes, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-ripa", ripa_fno, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-ropi", fno_ropi, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "fno-rounding-math", fno_rounding_math, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fno-rounding-math", rounding_math_fno, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-rtlib-add-rpath", fno_rtlib_add_rpath, Flag, INVALID, INVALID, nullptr, NoArgumentUnused, 0,
        "Do not add -rpath with architecture-specific resource directory to the linker flags", nullptr, nullptr)
 OPTION(prefix_1, "fno-rtti-data", fno_rtti_data, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
@@ -1819,7 +1825,7 @@ OPTION(prefix_1, "frewrite-map-file=", frewrite_map_file_EQ, Joined, f_Group, IN
 OPTION(prefix_1, "frewrite-map-file", frewrite_map_file, Separate, f_Group, INVALID, nullptr, DriverOption | CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fripa", ripa_f, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fropi", fropi, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "frounding-math", frounding_math, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "frounding-math", rounding_math_f, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "frtlib-add-rpath", frtlib_add_rpath, Flag, INVALID, INVALID, nullptr, NoArgumentUnused, 0,
        "Add -rpath with architecture-specific resource directory to the linker flags", nullptr, nullptr)
 OPTION(prefix_1, "frtti", frtti, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -2808,6 +2814,7 @@ OPTION(prefix_1, "mno-rdpid", mno_rdpid, Flag, m_x86_Features_Group, INVALID, nu
 OPTION(prefix_1, "mno-rdrnd", mno_rdrnd, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-rdseed", mno_rdseed, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-red-zone", mno_red_zone, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mno-reference-types", mno_reference_types, Flag, m_wasm_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-relax-all", mno_relax_all, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-relax-pic-calls", mno_relax_pic_calls, Flag, m_mips_Features_Group, INVALID, nullptr, HelpHidden, 0,
        "Do not produce relaxation hints for linkers to try optimizing PIC call sequences into direct calls (MIPS only)", nullptr, nullptr)
@@ -2932,6 +2939,7 @@ OPTION(prefix_1, "mreassociate", mreassociate, Flag, INVALID, INVALID, nullptr, 
 OPTION(prefix_1, "mrecip=", mrecip_EQ, CommaJoined, m_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mrecip", mrecip, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mred-zone", mred_zone, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mreference-types", mreference_types, Flag, m_wasm_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mregparm=", mregparm_EQ, Joined, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mregparm", mregparm, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Limit the number of registers available for integer arguments", nullptr, nullptr)

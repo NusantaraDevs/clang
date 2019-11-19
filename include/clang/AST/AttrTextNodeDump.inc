@@ -480,22 +480,10 @@
   }
   void VisitOMPDeclareVariantAttr(const OMPDeclareVariantAttr *A) {
     const auto *SA = cast<OMPDeclareVariantAttr>(A); (void)SA;
-    switch(SA->getCtxSelectorSet()) {
-    case OMPDeclareVariantAttr::CtxSetUnknown:
-      OS << " CtxSetUnknown";
-      break;
-    case OMPDeclareVariantAttr::CtxSetImplementation:
-      OS << " CtxSetImplementation";
-      break;
-    }
-    switch(SA->getCtxSelector()) {
-    case OMPDeclareVariantAttr::CtxUnknown:
-      OS << " CtxUnknown";
-      break;
-    case OMPDeclareVariantAttr::CtxVendor:
-      OS << " CtxVendor";
-      break;
-    }
+    for (const auto &Val : SA->ctxSelectorSets())
+      OS << " " << Val;
+    for (const auto &Val : SA->ctxSelectors())
+      OS << " " << Val;
     for (const auto &Val : SA->implVendors())
       OS << " " << Val;
   }

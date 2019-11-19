@@ -14,6 +14,7 @@
 #define LLVM_ANALYSIS_VECTORUTILS_H
 
 #include "llvm/ADT/MapVector.h"
+#include "llvm/ADT/SmallSet.h"
 #include "llvm/Analysis/LoopAccessAnalysis.h"
 #include "llvm/IR/IRBuilder.h"
 #include "llvm/Support/CheckedArithmetic.h"
@@ -47,7 +48,9 @@ enum class VFISAKind {
   AVX,          // x86 AVX
   AVX2,         // x86 AVX2
   AVX512,       // x86 AVX512
-  Unknown       // Unknown ISA
+  LLVM,         // LLVM internal ISA for functions that are not
+  // attached to an existing ABI via name mangling.
+  Unknown // Unknown ISA
 };
 
 /// Encapsulates information needed to describe a parameter.
@@ -102,6 +105,9 @@ struct VFInfo {
 };
 
 namespace VFABI {
+/// LLVM Internal VFABI ISA token for vector functions.
+static constexpr char const *_LLVM_ = "_LLVM_";
+
 /// Function to contruct a VFInfo out of a mangled names in the
 /// following format:
 ///
@@ -121,14 +127,20 @@ namespace VFABI {
 /// * x86 (libmvec): https://sourceware.org/glibc/wiki/libmvec and
 ///  https://sourceware.org/glibc/wiki/libmvec?action=AttachFile&do=view&target=VectorABI.txt
 ///
-///
-///
 /// \param MangledName -> input string in the format
 /// _ZGV<isa><mask><vlen><parameters>_<scalarname>[(<redirection>)].
 Optional<VFInfo> tryDemangleForVFABI(StringRef MangledName);
 
 /// Retrieve the `VFParamKind` from a string token.
 VFParamKind getVFParamKindFromString(const StringRef Token);
+
+// Name of the attribute where the variant mappings are stored.
+static constexpr char const *MappingsAttrName = "vector-function-abi-variant";
+
+/// Populates a set of strings representing the Vector Function ABI variants
+/// associated to the CallInst CI.
+void getVectorVariantNames(const CallInst &CI,
+                           SmallVectorImpl<std::string> &VariantMappings);
 } // end namespace VFABI
 
 template <typename T> class ArrayRef;
@@ -137,7 +149,6 @@ class GetElementPtrInst;
 template <typename InstTy> class InterleaveGroup;
 class Loop;
 class ScalarEvolution;
-class TargetLibraryInfo;
 class TargetTransformInfo;
 class Type;
 class Value;

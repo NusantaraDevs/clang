@@ -1598,6 +1598,48 @@ const char *AvailabilityAttr::getSpelling() const {
   }
 }
 
+BPFPreserveAccessIndexAttr *BPFPreserveAccessIndexAttr::clone(ASTContext &C) const {
+  auto *A = new (C) BPFPreserveAccessIndexAttr(C, *this);
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void BPFPreserveAccessIndexAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((preserve_access_index))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::preserve_access_index]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::preserve_access_index]]";
+    break;
+  }
+}
+}
+
+const char *BPFPreserveAccessIndexAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "preserve_access_index";
+  case 1:
+    return "preserve_access_index";
+  case 2:
+    return "preserve_access_index";
+  }
+}
+
 BlocksAttr *BlocksAttr::clone(ASTContext &C) const {
   auto *A = new (C) BlocksAttr(C, *this, type);
   A->Inherited = Inherited;
@@ -6475,7 +6517,7 @@ const char *OMPDeclareTargetDeclAttr::getSpelling() const {
 }
 
 OMPDeclareVariantAttr *OMPDeclareVariantAttr::clone(ASTContext &C) const {
-  auto *A = new (C) OMPDeclareVariantAttr(C, *this, variantFuncRef, score, ctxSelectorSet, ctxSelector, implVendors_, implVendors_Size);
+  auto *A = new (C) OMPDeclareVariantAttr(C, *this, variantFuncRef, scores_, scores_Size, ctxSelectorSets_, ctxSelectorSets_Size, ctxSelectors_, ctxSelectors_Size, implVendors_, implVendors_Size);
   A->Inherited = Inherited;
   A->IsPackExpansion = IsPackExpansion;
   A->setImplicit(Implicit);
@@ -7036,6 +7078,90 @@ const char *ObjCDesignatedInitializerAttr::getSpelling() const {
     return "objc_designated_initializer";
   case 2:
     return "objc_designated_initializer";
+  }
+}
+
+ObjCDirectAttr *ObjCDirectAttr::clone(ASTContext &C) const {
+  auto *A = new (C) ObjCDirectAttr(C, *this);
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void ObjCDirectAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((objc_direct))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::objc_direct]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::objc_direct]]";
+    break;
+  }
+}
+}
+
+const char *ObjCDirectAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "objc_direct";
+  case 1:
+    return "objc_direct";
+  case 2:
+    return "objc_direct";
+  }
+}
+
+ObjCDirectMembersAttr *ObjCDirectMembersAttr::clone(ASTContext &C) const {
+  auto *A = new (C) ObjCDirectMembersAttr(C, *this);
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void ObjCDirectMembersAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((objc_direct_members))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::objc_direct_members]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::objc_direct_members]]";
+    break;
+  }
+}
+}
+
+const char *ObjCDirectMembersAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "objc_direct_members";
+  case 1:
+    return "objc_direct_members";
+  case 2:
+    return "objc_direct_members";
   }
 }
 
@@ -11627,6 +11753,8 @@ const char *Attr::getSpelling() const {
     return cast<AssumeAlignedAttr>(this)->getSpelling();
   case attr::Availability:
     return cast<AvailabilityAttr>(this)->getSpelling();
+  case attr::BPFPreserveAccessIndex:
+    return cast<BPFPreserveAccessIndexAttr>(this)->getSpelling();
   case attr::Blocks:
     return cast<BlocksAttr>(this)->getSpelling();
   case attr::C11NoReturn:
@@ -11909,6 +12037,10 @@ const char *Attr::getSpelling() const {
     return cast<ObjCClassStubAttr>(this)->getSpelling();
   case attr::ObjCDesignatedInitializer:
     return cast<ObjCDesignatedInitializerAttr>(this)->getSpelling();
+  case attr::ObjCDirect:
+    return cast<ObjCDirectAttr>(this)->getSpelling();
+  case attr::ObjCDirectMembers:
+    return cast<ObjCDirectMembersAttr>(this)->getSpelling();
   case attr::ObjCException:
     return cast<ObjCExceptionAttr>(this)->getSpelling();
   case attr::ObjCExplicitProtocolImpl:
@@ -12209,6 +12341,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<AssumeAlignedAttr>(this)->clone(C);
   case attr::Availability:
     return cast<AvailabilityAttr>(this)->clone(C);
+  case attr::BPFPreserveAccessIndex:
+    return cast<BPFPreserveAccessIndexAttr>(this)->clone(C);
   case attr::Blocks:
     return cast<BlocksAttr>(this)->clone(C);
   case attr::C11NoReturn:
@@ -12491,6 +12625,10 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<ObjCClassStubAttr>(this)->clone(C);
   case attr::ObjCDesignatedInitializer:
     return cast<ObjCDesignatedInitializerAttr>(this)->clone(C);
+  case attr::ObjCDirect:
+    return cast<ObjCDirectAttr>(this)->clone(C);
+  case attr::ObjCDirectMembers:
+    return cast<ObjCDirectMembersAttr>(this)->clone(C);
   case attr::ObjCException:
     return cast<ObjCExceptionAttr>(this)->clone(C);
   case attr::ObjCExplicitProtocolImpl:
@@ -12791,6 +12929,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<AssumeAlignedAttr>(this)->printPretty(OS, Policy);
   case attr::Availability:
     return cast<AvailabilityAttr>(this)->printPretty(OS, Policy);
+  case attr::BPFPreserveAccessIndex:
+    return cast<BPFPreserveAccessIndexAttr>(this)->printPretty(OS, Policy);
   case attr::Blocks:
     return cast<BlocksAttr>(this)->printPretty(OS, Policy);
   case attr::C11NoReturn:
@@ -13073,6 +13213,10 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<ObjCClassStubAttr>(this)->printPretty(OS, Policy);
   case attr::ObjCDesignatedInitializer:
     return cast<ObjCDesignatedInitializerAttr>(this)->printPretty(OS, Policy);
+  case attr::ObjCDirect:
+    return cast<ObjCDirectAttr>(this)->printPretty(OS, Policy);
+  case attr::ObjCDirectMembers:
+    return cast<ObjCDirectMembersAttr>(this)->printPretty(OS, Policy);
   case attr::ObjCException:
     return cast<ObjCExceptionAttr>(this)->printPretty(OS, Policy);
   case attr::ObjCExplicitProtocolImpl:

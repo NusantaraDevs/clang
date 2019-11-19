@@ -222,6 +222,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<AvailabilityAttr>(At);
       return A->clone(C);
     }
+    case attr::BPFPreserveAccessIndex: {
+      const auto *A = cast<BPFPreserveAccessIndexAttr>(At);
+      return A->clone(C);
+    }
     case attr::Blocks: {
       const auto *A = cast<BlocksAttr>(At);
       return A->clone(C);
@@ -836,6 +840,14 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
     }
     case attr::ObjCDesignatedInitializer: {
       const auto *A = cast<ObjCDesignatedInitializerAttr>(At);
+      return A->clone(C);
+    }
+    case attr::ObjCDirect: {
+      const auto *A = cast<ObjCDirectAttr>(At);
+      return A->clone(C);
+    }
+    case attr::ObjCDirectMembers: {
+      const auto *A = cast<ObjCDirectMembersAttr>(At);
       return A->clone(C);
     }
     case attr::ObjCException: {
@@ -1460,6 +1472,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
     case attr::Availability: {
       return nullptr;
     }
+    case attr::BPFPreserveAccessIndex: {
+      return nullptr;
+    }
     case attr::Blocks: {
       return nullptr;
     }
@@ -1883,6 +1898,12 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return nullptr;
     }
     case attr::ObjCDesignatedInitializer: {
+      return nullptr;
+    }
+    case attr::ObjCDirect: {
+      return nullptr;
+    }
+    case attr::ObjCDirectMembers: {
       return nullptr;
     }
     case attr::ObjCException: {
