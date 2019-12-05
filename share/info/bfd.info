@@ -785,7 +785,8 @@ major data about the file and pointers to the rest of the data.
      static inline bfd_size_type
      bfd_get_section_limit (const bfd *abfd, const asection *sec)
      {
-       return bfd_get_section_limit_octets (abfd, sec) / bfd_octets_per_byte (abfd);
+       return (bfd_get_section_limit_octets (abfd, sec)
+               / bfd_octets_per_byte (abfd, sec));
      }
 
      /* Functions to handle insertion and deletion of a bfd's sections.  These
@@ -1929,6 +1930,11 @@ Here is the section structure:
 
        /* This section contains vliw code.  This is for Toshiba MeP only.  */
      #define SEC_MEP_VLIW               0x20000000
+
+       /* All symbols, sizes and relocations in this section are octets
+          instead of bytes.  Required for DWARF debug sections as DWARF
+          information is organized in octets, not bytes.  */
+     #define SEC_ELF_OCTETS             0x40000000
 
        /* Indicate that section has the no read flag set. This happens
           when memory read flag isn't set. */
@@ -8697,7 +8703,8 @@ type.
 ...............................
 
 *Synopsis*
-     unsigned int bfd_octets_per_byte (const bfd *abfd);
+     unsigned int bfd_octets_per_byte (const bfd *abfd,
+         const asection *sec);
    *Description*
 Return the number of octets (8-bit quantities) per target byte (minimum
 addressable unit).  In most cases, this will be one, but some DSP
@@ -12008,10 +12015,10 @@ BFD Index
 * bfd_alt_mach_code:                     Miscellaneous.      (line  291)
 * bfd_arch_bits_per_address:             Architectures.      (line  655)
 * bfd_arch_bits_per_byte:                Architectures.      (line  647)
-* bfd_arch_default_fill:                 Architectures.      (line  736)
+* bfd_arch_default_fill:                 Architectures.      (line  737)
 * bfd_arch_get_compatible:               Architectures.      (line  590)
 * bfd_arch_list:                         Architectures.      (line  581)
-* bfd_arch_mach_octets_per_byte:         Architectures.      (line  724)
+* bfd_arch_mach_octets_per_byte:         Architectures.      (line  725)
 * BFD_ARELOC_BFIN_ADD:                   howto manager.      (line 1144)
 * BFD_ARELOC_BFIN_ADDR:                  howto manager.      (line 1178)
 * BFD_ARELOC_BFIN_AND:                   howto manager.      (line 1158)
@@ -14644,61 +14651,61 @@ Node: BFD information loss6244
 Node: Canonical format8785
 Node: BFD front end13128
 Node: typedef bfd13552
-Node: Error reporting30987
-Node: Miscellaneous36238
-Node: Memory Usage55352
-Node: Initialization56583
-Node: Sections57259
-Node: Section Input57742
-Node: Section Output58936
-Node: typedef asection61423
-Node: section prototypes85209
-Node: Symbols95953
-Node: Reading Symbols97556
-Node: Writing Symbols98664
-Node: Mini Symbols100408
-Node: typedef asymbol101382
-Node: symbol handling functions107467
-Node: Archives112842
-Node: Formats116979
-Node: Relocations119930
-Node: typedef arelent120657
-Node: howto manager135575
-Node: Core Files267646
-Node: Targets269684
-Node: bfd_target271659
-Node: Architectures298994
-Node: Opening and Closing330421
-Node: Internal348884
-Node: File Caching355689
-Node: Linker Functions357607
-Node: Creating a Linker Hash Table359281
-Node: Adding Symbols to the Hash Table361020
-Node: Differing file formats361920
-Node: Adding symbols from an object file363645
-Node: Adding symbols from an archive365795
-Node: Performing the Final Link368141
-Node: Information provided by the linker369382
-Node: Relocating the section contents370536
-Node: Writing the symbol table372288
-Node: Hash Tables379442
-Node: Creating and Freeing a Hash Table380640
-Node: Looking Up or Entering a String381890
-Node: Traversing a Hash Table383143
-Node: Deriving a New Hash Table Type383932
-Node: Define the Derived Structures384998
-Node: Write the Derived Creation Routine386079
-Node: Write Other Derived Routines388704
-Node: BFD back ends390019
-Node: What to Put Where390289
-Node: aout390469
-Node: coff396751
-Node: elf424902
-Node: mmo425303
-Node: File layout426173
-Node: Symbol-table432086
-Node: mmo section mapping435849
-Node: GNU Free Documentation License439503
-Node: BFD Index464567
+Node: Error reporting31009
+Node: Miscellaneous36260
+Node: Memory Usage55374
+Node: Initialization56605
+Node: Sections57281
+Node: Section Input57764
+Node: Section Output58958
+Node: typedef asection61445
+Node: section prototypes85488
+Node: Symbols96232
+Node: Reading Symbols97835
+Node: Writing Symbols98943
+Node: Mini Symbols100687
+Node: typedef asymbol101661
+Node: symbol handling functions107746
+Node: Archives113121
+Node: Formats117258
+Node: Relocations120209
+Node: typedef arelent120936
+Node: howto manager135854
+Node: Core Files267925
+Node: Targets269963
+Node: bfd_target271938
+Node: Architectures299273
+Node: Opening and Closing330730
+Node: Internal349193
+Node: File Caching355998
+Node: Linker Functions357916
+Node: Creating a Linker Hash Table359590
+Node: Adding Symbols to the Hash Table361329
+Node: Differing file formats362229
+Node: Adding symbols from an object file363954
+Node: Adding symbols from an archive366104
+Node: Performing the Final Link368450
+Node: Information provided by the linker369691
+Node: Relocating the section contents370845
+Node: Writing the symbol table372597
+Node: Hash Tables379751
+Node: Creating and Freeing a Hash Table380949
+Node: Looking Up or Entering a String382199
+Node: Traversing a Hash Table383452
+Node: Deriving a New Hash Table Type384241
+Node: Define the Derived Structures385307
+Node: Write the Derived Creation Routine386388
+Node: Write Other Derived Routines389013
+Node: BFD back ends390328
+Node: What to Put Where390598
+Node: aout390778
+Node: coff397060
+Node: elf425211
+Node: mmo425612
+Node: File layout426482
+Node: Symbol-table432395
+Node: mmo section mapping436158
+Node: GNU Free Documentation License439812
+Node: BFD Index464876
 
 End Tag Table

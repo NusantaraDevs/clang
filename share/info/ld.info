@@ -4097,6 +4097,11 @@ section is discarded.
 input sections.  Any input sections which are assigned to an output
 section named '/DISCARD/' are not included in the output file.
 
+   Note, sections that match the '/DISCARD/' output section will be
+discarded even if they are in an ELF section group which has other
+members which are not being discarded.  This is deliberate.  Discarding
+takes precedence over grouping.
+
 
 File: ld.info,  Node: Output Section Attributes,  Next: Overlay Description,  Prev: Output Section Discarding,  Up: SECTIONS
 
@@ -8777,57 +8782,57 @@ Node: Input Section Example170991
 Node: Output Section Data172402
 Node: Output Section Keywords175181
 Node: Output Section Discarding178748
-Node: Output Section Attributes180238
-Node: Output Section Type181357
-Node: Output Section LMA182427
-Node: Forced Output Alignment185498
-Node: Forced Input Alignment185927
-Node: Output Section Constraint186315
-Node: Output Section Region186743
-Node: Output Section Phdr187176
-Node: Output Section Fill187840
-Node: Overlay Description188982
-Node: MEMORY193427
-Node: PHDRS198033
-Node: VERSION203359
-Node: Expressions211450
-Node: Constants212379
-Node: Symbolic Constants213253
-Node: Symbols213804
-Node: Orphan Sections214551
-Node: Location Counter216136
-Node: Operators220570
-Node: Evaluation221492
-Node: Expression Section222856
-Node: Builtin Functions226826
-Node: Implicit Linker Scripts235177
-Node: Machine Dependent235952
-Node: H8/300237040
-Node: M68HC11/68HC12239113
-Node: ARM240560
-Node: HPPA ELF32252807
-Node: M68K254430
-Node: MIPS255339
-Node: MMIX256455
-Node: MSP430257620
-Node: NDS32259533
-Node: Nios II260497
-Node: PowerPC ELF32261813
-Node: PowerPC64 ELF64264644
-Node: S/390 ELF273045
-Node: SPU ELF273392
-Node: TI COFF276020
-Node: WIN32276546
-Node: Xtensa296693
-Node: BFD299659
-Node: BFD outline301117
-Node: BFD information loss302405
-Node: Canonical format304931
-Node: Reporting Bugs309259
-Node: Bug Criteria309953
-Node: Bug Reporting310652
-Node: MRI317690
-Node: GNU Free Documentation License322161
-Node: LD Index347298
+Node: Output Section Attributes180478
+Node: Output Section Type181597
+Node: Output Section LMA182667
+Node: Forced Output Alignment185738
+Node: Forced Input Alignment186167
+Node: Output Section Constraint186555
+Node: Output Section Region186983
+Node: Output Section Phdr187416
+Node: Output Section Fill188080
+Node: Overlay Description189222
+Node: MEMORY193667
+Node: PHDRS198273
+Node: VERSION203599
+Node: Expressions211690
+Node: Constants212619
+Node: Symbolic Constants213493
+Node: Symbols214044
+Node: Orphan Sections214791
+Node: Location Counter216376
+Node: Operators220810
+Node: Evaluation221732
+Node: Expression Section223096
+Node: Builtin Functions227066
+Node: Implicit Linker Scripts235417
+Node: Machine Dependent236192
+Node: H8/300237280
+Node: M68HC11/68HC12239353
+Node: ARM240800
+Node: HPPA ELF32253047
+Node: M68K254670
+Node: MIPS255579
+Node: MMIX256695
+Node: MSP430257860
+Node: NDS32259773
+Node: Nios II260737
+Node: PowerPC ELF32262053
+Node: PowerPC64 ELF64264884
+Node: S/390 ELF273285
+Node: SPU ELF273632
+Node: TI COFF276260
+Node: WIN32276786
+Node: Xtensa296933
+Node: BFD299899
+Node: BFD outline301357
+Node: BFD information loss302645
+Node: Canonical format305171
+Node: Reporting Bugs309499
+Node: Bug Criteria310193
+Node: Bug Reporting310892
+Node: MRI317930
+Node: GNU Free Documentation License322401
+Node: LD Index347538
 
 End Tag Table

@@ -10,7 +10,6 @@ SECTIONS
   .text  :
   {
     *(.text)
-    /* ??? Why is .gcc_exc here?  */
   }
   /* The Cygwin32 library uses a section to avoid copying certain data
      on fork.  This used to be named ".data".  The linker used
