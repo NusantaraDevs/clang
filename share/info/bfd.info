@@ -9325,9 +9325,9 @@ less than a 'bfd_vma', use 'gcc -Wconversion' on a host with 64 bit
      #define bfd_put_signed_8 \
        bfd_put_8
      #define bfd_get_8(abfd, ptr) \
-       (*(const unsigned char *) (ptr) & 0xff)
+       ((bfd_vma) *(const unsigned char *) (ptr) & 0xff)
      #define bfd_get_signed_8(abfd, ptr) \
-       (((*(const unsigned char *) (ptr) & 0xff) ^ 0x80) - 0x80)
+       ((((bfd_signed_vma) *(const unsigned char *) (ptr) & 0xff) ^ 0x80) - 0x80)
 
      #define bfd_put_16(abfd, val, ptr) \
        BFD_SEND (abfd, bfd_putx16, ((val),(ptr)))
@@ -9371,7 +9371,7 @@ less than a 'bfd_vma', use 'gcc -Wconversion' on a host with 64 bit
        BFD_SEND (abfd, bfd_getx_signed_64, (ptr))
 
      #define bfd_get(bits, abfd, ptr)                       \
-       ((bits) == 8 ? (bfd_vma) bfd_get_8 (abfd, ptr)       \
+       ((bits) == 8 ? bfd_get_8 (abfd, ptr)                 \
         : (bits) == 16 ? bfd_get_16 (abfd, ptr)             \
         : (bits) == 32 ? bfd_get_32 (abfd, ptr)             \
         : (bits) == 64 ? bfd_get_64 (abfd, ptr)             \
@@ -14677,35 +14677,35 @@ Node: bfd_target271938
 Node: Architectures299273
 Node: Opening and Closing330730
 Node: Internal349193
-Node: File Caching355998
-Node: Linker Functions357916
-Node: Creating a Linker Hash Table359590
-Node: Adding Symbols to the Hash Table361329
-Node: Differing file formats362229
-Node: Adding symbols from an object file363954
-Node: Adding symbols from an archive366104
-Node: Performing the Final Link368450
-Node: Information provided by the linker369691
-Node: Relocating the section contents370845
-Node: Writing the symbol table372597
-Node: Hash Tables379751
-Node: Creating and Freeing a Hash Table380949
-Node: Looking Up or Entering a String382199
-Node: Traversing a Hash Table383452
-Node: Deriving a New Hash Table Type384241
-Node: Define the Derived Structures385307
-Node: Write the Derived Creation Routine386388
-Node: Write Other Derived Routines389013
-Node: BFD back ends390328
-Node: What to Put Where390598
-Node: aout390778
-Node: coff397060
-Node: elf425211
-Node: mmo425612
-Node: File layout426482
-Node: Symbol-table432395
-Node: mmo section mapping436158
-Node: GNU Free Documentation License439812
-Node: BFD Index464876
+Node: File Caching356025
+Node: Linker Functions357943
+Node: Creating a Linker Hash Table359617
+Node: Adding Symbols to the Hash Table361356
+Node: Differing file formats362256
+Node: Adding symbols from an object file363981
+Node: Adding symbols from an archive366131
+Node: Performing the Final Link368477
+Node: Information provided by the linker369718
+Node: Relocating the section contents370872
+Node: Writing the symbol table372624
+Node: Hash Tables379778
+Node: Creating and Freeing a Hash Table380976
+Node: Looking Up or Entering a String382226
+Node: Traversing a Hash Table383479
+Node: Deriving a New Hash Table Type384268
+Node: Define the Derived Structures385334
+Node: Write the Derived Creation Routine386415
+Node: Write Other Derived Routines389040
+Node: BFD back ends390355
+Node: What to Put Where390625
+Node: aout390805
+Node: coff397087
+Node: elf425238
+Node: mmo425639
+Node: File layout426509
+Node: Symbol-table432422
+Node: mmo section mapping436185
+Node: GNU Free Documentation License439839
+Node: BFD Index464903
 
 End Tag Table

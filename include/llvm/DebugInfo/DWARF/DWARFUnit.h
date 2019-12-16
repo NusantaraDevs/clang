@@ -427,17 +427,24 @@ public:
   /// an entry in the rangelist table's offset array and is supplied by
   /// DW_FORM_rnglistx.
   Optional<uint64_t> getRnglistOffset(uint32_t Index) {
-    if (RngListTable)
-      return RngListTable->getOffsetEntry(Index);
+    if (!RngListTable)
+      return None;
+    if (Optional<uint64_t> Off = RngListTable->getOffsetEntry(Index))
+      return *Off + RangeSectionBase;
     return None;
   }
 
   Optional<uint64_t> getLoclistOffset(uint32_t Index) {
-    if (LoclistTableHeader)
-      return LoclistTableHeader->getOffsetEntry(Index);
+    if (!LoclistTableHeader)
+      return None;
+    if (Optional<uint64_t> Off = LoclistTableHeader->getOffsetEntry(Index))
+      return *Off + getLocSectionBase();
     return None;
   }
   Expected<DWARFAddressRangesVector> collectAddressRanges();
+
+  Expected<DWARFLocationExpressionsVector>
+  findLoclistFromOffset(uint64_t Offset);
 
   /// Returns subprogram DIE with address range encompassing the provided
   /// address. The pointer is alive as long as parsed compile unit DIEs are not

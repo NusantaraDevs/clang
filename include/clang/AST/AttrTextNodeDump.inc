@@ -486,6 +486,8 @@
       OS << " " << Val;
     for (const auto &Val : SA->implVendors())
       OS << " " << Val;
+    for (const auto &Val : SA->deviceKinds())
+      OS << " " << Val;
   }
   void VisitObjCBridgeAttr(const ObjCBridgeAttr *A) {
     const auto *SA = cast<ObjCBridgeAttr>(A); (void)SA;
@@ -546,9 +548,24 @@
   void VisitOpenCLAccessAttr(const OpenCLAccessAttr *A) {
     OS << " " << A->getSpelling();
   }
+  void VisitOpenCLConstantAddressSpaceAttr(const OpenCLConstantAddressSpaceAttr *A) {
+    OS << " " << A->getSpelling();
+  }
+  void VisitOpenCLGenericAddressSpaceAttr(const OpenCLGenericAddressSpaceAttr *A) {
+    OS << " " << A->getSpelling();
+  }
+  void VisitOpenCLGlobalAddressSpaceAttr(const OpenCLGlobalAddressSpaceAttr *A) {
+    OS << " " << A->getSpelling();
+  }
   void VisitOpenCLIntelReqdSubGroupSizeAttr(const OpenCLIntelReqdSubGroupSizeAttr *A) {
     const auto *SA = cast<OpenCLIntelReqdSubGroupSizeAttr>(A); (void)SA;
     OS << " " << SA->getSubGroupSize();
+  }
+  void VisitOpenCLLocalAddressSpaceAttr(const OpenCLLocalAddressSpaceAttr *A) {
+    OS << " " << A->getSpelling();
+  }
+  void VisitOpenCLPrivateAddressSpaceAttr(const OpenCLPrivateAddressSpaceAttr *A) {
+    OS << " " << A->getSpelling();
   }
   void VisitOpenCLUnrollHintAttr(const OpenCLUnrollHintAttr *A) {
     const auto *SA = cast<OpenCLUnrollHintAttr>(A); (void)SA;
@@ -796,6 +813,10 @@
   void VisitWeakRefAttr(const WeakRefAttr *A) {
     const auto *SA = cast<WeakRefAttr>(A); (void)SA;
     OS << " \"" << SA->getAliasee() << "\"";
+  }
+  void VisitWebAssemblyExportNameAttr(const WebAssemblyExportNameAttr *A) {
+    const auto *SA = cast<WebAssemblyExportNameAttr>(A); (void)SA;
+    OS << " \"" << SA->getExportName() << "\"";
   }
   void VisitWebAssemblyImportModuleAttr(const WebAssemblyImportModuleAttr *A) {
     const auto *SA = cast<WebAssemblyImportModuleAttr>(A); (void)SA;

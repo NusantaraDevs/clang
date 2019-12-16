@@ -1139,6 +1139,9 @@ Record.push_back(SA->getDevType());
     Record.push_back(SA->implVendors_size());
     for (auto &Val : SA->implVendors())
       Record.AddString(Val);
+    Record.push_back(SA->deviceKinds_size());
+    for (auto &Val : SA->deviceKinds())
+      Record.AddString(Val);
     break;
   }
   case attr::OMPReferencedVar: {
@@ -1610,6 +1613,12 @@ Record.push_back(SA->getState());
     Record.push_back(A->isImplicit());
     break;
   }
+  case attr::SYCLKernel: {
+    const auto *SA = cast<SYCLKernelAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    break;
+  }
   case attr::ScopedLockable: {
     const auto *SA = cast<ScopedLockableAttr>(A);
     Record.push_back(SA->isInherited());
@@ -1879,6 +1888,13 @@ Record.push_back(SA->getVisibility());
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
     Record.AddString(SA->getAliasee());
+    break;
+  }
+  case attr::WebAssemblyExportName: {
+    const auto *SA = cast<WebAssemblyExportNameAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.AddString(SA->getExportName());
     break;
   }
   case attr::WebAssemblyImportModule: {

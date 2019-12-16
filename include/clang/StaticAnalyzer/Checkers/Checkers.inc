@@ -293,6 +293,7 @@ CHECKER_OPTION("bool", "debug.AnalysisOrder", "NewAllocator", "", "false", "rele
 CHECKER_OPTION("bool", "debug.AnalysisOrder", "Bind", "", "false", "released", true)
 CHECKER_OPTION("bool", "debug.AnalysisOrder", "LiveSymbols", "", "false", "released", true)
 CHECKER_OPTION("bool", "debug.AnalysisOrder", "RegionChanges", "", "false", "released", true)
+CHECKER_OPTION("bool", "debug.AnalysisOrder", "PointerEscape", "", "false", "released", true)
 CHECKER_OPTION("bool", "debug.AnalysisOrder", "*", "Enables all callbacks.", "false", "released", true)
 CHECKER_OPTION("int", "alpha.clone.CloneChecker", "MinimumCloneComplexity", "Ensures that every clone has at least the given complexity. Complexity is here defined as the total amount of children of a statement. This constraint assumes the first statement in the group is representative for all other statements in the group in terms of complexity.", "50", "released", false)
 CHECKER_OPTION("bool", "alpha.clone.CloneChecker", "ReportNormalClones", "Report all clones, even less suspicious ones.", "true", "released", false)

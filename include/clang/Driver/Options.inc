@@ -685,6 +685,8 @@ OPTION(prefix_1, "fconstexpr-depth", fconstexpr_depth, Separate, INVALID, INVALI
 OPTION(prefix_1, "fconstexpr-steps=", fconstexpr_steps_EQ, Joined, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fconstexpr-steps", fconstexpr_steps, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Maximum number of steps in constexpr function evaluation", nullptr, nullptr)
+OPTION(prefix_1, "fconvergent-functions", fconvergent_functions, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
+       "Assume functions may be convergent", nullptr, nullptr)
 OPTION(prefix_1, "fconvert=", fconvert_EQ, Joined, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fcoroutines-ts", fcoroutines_ts, Flag, f_Group, INVALID, nullptr, DriverOption | CC1Option, 0,
        "Enable support for the C++ Coroutines TS", nullptr, nullptr)
@@ -864,6 +866,8 @@ OPTION(prefix_1, "ffake-address-space-map", ffake_address_space_map, Flag, INVAL
 OPTION(prefix_1, "ffast-math", ffast_math, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Allow aggressive, lossy floating-point optimizations", nullptr, nullptr)
 OPTION(prefix_1, "ffat-lto-objects", fat_lto_objects_f, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "ffile-prefix-map=", ffile_prefix_map_EQ, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
+       "remap file source paths in debug info and predefined preprocessor macros", nullptr, nullptr)
 OPTION(prefix_1, "ffine-grained-bitfield-accesses", ffine_grained_bitfield_accesses, Flag, f_clang_Group, INVALID, nullptr, CC1Option, 0,
        "Use separate accesses for consecutive bitfield runs with legal widths and alignments.", nullptr, nullptr)
 OPTION(prefix_1, "ffinite-math-only", ffinite_math_only, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
@@ -871,18 +875,8 @@ OPTION(prefix_1, "ffixed-form", fixed_form_f, Flag, gfortran_Group, INVALID, nul
 OPTION(prefix_1, "ffixed-line-length-", ffixed_line_length_VALUE, Joined, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "ffixed-point", ffixed_point, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Enable fixed point types", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-r10", ffixed_r10, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the r10 register (ARM only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-r11", ffixed_r11, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the r11 register (ARM only)", nullptr, nullptr)
 OPTION(prefix_1, "ffixed-r19", ffixed_r19, Flag, INVALID, INVALID, nullptr, 0, 0,
        "Reserve register r19 (Hexagon only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-r6", ffixed_r6, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the r6 register (ARM only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-r7", ffixed_r7, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the r7 register (ARM only)", nullptr, nullptr)
-OPTION(prefix_1, "ffixed-r8", ffixed_r8, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
-       "Reserve the r8 register (ARM only)", nullptr, nullptr)
 OPTION(prefix_1, "ffixed-r9", ffixed_r9, Flag, m_arm_Features_Group, INVALID, nullptr, 0, 0,
        "Reserve the r9 register (ARM only)", nullptr, nullptr)
 OPTION(prefix_1, "ffixed-x10", ffixed_x10, Flag, m_Group, INVALID, nullptr, 0, 0,
@@ -958,10 +952,12 @@ OPTION(prefix_1, "fforce-emit-vtables", fforce_emit_vtables, Flag, f_Group, INVA
        "Emits more virtual tables to improve devirtualization", nullptr, nullptr)
 OPTION(prefix_1, "fforce-enable-int128", fforce_enable_int128, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Enable support for int128_t type", nullptr, nullptr)
-OPTION(prefix_1, "fforce-experimental-new-constant-interpreter", fforce_experimental_new_constant_interpreter, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
-       "Force the use of the experimental new constant interpreter, failing on missing features", nullptr, nullptr)
 OPTION(prefix_1, "ffp-contract=", ffp_contract, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
        "Form fused FP ops (e.g. FMAs): fast (everywhere) | on (according to FP_CONTRACT pragma) | off (never fuse). Default is 'fast' for CUDA/HIP and 'on' otherwise.", nullptr, "fast,on,off")
+OPTION(prefix_1, "ffp-exception-behavior=", ffp_exception_behavior_EQ, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
+       "Specifies the exception behavior of floating-point operations.", nullptr, nullptr)
+OPTION(prefix_1, "ffp-model=", ffp_model_EQ, Joined, f_Group, INVALID, nullptr, DriverOption, 0,
+       "Controls the semantics of floating-point calculations.", nullptr, nullptr)
 OPTION(prefix_1, "ffpe-trap=", ffpe_trap_EQ, Joined, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "ffree-form", free_form_f, Flag, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "ffree-line-length-", ffree_line_length_VALUE, Joined, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -1077,6 +1073,8 @@ OPTION(prefix_1, "flto", flto, Flag, f_Group, INVALID, nullptr, CoreOption | CC1
 OPTION(prefix_1, "fmacro-backtrace-limit=", fmacro_backtrace_limit_EQ, Joined, f_Group, INVALID, nullptr, DriverOption | CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fmacro-backtrace-limit", fmacro_backtrace_limit, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Set the maximum number of entries to print in a macro expansion backtrace (0 = no limit).", "<N>", nullptr)
+OPTION(prefix_1, "fmacro-prefix-map=", fmacro_prefix_map_EQ, Joined, Preprocessor_Group, INVALID, nullptr, CC1Option, 0,
+       "remap file source paths in predefined preprocessor macros", nullptr, nullptr)
 OPTION(prefix_1, "fmath-errno", fmath_errno, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Require math functions to indicate errors by setting errno", nullptr, nullptr)
 OPTION(prefix_1, "fmax-array-constructor=", fmax_array_constructor_EQ, Joined, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -1476,7 +1474,7 @@ OPTION(prefix_1, "fno-rewrite-imports", fno_rewrite_imports, Flag, f_Group, INVA
 OPTION(prefix_1, "fno-rewrite-includes", fno_rewrite_includes, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-ripa", ripa_fno, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-ropi", fno_ropi, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "fno-rounding-math", rounding_math_fno, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fno-rounding-math", fno_rounding_math, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-rtlib-add-rpath", fno_rtlib_add_rpath, Flag, INVALID, INVALID, nullptr, NoArgumentUnused, 0,
        "Do not add -rpath with architecture-specific resource directory to the linker flags", nullptr, nullptr)
 OPTION(prefix_1, "fno-rtti-data", fno_rtti_data, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
@@ -1668,6 +1666,8 @@ OPTION(prefix_1, "fopenmp-cuda-force-full-runtime", fopenmp_cuda_force_full_runt
 OPTION(prefix_1, "fopenmp-cuda-mode", fopenmp_cuda_mode, Flag, f_Group, INVALID, nullptr, CC1Option | NoArgumentUnused | HelpHidden, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fopenmp-cuda-number-of-sm=", fopenmp_cuda_number_of_sm_EQ, Joined, f_Group, INVALID, nullptr, CC1Option | NoArgumentUnused | HelpHidden, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fopenmp-cuda-teams-reduction-recs-num=", fopenmp_cuda_teams_reduction_recs_num_EQ, Joined, f_Group, INVALID, nullptr, CC1Option | NoArgumentUnused | HelpHidden, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fopenmp-enable-irbuilder", fopenmp_enable_irbuilder, Flag, f_Group, INVALID, nullptr, CC1Option | NoArgumentUnused | HelpHidden, 0,
+       "Use the experimental OpenMP-IR-Builder codegen path.", nullptr, nullptr)
 OPTION(prefix_1, "fopenmp-host-ir-file-path", fopenmp_host_ir_file_path, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Path to the IR file produced by the frontend for the host.", nullptr, nullptr)
 OPTION(prefix_1, "fopenmp-is-device", fopenmp_is_device, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
@@ -1687,9 +1687,9 @@ OPTION(prefix_1, "foperator-arrow-depth=", foperator_arrow_depth_EQ, Joined, f_G
 OPTION(prefix_1, "foperator-arrow-depth", foperator_arrow_depth, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Maximum number of 'operator->'s to call for a member access", nullptr, nullptr)
 OPTION(prefix_1, "foptimization-record-file=", foptimization_record_file_EQ, Joined, f_Group, INVALID, nullptr, 0, 0,
-       "Specify the file name of any generated YAML optimization record", nullptr, nullptr)
+       "Specify the output name of the file containing the optimization remarks. Implies -fsave-optimization-record. On Darwin platforms, this cannot be used with multiple -arch <arch> options.", "<file>", nullptr)
 OPTION(prefix_1, "foptimization-record-passes=", foptimization_record_passes_EQ, Joined, f_Group, INVALID, nullptr, 0, 0,
-       "Only include passes which match a specified regular expression in the generated optimization record (by default, include all passes)", nullptr, nullptr)
+       "Only include passes which match a specified regular expression in the generated optimization record (by default, include all passes)", "<regex>", nullptr)
 OPTION(prefix_1, "foptimize-sibling-calls", foptimize_sibling_calls, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_3, "for-linker=", _for_linker_EQ, Joined, INVALID, Xlinker, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_3, "for-linker", _for_linker, Separate, INVALID, Xlinker, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -1825,7 +1825,7 @@ OPTION(prefix_1, "frewrite-map-file=", frewrite_map_file_EQ, Joined, f_Group, IN
 OPTION(prefix_1, "frewrite-map-file", frewrite_map_file, Separate, f_Group, INVALID, nullptr, DriverOption | CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fripa", ripa_f, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fropi", fropi, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "frounding-math", rounding_math_f, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "frounding-math", frounding_math, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "frtlib-add-rpath", frtlib_add_rpath, Flag, INVALID, INVALID, nullptr, NoArgumentUnused, 0,
        "Add -rpath with architecture-specific resource directory to the linker flags", nullptr, nullptr)
 OPTION(prefix_1, "frtti", frtti, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -1910,7 +1910,7 @@ OPTION(prefix_1, "fsanitize-undefined-trap-on-error", fsanitize_undefined_trap_o
 OPTION(prefix_1, "fsanitize=", fsanitize_EQ, CommaJoined, f_clang_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
        "Turn on runtime checks for various forms of undefined or suspicious behavior. See user manual for available checks", "<check>", nullptr)
 OPTION(prefix_1, "fsave-optimization-record=", fsave_optimization_record_EQ, Joined, f_Group, INVALID, nullptr, 0, 0,
-       "Generate an optimization record file in a specific format (default: YAML)", nullptr, nullptr)
+       "Generate an optimization record file in a specific format", "<format>", nullptr)
 OPTION(prefix_1, "fsave-optimization-record", fsave_optimization_record, Flag, f_Group, INVALID, nullptr, 0, 0,
        "Generate a YAML optimization record file", nullptr, nullptr)
 OPTION(prefix_1, "fsched-interblock", anonymous_22, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)

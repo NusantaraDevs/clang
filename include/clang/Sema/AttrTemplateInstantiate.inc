@@ -1130,6 +1130,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<SPtrAttr>(At);
       return A->clone(C);
     }
+    case attr::SYCLKernel: {
+      const auto *A = cast<SYCLKernelAttr>(At);
+      return A->clone(C);
+    }
     case attr::ScopedLockable: {
       const auto *A = cast<ScopedLockableAttr>(At);
       return A->clone(C);
@@ -1328,6 +1332,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
     }
     case attr::WeakRef: {
       const auto *A = cast<WeakRefAttr>(At);
+      return A->clone(C);
+    }
+    case attr::WebAssemblyExportName: {
+      const auto *A = cast<WebAssemblyExportNameAttr>(At);
       return A->clone(C);
     }
     case attr::WebAssemblyImportModule: {
@@ -2095,6 +2103,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
     case attr::SPtr: {
       return nullptr;
     }
+    case attr::SYCLKernel: {
+      return nullptr;
+    }
     case attr::ScopedLockable: {
       return nullptr;
     }
@@ -2219,6 +2230,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return nullptr;
     }
     case attr::WeakRef: {
+      return nullptr;
+    }
+    case attr::WebAssemblyExportName: {
       return nullptr;
     }
     case attr::WebAssemblyImportModule: {

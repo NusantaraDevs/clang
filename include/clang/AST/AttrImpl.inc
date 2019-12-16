@@ -6517,7 +6517,7 @@ const char *OMPDeclareTargetDeclAttr::getSpelling() const {
 }
 
 OMPDeclareVariantAttr *OMPDeclareVariantAttr::clone(ASTContext &C) const {
-  auto *A = new (C) OMPDeclareVariantAttr(C, *this, variantFuncRef, scores_, scores_Size, ctxSelectorSets_, ctxSelectorSets_Size, ctxSelectors_, ctxSelectors_Size, implVendors_, implVendors_Size);
+  auto *A = new (C) OMPDeclareVariantAttr(C, *this, variantFuncRef, scores_, scores_Size, ctxSelectorSets_, ctxSelectorSets_Size, ctxSelectors_, ctxSelectors_Size, implVendors_, implVendors_Size, deviceKinds_, deviceKinds_Size);
   A->Inherited = Inherited;
   A->IsPackExpansion = IsPackExpansion;
   A->setImplicit(Implicit);
@@ -8020,6 +8020,18 @@ void OpenCLConstantAddressSpaceAttr::printPretty(raw_ostream &OS, const Printing
     OS << " constant";
     break;
   }
+  case 2 : {
+    OS << " __attribute__((opencl_constant))";
+    break;
+  }
+  case 3 : {
+    OS << " [[clang::opencl_constant]]";
+    break;
+  }
+  case 4 : {
+    OS << " [[clang::opencl_constant]]";
+    break;
+  }
 }
 }
 
@@ -8032,6 +8044,12 @@ const char *OpenCLConstantAddressSpaceAttr::getSpelling() const {
     return "__constant";
   case 1:
     return "constant";
+  case 2:
+    return "opencl_constant";
+  case 3:
+    return "opencl_constant";
+  case 4:
+    return "opencl_constant";
   }
 }
 
@@ -8056,6 +8074,18 @@ void OpenCLGenericAddressSpaceAttr::printPretty(raw_ostream &OS, const PrintingP
     OS << " generic";
     break;
   }
+  case 2 : {
+    OS << " __attribute__((opencl_generic))";
+    break;
+  }
+  case 3 : {
+    OS << " [[clang::opencl_generic]]";
+    break;
+  }
+  case 4 : {
+    OS << " [[clang::opencl_generic]]";
+    break;
+  }
 }
 }
 
@@ -8068,6 +8098,12 @@ const char *OpenCLGenericAddressSpaceAttr::getSpelling() const {
     return "__generic";
   case 1:
     return "generic";
+  case 2:
+    return "opencl_generic";
+  case 3:
+    return "opencl_generic";
+  case 4:
+    return "opencl_generic";
   }
 }
 
@@ -8092,6 +8128,18 @@ void OpenCLGlobalAddressSpaceAttr::printPretty(raw_ostream &OS, const PrintingPo
     OS << " global";
     break;
   }
+  case 2 : {
+    OS << " __attribute__((opencl_global))";
+    break;
+  }
+  case 3 : {
+    OS << " [[clang::opencl_global]]";
+    break;
+  }
+  case 4 : {
+    OS << " [[clang::opencl_global]]";
+    break;
+  }
 }
 }
 
@@ -8104,6 +8152,12 @@ const char *OpenCLGlobalAddressSpaceAttr::getSpelling() const {
     return "__global";
   case 1:
     return "global";
+  case 2:
+    return "opencl_global";
+  case 3:
+    return "opencl_global";
+  case 4:
+    return "opencl_global";
   }
 }
 
@@ -8194,6 +8248,18 @@ void OpenCLLocalAddressSpaceAttr::printPretty(raw_ostream &OS, const PrintingPol
     OS << " local";
     break;
   }
+  case 2 : {
+    OS << " __attribute__((opencl_local))";
+    break;
+  }
+  case 3 : {
+    OS << " [[clang::opencl_local]]";
+    break;
+  }
+  case 4 : {
+    OS << " [[clang::opencl_local]]";
+    break;
+  }
 }
 }
 
@@ -8206,6 +8272,12 @@ const char *OpenCLLocalAddressSpaceAttr::getSpelling() const {
     return "__local";
   case 1:
     return "local";
+  case 2:
+    return "opencl_local";
+  case 3:
+    return "opencl_local";
+  case 4:
+    return "opencl_local";
   }
 }
 
@@ -8230,6 +8302,18 @@ void OpenCLPrivateAddressSpaceAttr::printPretty(raw_ostream &OS, const PrintingP
     OS << " private";
     break;
   }
+  case 2 : {
+    OS << " __attribute__((opencl_private))";
+    break;
+  }
+  case 3 : {
+    OS << " [[clang::opencl_private]]";
+    break;
+  }
+  case 4 : {
+    OS << " [[clang::opencl_private]]";
+    break;
+  }
 }
 }
 
@@ -8242,6 +8326,12 @@ const char *OpenCLPrivateAddressSpaceAttr::getSpelling() const {
     return "__private";
   case 1:
     return "private";
+  case 2:
+    return "opencl_private";
+  case 3:
+    return "opencl_private";
+  case 4:
+    return "opencl_private";
   }
 }
 
@@ -9768,6 +9858,48 @@ const char *SPtrAttr::getSpelling() const {
     return "(No spelling)";
   case 0:
     return "__sptr";
+  }
+}
+
+SYCLKernelAttr *SYCLKernelAttr::clone(ASTContext &C) const {
+  auto *A = new (C) SYCLKernelAttr(C, *this);
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void SYCLKernelAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((sycl_kernel))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::sycl_kernel]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::sycl_kernel]]";
+    break;
+  }
+}
+}
+
+const char *SYCLKernelAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "sycl_kernel";
+  case 1:
+    return "sycl_kernel";
+  case 2:
+    return "sycl_kernel";
   }
 }
 
@@ -11427,6 +11559,48 @@ const char *WeakRefAttr::getSpelling() const {
   }
 }
 
+WebAssemblyExportNameAttr *WebAssemblyExportNameAttr::clone(ASTContext &C) const {
+  auto *A = new (C) WebAssemblyExportNameAttr(C, *this, getExportName());
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void WebAssemblyExportNameAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((export_name(\"" << getExportName() << "\")))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::export_name(\"" << getExportName() << "\")]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::export_name(\"" << getExportName() << "\")]]";
+    break;
+  }
+}
+}
+
+const char *WebAssemblyExportNameAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "export_name";
+  case 1:
+    return "export_name";
+  case 2:
+    return "export_name";
+  }
+}
+
 WebAssemblyImportModuleAttr *WebAssemblyImportModuleAttr::clone(ASTContext &C) const {
   auto *A = new (C) WebAssemblyImportModuleAttr(C, *this, getImportModule());
   A->Inherited = Inherited;
@@ -12167,6 +12341,8 @@ const char *Attr::getSpelling() const {
     return cast<ReturnsTwiceAttr>(this)->getSpelling();
   case attr::SPtr:
     return cast<SPtrAttr>(this)->getSpelling();
+  case attr::SYCLKernel:
+    return cast<SYCLKernelAttr>(this)->getSpelling();
   case attr::ScopedLockable:
     return cast<ScopedLockableAttr>(this)->getSpelling();
   case attr::Section:
@@ -12251,6 +12427,8 @@ const char *Attr::getSpelling() const {
     return cast<WeakImportAttr>(this)->getSpelling();
   case attr::WeakRef:
     return cast<WeakRefAttr>(this)->getSpelling();
+  case attr::WebAssemblyExportName:
+    return cast<WebAssemblyExportNameAttr>(this)->getSpelling();
   case attr::WebAssemblyImportModule:
     return cast<WebAssemblyImportModuleAttr>(this)->getSpelling();
   case attr::WebAssemblyImportName:
@@ -12755,6 +12933,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<ReturnsTwiceAttr>(this)->clone(C);
   case attr::SPtr:
     return cast<SPtrAttr>(this)->clone(C);
+  case attr::SYCLKernel:
+    return cast<SYCLKernelAttr>(this)->clone(C);
   case attr::ScopedLockable:
     return cast<ScopedLockableAttr>(this)->clone(C);
   case attr::Section:
@@ -12839,6 +13019,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<WeakImportAttr>(this)->clone(C);
   case attr::WeakRef:
     return cast<WeakRefAttr>(this)->clone(C);
+  case attr::WebAssemblyExportName:
+    return cast<WebAssemblyExportNameAttr>(this)->clone(C);
   case attr::WebAssemblyImportModule:
     return cast<WebAssemblyImportModuleAttr>(this)->clone(C);
   case attr::WebAssemblyImportName:
@@ -13343,6 +13525,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<ReturnsTwiceAttr>(this)->printPretty(OS, Policy);
   case attr::SPtr:
     return cast<SPtrAttr>(this)->printPretty(OS, Policy);
+  case attr::SYCLKernel:
+    return cast<SYCLKernelAttr>(this)->printPretty(OS, Policy);
   case attr::ScopedLockable:
     return cast<ScopedLockableAttr>(this)->printPretty(OS, Policy);
   case attr::Section:
@@ -13427,6 +13611,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<WeakImportAttr>(this)->printPretty(OS, Policy);
   case attr::WeakRef:
     return cast<WeakRefAttr>(this)->printPretty(OS, Policy);
+  case attr::WebAssemblyExportName:
+    return cast<WebAssemblyExportNameAttr>(this)->printPretty(OS, Policy);
   case attr::WebAssemblyImportModule:
     return cast<WebAssemblyImportModuleAttr>(this)->printPretty(OS, Policy);
   case attr::WebAssemblyImportName:

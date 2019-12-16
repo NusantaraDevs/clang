@@ -980,6 +980,10 @@
   bool VisitSPtrAttr(SPtrAttr *A) {
     return true; 
   }
+  bool TraverseSYCLKernelAttr(SYCLKernelAttr *A);
+  bool VisitSYCLKernelAttr(SYCLKernelAttr *A) {
+    return true; 
+  }
   bool TraverseScopedLockableAttr(ScopedLockableAttr *A);
   bool VisitScopedLockableAttr(ScopedLockableAttr *A) {
     return true; 
@@ -1146,6 +1150,10 @@
   }
   bool TraverseWeakRefAttr(WeakRefAttr *A);
   bool VisitWeakRefAttr(WeakRefAttr *A) {
+    return true; 
+  }
+  bool TraverseWebAssemblyExportNameAttr(WebAssemblyExportNameAttr *A);
+  bool VisitWebAssemblyExportNameAttr(WebAssemblyExportNameAttr *A) {
     return true; 
   }
   bool TraverseWebAssemblyImportModuleAttr(WebAssemblyImportModuleAttr *A);
@@ -3547,6 +3555,15 @@ bool VISITORCLASS<Derived>::TraverseSPtrAttr(SPtrAttr *A) {
 }
 
 template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseSYCLKernelAttr(SYCLKernelAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitSYCLKernelAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
 bool VISITORCLASS<Derived>::TraverseScopedLockableAttr(ScopedLockableAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
@@ -3946,6 +3963,15 @@ bool VISITORCLASS<Derived>::TraverseWeakRefAttr(WeakRefAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
   if (!getDerived().VisitWeakRefAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseWebAssemblyExportNameAttr(WebAssemblyExportNameAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitWebAssemblyExportNameAttr(A))
     return false;
   return true;
 }
@@ -4496,6 +4522,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseReturnsTwiceAttr(cast<ReturnsTwiceAttr>(A));
     case attr::SPtr:
       return getDerived().TraverseSPtrAttr(cast<SPtrAttr>(A));
+    case attr::SYCLKernel:
+      return getDerived().TraverseSYCLKernelAttr(cast<SYCLKernelAttr>(A));
     case attr::ScopedLockable:
       return getDerived().TraverseScopedLockableAttr(cast<ScopedLockableAttr>(A));
     case attr::Section:
@@ -4580,6 +4608,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseWeakImportAttr(cast<WeakImportAttr>(A));
     case attr::WeakRef:
       return getDerived().TraverseWeakRefAttr(cast<WeakRefAttr>(A));
+    case attr::WebAssemblyExportName:
+      return getDerived().TraverseWebAssemblyExportNameAttr(cast<WebAssemblyExportNameAttr>(A));
     case attr::WebAssemblyImportModule:
       return getDerived().TraverseWebAssemblyImportModuleAttr(cast<WebAssemblyImportModuleAttr>(A));
     case attr::WebAssemblyImportName:

@@ -164,6 +164,16 @@ set_target_properties(LLVMBitstreamReader PROPERTIES
 list(APPEND _IMPORT_CHECK_TARGETS LLVMBitstreamReader )
 list(APPEND _IMPORT_CHECK_FILES_FOR_LLVMBitstreamReader "${_IMPORT_PREFIX}/lib/libLLVMBitstreamReader.a" )
 
+# Import target "LLVMFrontendOpenMP" for configuration "Release"
+set_property(TARGET LLVMFrontendOpenMP APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+set_target_properties(LLVMFrontendOpenMP PROPERTIES
+  IMPORTED_LINK_INTERFACE_LANGUAGES_RELEASE "CXX"
+  IMPORTED_LOCATION_RELEASE "${_IMPORT_PREFIX}/lib/libLLVMFrontendOpenMP.a"
+  )
+
+list(APPEND _IMPORT_CHECK_TARGETS LLVMFrontendOpenMP )
+list(APPEND _IMPORT_CHECK_FILES_FOR_LLVMFrontendOpenMP "${_IMPORT_PREFIX}/lib/libLLVMFrontendOpenMP.a" )
+
 # Import target "LLVMTransformUtils" for configuration "Release"
 set_property(TARGET LLVMTransformUtils APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
 set_target_properties(LLVMTransformUtils PROPERTIES

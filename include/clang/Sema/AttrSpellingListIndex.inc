@@ -1521,6 +1521,12 @@
         return 0;
     if (Name == "constant" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 1;
+    if (Name == "opencl_constant" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 2;
+    if (Name == "opencl_constant" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 3;
+    if (Name == "opencl_constant" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 4;
     break;
   }
   case AT_OpenCLGenericAddressSpace: {
@@ -1528,6 +1534,12 @@
         return 0;
     if (Name == "generic" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 1;
+    if (Name == "opencl_generic" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 2;
+    if (Name == "opencl_generic" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 3;
+    if (Name == "opencl_generic" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 4;
     break;
   }
   case AT_OpenCLGlobalAddressSpace: {
@@ -1535,6 +1547,12 @@
         return 0;
     if (Name == "global" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 1;
+    if (Name == "opencl_global" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 2;
+    if (Name == "opencl_global" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 3;
+    if (Name == "opencl_global" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 4;
     break;
   }
   case AT_OpenCLIntelReqdSubGroupSize: {
@@ -1554,6 +1572,12 @@
         return 0;
     if (Name == "local" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 1;
+    if (Name == "opencl_local" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 2;
+    if (Name == "opencl_local" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 3;
+    if (Name == "opencl_local" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 4;
     break;
   }
   case AT_OpenCLNoSVM: {
@@ -1566,6 +1590,12 @@
         return 0;
     if (Name == "private" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 1;
+    if (Name == "opencl_private" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 2;
+    if (Name == "opencl_private" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 3;
+    if (Name == "opencl_private" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 4;
     break;
   }
   case AT_OpenCLUnrollHint: {
@@ -1837,6 +1867,15 @@
   case AT_SPtr: {
     if (Name == "__sptr" && getSyntax() == AttributeCommonInfo::AS_Keyword && Scope == "")
         return 0;
+    break;
+  }
+  case AT_SYCLKernel: {
+    if (Name == "sycl_kernel" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "sycl_kernel" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "sycl_kernel" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
     break;
   }
   case AT_ScopedLockable: {
@@ -2172,6 +2211,15 @@
         return 0;
     if (Name == "weakref" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "gnu")
         return 1;
+    break;
+  }
+  case AT_WebAssemblyExportName: {
+    if (Name == "export_name" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "export_name" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "export_name" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
     break;
   }
   case AT_WebAssemblyImportModule: {
