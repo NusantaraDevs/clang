@@ -116,297 +116,434 @@ public:
   }
 
   void writeAdjustedType(const AdjustedType *node) {
-    W.find("originalType").writeQualType( node->getOriginalType() );
-    W.find("adjustedType").writeQualType( node->getAdjustedType() );
+    QualType originalType = ( node->getOriginalType() );
+    W.find("originalType").writeQualType(originalType);
+    QualType adjustedType = ( node->getAdjustedType() );
+    W.find("adjustedType").writeQualType(adjustedType);
   }
 
   void writeDecayedType(const DecayedType *node) {
-    W.find("originalType").writeQualType( node->getOriginalType() );
+    QualType originalType = ( node->getOriginalType() );
+    W.find("originalType").writeQualType(originalType);
   }
 
   void writeConstantArrayType(const ConstantArrayType *node) {
-    W.find("sizeValue").writeAPInt( node->getSize() );
-    W.find("size").writeExprRef( node->getSizeExpr() );
-    W.find("elementType").writeQualType( node->getElementType() );
-    W.find("sizeModifier").writeArraySizeModifier( node->getSizeModifier() );
-    W.find("indexQualifiers").writeQualifiers( Qualifiers::fromCVRMask(node->getIndexTypeCVRQualifiers()) );
+    llvm::APInt sizeValue = ( node->getSize() );
+    W.find("sizeValue").writeAPInt(sizeValue);
+    const Expr* size = ( node->getSizeExpr() );
+    W.find("size").writeExprRef(size);
+    QualType elementType = ( node->getElementType() );
+    W.find("elementType").writeQualType(elementType);
+    ArrayType::ArraySizeModifier sizeModifier = ( node->getSizeModifier() );
+    W.find("sizeModifier").writeArraySizeModifier(sizeModifier);
+    Qualifiers indexQualifiers = ( Qualifiers::fromCVRMask(node->getIndexTypeCVRQualifiers()) );
+    W.find("indexQualifiers").writeQualifiers(indexQualifiers);
   }
 
   void writeDependentSizedArrayType(const DependentSizedArrayType *node) {
-    W.find("size").writeExprRef( node->getSizeExpr() );
-    W.find("leftBracketLoc").writeSourceLocation( node->getLBracketLoc() );
-    W.find("rightBracketLoc").writeSourceLocation( node->getRBracketLoc() );
-    W.find("elementType").writeQualType( node->getElementType() );
-    W.find("sizeModifier").writeArraySizeModifier( node->getSizeModifier() );
-    W.find("indexQualifiers").writeQualifiers( Qualifiers::fromCVRMask(node->getIndexTypeCVRQualifiers()) );
+    const Expr* size = ( node->getSizeExpr() );
+    W.find("size").writeExprRef(size);
+    SourceLocation leftBracketLoc = ( node->getLBracketLoc() );
+    W.find("leftBracketLoc").writeSourceLocation(leftBracketLoc);
+    SourceLocation rightBracketLoc = ( node->getRBracketLoc() );
+    W.find("rightBracketLoc").writeSourceLocation(rightBracketLoc);
+    QualType elementType = ( node->getElementType() );
+    W.find("elementType").writeQualType(elementType);
+    ArrayType::ArraySizeModifier sizeModifier = ( node->getSizeModifier() );
+    W.find("sizeModifier").writeArraySizeModifier(sizeModifier);
+    Qualifiers indexQualifiers = ( Qualifiers::fromCVRMask(node->getIndexTypeCVRQualifiers()) );
+    W.find("indexQualifiers").writeQualifiers(indexQualifiers);
   }
 
   void writeIncompleteArrayType(const IncompleteArrayType *node) {
-    W.find("elementType").writeQualType( node->getElementType() );
-    W.find("sizeModifier").writeArraySizeModifier( node->getSizeModifier() );
-    W.find("indexQualifiers").writeQualifiers( Qualifiers::fromCVRMask(node->getIndexTypeCVRQualifiers()) );
+    QualType elementType = ( node->getElementType() );
+    W.find("elementType").writeQualType(elementType);
+    ArrayType::ArraySizeModifier sizeModifier = ( node->getSizeModifier() );
+    W.find("sizeModifier").writeArraySizeModifier(sizeModifier);
+    Qualifiers indexQualifiers = ( Qualifiers::fromCVRMask(node->getIndexTypeCVRQualifiers()) );
+    W.find("indexQualifiers").writeQualifiers(indexQualifiers);
   }
 
   void writeVariableArrayType(const VariableArrayType *node) {
-    W.find("leftBracketLoc").writeSourceLocation( node->getLBracketLoc() );
-    W.find("rightBracketLoc").writeSourceLocation( node->getRBracketLoc() );
-    W.find("size").writeExprRef( node->getSizeExpr() );
-    W.find("elementType").writeQualType( node->getElementType() );
-    W.find("sizeModifier").writeArraySizeModifier( node->getSizeModifier() );
-    W.find("indexQualifiers").writeQualifiers( Qualifiers::fromCVRMask(node->getIndexTypeCVRQualifiers()) );
+    SourceLocation leftBracketLoc = ( node->getLBracketLoc() );
+    W.find("leftBracketLoc").writeSourceLocation(leftBracketLoc);
+    SourceLocation rightBracketLoc = ( node->getRBracketLoc() );
+    W.find("rightBracketLoc").writeSourceLocation(rightBracketLoc);
+    const Expr* size = ( node->getSizeExpr() );
+    W.find("size").writeExprRef(size);
+    QualType elementType = ( node->getElementType() );
+    W.find("elementType").writeQualType(elementType);
+    ArrayType::ArraySizeModifier sizeModifier = ( node->getSizeModifier() );
+    W.find("sizeModifier").writeArraySizeModifier(sizeModifier);
+    Qualifiers indexQualifiers = ( Qualifiers::fromCVRMask(node->getIndexTypeCVRQualifiers()) );
+    W.find("indexQualifiers").writeQualifiers(indexQualifiers);
   }
 
   void writeAtomicType(const AtomicType *node) {
-    W.find("valueType").writeQualType( node->getValueType() );
+    QualType valueType = ( node->getValueType() );
+    W.find("valueType").writeQualType(valueType);
   }
 
   void writeAttributedType(const AttributedType *node) {
-    W.find("modifiedType").writeQualType( node->getModifiedType() );
-    W.find("equivalentType").writeQualType( node->getEquivalentType() );
-    W.find("attribute").writeAttrKind( node->getAttrKind() );
+    QualType modifiedType = ( node->getModifiedType() );
+    W.find("modifiedType").writeQualType(modifiedType);
+    QualType equivalentType = ( node->getEquivalentType() );
+    W.find("equivalentType").writeQualType(equivalentType);
+    attr::Kind attribute = ( node->getAttrKind() );
+    W.find("attribute").writeAttrKind(attribute);
   }
 
   void writeBlockPointerType(const BlockPointerType *node) {
-    W.find("pointeeType").writeQualType( node->getPointeeType() );
+    QualType pointeeType = ( node->getPointeeType() );
+    W.find("pointeeType").writeQualType(pointeeType);
   }
 
   void writeBuiltinType(const BuiltinType *node) {
-    W.find("kind").writeBuiltinTypeKind( node->getKind() );
+    BuiltinType::Kind kind = ( node->getKind() );
+    W.find("kind").writeBuiltinTypeKind(kind);
   }
 
   void writeComplexType(const ComplexType *node) {
-    W.find("elementType").writeQualType( node->getElementType() );
+    QualType elementType = ( node->getElementType() );
+    W.find("elementType").writeQualType(elementType);
   }
 
   void writeDecltypeType(const DecltypeType *node) {
-    W.find("underlyingType").writeQualType( node->getUnderlyingType() );
-    W.find("expression").writeExprRef( node->getUnderlyingExpr() );
+    QualType underlyingType = ( node->getUnderlyingType() );
+    W.find("underlyingType").writeQualType(underlyingType);
+    const Expr* expression = ( node->getUnderlyingExpr() );
+    W.find("expression").writeExprRef(expression);
   }
 
   void writeAutoType(const AutoType *node) {
-    W.find("deducedType").writeOptional( makeOptionalFromNullable(node->getDeducedType()) );
-    W.find("keyword").writeAutoTypeKeyword( node->getKeyword() );
-    W.find("dependence").writeUInt32( !node->getDeducedType().isNull() ? 0 :
+    llvm::Optional<QualType> deducedType = ( makeOptionalFromNullable(node->getDeducedType()) );
+    W.find("deducedType").writeOptional(deducedType);
+    AutoTypeKeyword keyword = ( node->getKeyword() );
+    W.find("keyword").writeAutoTypeKeyword(keyword);
+    uint32_t dependence = ( !node->getDeducedType().isNull() ? 0 :
                   node->containsUnexpandedParameterPack() ? 2 :
                   node->isDependentType() ? 1 : 0 );
+    W.find("dependence").writeUInt32(dependence);
   }
 
   void writeDeducedTemplateSpecializationType(const DeducedTemplateSpecializationType *node) {
-    W.find("templateName").writeOptional( makeOptionalFromNullable(node->getTemplateName()) );
-    W.find("deducedType").writeQualType( node->getDeducedType() );
-    W.find("dependent").writeBool( !node->getDeducedType().isNull()
+    llvm::Optional<TemplateName> templateName = ( makeOptionalFromNullable(node->getTemplateName()) );
+    W.find("templateName").writeOptional(templateName);
+    QualType deducedType = ( node->getDeducedType() );
+    W.find("deducedType").writeQualType(deducedType);
+    bool dependent = ( !node->getDeducedType().isNull()
                     ? false : node->isDependentType() );
+    W.find("dependent").writeBool(dependent);
   }
 
   void writeDependentAddressSpaceType(const DependentAddressSpaceType *node) {
-    W.find("pointeeType").writeQualType( node->getPointeeType() );
-    W.find("addressSpace").writeExprRef( node->getAddrSpaceExpr() );
-    W.find("attributeLoc").writeSourceLocation( node->getAttributeLoc() );
+    QualType pointeeType = ( node->getPointeeType() );
+    W.find("pointeeType").writeQualType(pointeeType);
+    const Expr* addressSpace = ( node->getAddrSpaceExpr() );
+    W.find("addressSpace").writeExprRef(addressSpace);
+    SourceLocation attributeLoc = ( node->getAttributeLoc() );
+    W.find("attributeLoc").writeSourceLocation(attributeLoc);
   }
 
   void writeDependentNameType(const DependentNameType *node) {
-    W.find("keyword").writeElaboratedTypeKeyword( node->getKeyword() );
-    W.find("qualifier").writeNestedNameSpecifier( node->getQualifier() );
-    W.find("name").writeIdentifier( node->getIdentifier() );
-    W.find("underlyingType").writeOptional(
-    	node->isCanonicalUnqualified()
-    		? llvm::None
-    		: llvm::Optional<QualType>(node->getCanonicalTypeInternal())
+    ElaboratedTypeKeyword keyword = ( node->getKeyword() );
+    W.find("keyword").writeElaboratedTypeKeyword(keyword);
+    NestedNameSpecifier * qualifier = ( node->getQualifier() );
+    W.find("qualifier").writeNestedNameSpecifier(qualifier);
+    const IdentifierInfo* name = ( node->getIdentifier() );
+    W.find("name").writeIdentifier(name);
+    llvm::Optional<QualType> underlyingType = (
+      node->isCanonicalUnqualified()
+        ? llvm::None
+        : llvm::Optional<QualType>(node->getCanonicalTypeInternal())
     );
+    W.find("underlyingType").writeOptional(underlyingType);
   }
 
   void writeDependentSizedExtVectorType(const DependentSizedExtVectorType *node) {
-    W.find("elementType").writeQualType( node->getElementType() );
-    W.find("size").writeExprRef( node->getSizeExpr() );
-    W.find("attributeLoc").writeSourceLocation( node->getAttributeLoc() );
+    QualType elementType = ( node->getElementType() );
+    W.find("elementType").writeQualType(elementType);
+    const Expr* size = ( node->getSizeExpr() );
+    W.find("size").writeExprRef(size);
+    SourceLocation attributeLoc = ( node->getAttributeLoc() );
+    W.find("attributeLoc").writeSourceLocation(attributeLoc);
   }
 
   void writeDependentTemplateSpecializationType(const DependentTemplateSpecializationType *node) {
-    W.find("keyword").writeElaboratedTypeKeyword( node->getKeyword() );
-    W.find("qualifier").writeNestedNameSpecifier( node->getQualifier() );
-    W.find("name").writeIdentifier( node->getIdentifier() );
-    W.find("templateArguments").writeArray( node->template_arguments() );
+    ElaboratedTypeKeyword keyword = ( node->getKeyword() );
+    W.find("keyword").writeElaboratedTypeKeyword(keyword);
+    NestedNameSpecifier * qualifier = ( node->getQualifier() );
+    W.find("qualifier").writeNestedNameSpecifier(qualifier);
+    const IdentifierInfo* name = ( node->getIdentifier() );
+    W.find("name").writeIdentifier(name);
+    llvm::ArrayRef<TemplateArgument> templateArguments = ( node->template_arguments() );
+    W.find("templateArguments").writeArray(templateArguments);
   }
 
   void writeDependentVectorType(const DependentVectorType *node) {
-    W.find("elementType").writeQualType( node->getElementType() );
-    W.find("size").writeExprRef( node->getSizeExpr() );
-    W.find("attributeLoc").writeSourceLocation( node->getAttributeLoc() );
-    W.find("vectorKind").writeVectorKind( node->getVectorKind() );
+    QualType elementType = ( node->getElementType() );
+    W.find("elementType").writeQualType(elementType);
+    const Expr* size = ( node->getSizeExpr() );
+    W.find("size").writeExprRef(size);
+    SourceLocation attributeLoc = ( node->getAttributeLoc() );
+    W.find("attributeLoc").writeSourceLocation(attributeLoc);
+    VectorType::VectorKind vectorKind = ( node->getVectorKind() );
+    W.find("vectorKind").writeVectorKind(vectorKind);
   }
 
   void writeElaboratedType(const ElaboratedType *node) {
-    W.find("qualifier").writeNestedNameSpecifier( node->getQualifier() );
-    W.find("namedType").writeQualType( node->getNamedType() );
-    W.find("ownedTag").writeOptional( makeOptionalFromPointer(node->getOwnedTagDecl()) );
-    W.find("keyword").writeElaboratedTypeKeyword( node->getKeyword() );
+    ElaboratedTypeKeyword keyword = ( node->getKeyword() );
+    W.find("keyword").writeElaboratedTypeKeyword(keyword);
+    NestedNameSpecifier * qualifier = ( node->getQualifier() );
+    W.find("qualifier").writeNestedNameSpecifier(qualifier);
+    QualType namedType = ( node->getNamedType() );
+    W.find("namedType").writeQualType(namedType);
+    llvm::Optional<const TagDecl*> ownedTag = ( makeOptionalFromPointer(
+                    const_cast<const TagDecl *>(node->getOwnedTagDecl())) );
+    W.find("ownedTag").writeOptional(ownedTag);
   }
 
   void writeFunctionNoProtoType(const FunctionNoProtoType *node) {
-    W.find("returnType").writeQualType( node->getReturnType() );
-    W.find("noReturn").writeBool( node->getExtInfo().getNoReturn() );
-    W.find("hasRegParm").writeBool( node->getExtInfo().getHasRegParm() );
-    W.find("regParm").writeUInt32( node->getExtInfo().getRegParm() );
-    W.find("callingConvention").writeCallingConv( node->getExtInfo().getCC() );
-    W.find("producesResult").writeBool( node->getExtInfo().getProducesResult() );
-    W.find("noCallerSavedRegs").writeBool( node->getExtInfo().getNoCallerSavedRegs() );
-    W.find("noCfCheck").writeBool( node->getExtInfo().getNoCfCheck() );
+    QualType returnType = ( node->getReturnType() );
+    W.find("returnType").writeQualType(returnType);
+    bool noReturn = ( node->getExtInfo().getNoReturn() );
+    W.find("noReturn").writeBool(noReturn);
+    bool hasRegParm = ( node->getExtInfo().getHasRegParm() );
+    W.find("hasRegParm").writeBool(hasRegParm);
+    uint32_t regParm = ( node->getExtInfo().getRegParm() );
+    W.find("regParm").writeUInt32(regParm);
+    CallingConv callingConvention = ( node->getExtInfo().getCC() );
+    W.find("callingConvention").writeCallingConv(callingConvention);
+    bool producesResult = ( node->getExtInfo().getProducesResult() );
+    W.find("producesResult").writeBool(producesResult);
+    bool noCallerSavedRegs = ( node->getExtInfo().getNoCallerSavedRegs() );
+    W.find("noCallerSavedRegs").writeBool(noCallerSavedRegs);
+    bool noCfCheck = ( node->getExtInfo().getNoCfCheck() );
+    W.find("noCfCheck").writeBool(noCfCheck);
   }
 
   void writeFunctionProtoType(const FunctionProtoType *node) {
-    W.find("variadic").writeBool( node->isVariadic() );
-    W.find("trailingReturn").writeBool( node->hasTrailingReturn() );
-    W.find("methodQualifiers").writeQualifiers( node->getMethodQuals() );
-    W.find("refQualifier").writeRefQualifierKind( node->getRefQualifier() );
-    W.find("exceptionSpecifier").writeExceptionSpecInfo( node->getExceptionSpecInfo() );
-    W.find("parameters").writeArray( node->getParamTypes() );
-    W.find("extParameterInfo").writeArray( node->hasExtParameterInfos()
+    bool variadic = ( node->isVariadic() );
+    W.find("variadic").writeBool(variadic);
+    bool trailingReturn = ( node->hasTrailingReturn() );
+    W.find("trailingReturn").writeBool(trailingReturn);
+    Qualifiers methodQualifiers = ( node->getMethodQuals() );
+    W.find("methodQualifiers").writeQualifiers(methodQualifiers);
+    RefQualifierKind refQualifier = ( node->getRefQualifier() );
+    W.find("refQualifier").writeRefQualifierKind(refQualifier);
+    FunctionProtoType::ExceptionSpecInfo exceptionSpecifier = ( node->getExceptionSpecInfo() );
+    W.find("exceptionSpecifier").writeExceptionSpecInfo(exceptionSpecifier);
+    llvm::ArrayRef<QualType> parameters = ( node->getParamTypes() );
+    W.find("parameters").writeArray(parameters);
+    llvm::ArrayRef<FunctionProtoType::ExtParameterInfo> extParameterInfo = ( node->hasExtParameterInfos()
                     ? node->getExtParameterInfos()
                     : llvm::ArrayRef<FunctionProtoType::ExtParameterInfo>() );
-    W.find("returnType").writeQualType( node->getReturnType() );
-    W.find("noReturn").writeBool( node->getExtInfo().getNoReturn() );
-    W.find("hasRegParm").writeBool( node->getExtInfo().getHasRegParm() );
-    W.find("regParm").writeUInt32( node->getExtInfo().getRegParm() );
-    W.find("callingConvention").writeCallingConv( node->getExtInfo().getCC() );
-    W.find("producesResult").writeBool( node->getExtInfo().getProducesResult() );
-    W.find("noCallerSavedRegs").writeBool( node->getExtInfo().getNoCallerSavedRegs() );
-    W.find("noCfCheck").writeBool( node->getExtInfo().getNoCfCheck() );
+    W.find("extParameterInfo").writeArray(extParameterInfo);
+    QualType returnType = ( node->getReturnType() );
+    W.find("returnType").writeQualType(returnType);
+    bool noReturn = ( node->getExtInfo().getNoReturn() );
+    W.find("noReturn").writeBool(noReturn);
+    bool hasRegParm = ( node->getExtInfo().getHasRegParm() );
+    W.find("hasRegParm").writeBool(hasRegParm);
+    uint32_t regParm = ( node->getExtInfo().getRegParm() );
+    W.find("regParm").writeUInt32(regParm);
+    CallingConv callingConvention = ( node->getExtInfo().getCC() );
+    W.find("callingConvention").writeCallingConv(callingConvention);
+    bool producesResult = ( node->getExtInfo().getProducesResult() );
+    W.find("producesResult").writeBool(producesResult);
+    bool noCallerSavedRegs = ( node->getExtInfo().getNoCallerSavedRegs() );
+    W.find("noCallerSavedRegs").writeBool(noCallerSavedRegs);
+    bool noCfCheck = ( node->getExtInfo().getNoCfCheck() );
+    W.find("noCfCheck").writeBool(noCfCheck);
   }
 
   void writeInjectedClassNameType(const InjectedClassNameType *node) {
-    W.find("declaration").writeDeclRef( node->getDecl()->getCanonicalDecl() );
-    W.find("injectedSpecializationType").writeQualType( node->getInjectedSpecializationType() );
+    const Decl* declaration = ( node->getDecl()->getCanonicalDecl() );
+    W.find("declaration").writeDeclRef(declaration);
+    QualType injectedSpecializationType = ( node->getInjectedSpecializationType() );
+    W.find("injectedSpecializationType").writeQualType(injectedSpecializationType);
   }
 
   void writeMacroQualifiedType(const MacroQualifiedType *node) {
-    W.find("underlyingType").writeQualType( node->getUnderlyingType() );
-    W.find("macroIdentifier").writeIdentifier( node->getMacroIdentifier() );
+    QualType underlyingType = ( node->getUnderlyingType() );
+    W.find("underlyingType").writeQualType(underlyingType);
+    const IdentifierInfo* macroIdentifier = ( node->getMacroIdentifier() );
+    W.find("macroIdentifier").writeIdentifier(macroIdentifier);
   }
 
   void writeMemberPointerType(const MemberPointerType *node) {
-    W.find("pointeeType").writeQualType( node->getPointeeType() );
-    W.find("baseType").writeQualType( QualType(node->getClass(), 0) );
+    QualType pointeeType = ( node->getPointeeType() );
+    W.find("pointeeType").writeQualType(pointeeType);
+    QualType baseType = ( QualType(node->getClass(), 0) );
+    W.find("baseType").writeQualType(baseType);
   }
 
   void writeObjCObjectPointerType(const ObjCObjectPointerType *node) {
-    W.find("pointeeType").writeQualType( node->getPointeeType() );
+    QualType pointeeType = ( node->getPointeeType() );
+    W.find("pointeeType").writeQualType(pointeeType);
   }
 
   void writeObjCObjectType(const ObjCObjectType *node) {
-    W.find("baseType").writeQualType( node->getBaseType() );
-    W.find("typeArgsAsWritten").writeArray( node->getTypeArgsAsWritten() );
-    W.find("qualifiers").writeArray( node->getProtocols() );
-    W.find("isKindOfTypeAsWritten").writeBool( node->isKindOfTypeAsWritten() );
+    QualType baseType = ( node->getBaseType() );
+    W.find("baseType").writeQualType(baseType);
+    llvm::ArrayRef<QualType> typeArgsAsWritten = ( node->getTypeArgsAsWritten() );
+    W.find("typeArgsAsWritten").writeArray(typeArgsAsWritten);
+    llvm::ArrayRef<const ObjCProtocolDecl*> qualifiers = ( node->getProtocols() );
+    W.find("qualifiers").writeArray(qualifiers);
+    bool isKindOfTypeAsWritten = ( node->isKindOfTypeAsWritten() );
+    W.find("isKindOfTypeAsWritten").writeBool(isKindOfTypeAsWritten);
   }
 
   void writeObjCInterfaceType(const ObjCInterfaceType *node) {
-    W.find("declaration").writeDeclRef( node->getDecl()->getCanonicalDecl() );
+    const Decl* declaration = ( node->getDecl()->getCanonicalDecl() );
+    W.find("declaration").writeDeclRef(declaration);
   }
 
   void writeObjCTypeParamType(const ObjCTypeParamType *node) {
-    W.find("declaration").writeObjCTypeParamDeclRef( node->getDecl() );
-    W.find("qualifiers").writeArray( node->getProtocols() );
+    const ObjCTypeParamDecl* declaration = ( node->getDecl() );
+    W.find("declaration").writeObjCTypeParamDeclRef(declaration);
+    llvm::ArrayRef<const ObjCProtocolDecl*> qualifiers = ( node->getProtocols() );
+    W.find("qualifiers").writeArray(qualifiers);
   }
 
   void writePackExpansionType(const PackExpansionType *node) {
-    W.find("pattern").writeQualType( node->getPattern() );
-    W.find("numExpansions").writeOptional( node->getNumExpansions() );
+    QualType pattern = ( node->getPattern() );
+    W.find("pattern").writeQualType(pattern);
+    llvm::Optional<uint32_t> numExpansions = ( node->getNumExpansions() );
+    W.find("numExpansions").writeOptional(numExpansions);
   }
 
   void writeParenType(const ParenType *node) {
-    W.find("innerType").writeQualType( node->getInnerType() );
+    QualType innerType = ( node->getInnerType() );
+    W.find("innerType").writeQualType(innerType);
   }
 
   void writePipeType(const PipeType *node) {
-    W.find("elementType").writeQualType( node->getElementType() );
-    W.find("isReadOnly").writeBool( node->isReadOnly() );
+    QualType elementType = ( node->getElementType() );
+    W.find("elementType").writeQualType(elementType);
+    bool isReadOnly = ( node->isReadOnly() );
+    W.find("isReadOnly").writeBool(isReadOnly);
   }
 
   void writePointerType(const PointerType *node) {
-    W.find("pointeeType").writeQualType( node->getPointeeType() );
+    QualType pointeeType = ( node->getPointeeType() );
+    W.find("pointeeType").writeQualType(pointeeType);
   }
 
   void writeLValueReferenceType(const LValueReferenceType *node) {
-    W.find("isSpelledAsLValue").writeBool( node->isSpelledAsLValue() );
-    W.find("pointeeTypeAsWritten").writeQualType( node->getPointeeTypeAsWritten() );
+    bool isSpelledAsLValue = ( node->isSpelledAsLValue() );
+    W.find("isSpelledAsLValue").writeBool(isSpelledAsLValue);
+    QualType pointeeTypeAsWritten = ( node->getPointeeTypeAsWritten() );
+    W.find("pointeeTypeAsWritten").writeQualType(pointeeTypeAsWritten);
   }
 
   void writeRValueReferenceType(const RValueReferenceType *node) {
-    W.find("pointeeTypeAsWritten").writeQualType( node->getPointeeTypeAsWritten() );
+    QualType pointeeTypeAsWritten = ( node->getPointeeTypeAsWritten() );
+    W.find("pointeeTypeAsWritten").writeQualType(pointeeTypeAsWritten);
   }
 
   void writeSubstTemplateTypeParmPackType(const SubstTemplateTypeParmPackType *node) {
-    W.find("replacedParameter").writeQualType( QualType(node->getReplacedParameter(), 0) );
-    W.find("replacementPack").writeTemplateArgument( node->getArgumentPack() );
+    QualType replacedParameter = ( QualType(node->getReplacedParameter(), 0) );
+    W.find("replacedParameter").writeQualType(replacedParameter);
+    TemplateArgument replacementPack = ( node->getArgumentPack() );
+    W.find("replacementPack").writeTemplateArgument(replacementPack);
   }
 
   void writeSubstTemplateTypeParmType(const SubstTemplateTypeParmType *node) {
-    W.find("replacedParameter").writeQualType( QualType(node->getReplacedParameter(), 0) );
-    W.find("replacementType").writeQualType( node->getReplacementType() );
+    QualType replacedParameter = ( QualType(node->getReplacedParameter(), 0) );
+    W.find("replacedParameter").writeQualType(replacedParameter);
+    QualType replacementType = ( node->getReplacementType() );
+    W.find("replacementType").writeQualType(replacementType);
   }
 
   void writeEnumType(const EnumType *node) {
-    W.find("dependent").writeBool( node->isDependentType() );
-    W.find("declaration").writeDeclRef( node->getDecl()->getCanonicalDecl() );
+    bool dependent = ( node->isDependentType() );
+    W.find("dependent").writeBool(dependent);
+    const Decl* declaration = ( node->getDecl()->getCanonicalDecl() );
+    W.find("declaration").writeDeclRef(declaration);
   }
 
   void writeRecordType(const RecordType *node) {
-    W.find("dependent").writeBool( node->isDependentType() );
-    W.find("declaration").writeDeclRef( node->getDecl()->getCanonicalDecl() );
+    bool dependent = ( node->isDependentType() );
+    W.find("dependent").writeBool(dependent);
+    const Decl* declaration = ( node->getDecl()->getCanonicalDecl() );
+    W.find("declaration").writeDeclRef(declaration);
   }
 
   void writeTemplateSpecializationType(const TemplateSpecializationType *node) {
-    W.find("dependent").writeBool( node->isDependentType() );
-    W.find("templateName").writeTemplateName( node->getTemplateName() );
-    W.find("templateArguments").writeArray( node->template_arguments() );
-    W.find("underlyingType").writeOptional(
-    	node->isTypeAlias()
-    		? llvm::Optional<QualType>(node->getAliasedType())
-    		: node->isCanonicalUnqualified()
-        		? llvm::None
-        		: llvm::Optional<QualType>(node->getCanonicalTypeInternal())
+    bool dependent = ( node->isDependentType() );
+    W.find("dependent").writeBool(dependent);
+    TemplateName templateName = ( node->getTemplateName() );
+    W.find("templateName").writeTemplateName(templateName);
+    llvm::ArrayRef<TemplateArgument> templateArguments = ( node->template_arguments() );
+    W.find("templateArguments").writeArray(templateArguments);
+    llvm::Optional<QualType> underlyingType = (
+      node->isTypeAlias()
+        ? llvm::Optional<QualType>(node->getAliasedType())
+        : node->isCanonicalUnqualified()
+            ? llvm::None
+            : llvm::Optional<QualType>(node->getCanonicalTypeInternal())
     );
+    W.find("underlyingType").writeOptional(underlyingType);
   }
 
   void writeTemplateTypeParmType(const TemplateTypeParmType *node) {
-    W.find("depth").writeUInt32( node->getDepth() );
-    W.find("index").writeUInt32( node->getIndex() );
-    W.find("isParameterPack").writeBool( node->isParameterPack() );
-    W.find("declaration").writeOptional( makeOptionalFromPointer(node->getDecl()) );
+    uint32_t depth = ( node->getDepth() );
+    W.find("depth").writeUInt32(depth);
+    uint32_t index = ( node->getIndex() );
+    W.find("index").writeUInt32(index);
+    bool isParameterPack = ( node->isParameterPack() );
+    W.find("isParameterPack").writeBool(isParameterPack);
+    llvm::Optional<const TemplateTypeParmDecl*> declaration = ( makeOptionalFromPointer(
+                    const_cast<const TemplateTypeParmDecl*>(node->getDecl())) );
+    W.find("declaration").writeOptional(declaration);
   }
 
   void writeTypeOfExprType(const TypeOfExprType *node) {
-    W.find("expression").writeExprRef( node->getUnderlyingExpr() );
+    const Expr* expression = ( node->getUnderlyingExpr() );
+    W.find("expression").writeExprRef(expression);
   }
 
   void writeTypeOfType(const TypeOfType *node) {
-    W.find("underlyingType").writeQualType( node->getUnderlyingType() );
+    QualType underlyingType = ( node->getUnderlyingType() );
+    W.find("underlyingType").writeQualType(underlyingType);
   }
 
   void writeTypedefType(const TypedefType *node) {
-    W.find("declaration").writeDeclRef( node->getDecl() );
-    W.find("canonicalType").writeOptional( makeOptionalFromNullable(node->getCanonicalTypeInternal()) );
+    const Decl* declaration = ( node->getDecl() );
+    W.find("declaration").writeDeclRef(declaration);
+    llvm::Optional<QualType> canonicalType = ( makeOptionalFromNullable(node->getCanonicalTypeInternal()) );
+    W.find("canonicalType").writeOptional(canonicalType);
   }
 
   void writeUnaryTransformType(const UnaryTransformType *node) {
-    W.find("baseType").writeQualType( node->getBaseType() );
-    W.find("underlyingType").writeQualType( node->getUnderlyingType() );
-    W.find("transform").writeUnaryTypeTransformKind( node->getUTTKind() );
+    QualType baseType = ( node->getBaseType() );
+    W.find("baseType").writeQualType(baseType);
+    QualType underlyingType = ( node->getUnderlyingType() );
+    W.find("underlyingType").writeQualType(underlyingType);
+    UnaryTransformType::UTTKind transform = ( node->getUTTKind() );
+    W.find("transform").writeUnaryTypeTransformKind(transform);
   }
 
   void writeUnresolvedUsingType(const UnresolvedUsingType *node) {
-    W.find("declaration").writeDeclRef( node->getDecl() );
+    const Decl* declaration = ( node->getDecl() );
+    W.find("declaration").writeDeclRef(declaration);
   }
 
   void writeVectorType(const VectorType *node) {
-    W.find("elementType").writeQualType( node->getElementType() );
-    W.find("numElements").writeUInt32( node->getNumElements() );
-    W.find("vectorKind").writeVectorKind( node->getVectorKind() );
+    QualType elementType = ( node->getElementType() );
+    W.find("elementType").writeQualType(elementType);
+    uint32_t numElements = ( node->getNumElements() );
+    W.find("numElements").writeUInt32(numElements);
+    VectorType::VectorKind vectorKind = ( node->getVectorKind() );
+    W.find("vectorKind").writeVectorKind(vectorKind);
   }
 
   void writeExtVectorType(const ExtVectorType *node) {
-    W.find("elementType").writeQualType( node->getElementType() );
-    W.find("numElements").writeUInt32( node->getNumElements() );
+    QualType elementType = ( node->getElementType() );
+    W.find("elementType").writeQualType(elementType);
+    uint32_t numElements = ( node->getNumElements() );
+    W.find("numElements").writeUInt32(numElements);
   }
 
 };

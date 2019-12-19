@@ -13,11 +13,12 @@ namespace llvm {
 namespace Intrinsic {
 enum WASMIntrinsics : unsigned {
 // Enum values for intrinsics
-    wasm_alltrue = 6176,                              // llvm.wasm.alltrue
+    wasm_alltrue = 6198,                              // llvm.wasm.alltrue
     wasm_anytrue,                              // llvm.wasm.anytrue
     wasm_atomic_notify,                        // llvm.wasm.atomic.notify
     wasm_atomic_wait_i32,                      // llvm.wasm.atomic.wait.i32
     wasm_atomic_wait_i64,                      // llvm.wasm.atomic.wait.i64
+    wasm_avgr_unsigned,                        // llvm.wasm.avgr.unsigned
     wasm_bitselect,                            // llvm.wasm.bitselect
     wasm_data_drop,                            // llvm.wasm.data.drop
     wasm_dot,                                  // llvm.wasm.dot
@@ -26,13 +27,9 @@ enum WASMIntrinsics : unsigned {
     wasm_get_exception,                        // llvm.wasm.get.exception
     wasm_landingpad_index,                     // llvm.wasm.landingpad.index
     wasm_lsda,                                 // llvm.wasm.lsda
-    wasm_max_signed,                           // llvm.wasm.max.signed
-    wasm_max_unsigned,                         // llvm.wasm.max.unsigned
     wasm_memory_grow,                          // llvm.wasm.memory.grow
     wasm_memory_init,                          // llvm.wasm.memory.init
     wasm_memory_size,                          // llvm.wasm.memory.size
-    wasm_min_signed,                           // llvm.wasm.min.signed
-    wasm_min_unsigned,                         // llvm.wasm.min.unsigned
     wasm_narrow_signed,                        // llvm.wasm.narrow.signed
     wasm_narrow_unsigned,                      // llvm.wasm.narrow.unsigned
     wasm_qfma,                                 // llvm.wasm.qfma

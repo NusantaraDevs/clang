@@ -2905,6 +2905,8 @@ OPTION(prefix_1, "momit-leaf-frame-pointer", momit_leaf_frame_pointer, Flag, m_G
 OPTION(prefix_1, "moslib=", moslib_EQ, Joined, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "moutline", moutline, Flag, f_clang_Group, INVALID, nullptr, CC1Option, 0,
        "Enable function outlining (AArch64 only)", nullptr, nullptr)
+OPTION(prefix_1, "mpacked-stack", mpacked_stack, Flag, m_Group, INVALID, nullptr, CC1Option, 0,
+       "Use packed stack layout (SystemZ only).", nullptr, nullptr)
 OPTION(prefix_1, "mpackets", mpackets, Flag, m_hexagon_Features_Group, INVALID, nullptr, CC1Option, 0,
        "Enable generation of instruction packets", nullptr, nullptr)
 OPTION(prefix_1, "mpascal-strings", mpascal_strings, Flag, INVALID, fpascal_strings, nullptr, 0, 0, nullptr, nullptr, nullptr)

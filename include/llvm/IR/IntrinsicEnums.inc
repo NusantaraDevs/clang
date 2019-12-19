@@ -102,7 +102,9 @@
     experimental_constrained_log2,             // llvm.experimental.constrained.log2
     experimental_constrained_lrint,            // llvm.experimental.constrained.lrint
     experimental_constrained_lround,           // llvm.experimental.constrained.lround
+    experimental_constrained_maximum,          // llvm.experimental.constrained.maximum
     experimental_constrained_maxnum,           // llvm.experimental.constrained.maxnum
+    experimental_constrained_minimum,          // llvm.experimental.constrained.minimum
     experimental_constrained_minnum,           // llvm.experimental.constrained.minnum
     experimental_constrained_nearbyint,        // llvm.experimental.constrained.nearbyint
     experimental_constrained_pow,              // llvm.experimental.constrained.pow
@@ -110,8 +112,10 @@
     experimental_constrained_rint,             // llvm.experimental.constrained.rint
     experimental_constrained_round,            // llvm.experimental.constrained.round
     experimental_constrained_sin,              // llvm.experimental.constrained.sin
+    experimental_constrained_sitofp,           // llvm.experimental.constrained.sitofp
     experimental_constrained_sqrt,             // llvm.experimental.constrained.sqrt
     experimental_constrained_trunc,            // llvm.experimental.constrained.trunc
+    experimental_constrained_uitofp,           // llvm.experimental.constrained.uitofp
     experimental_deoptimize,                   // llvm.experimental.deoptimize
     experimental_gc_relocate,                  // llvm.experimental.gc.relocate
     experimental_gc_result,                    // llvm.experimental.gc.result
@@ -280,7 +284,7 @@
     write_register,                            // llvm.write_register
     xray_customevent,                          // llvm.xray.customevent
     xray_typedevent,                           // llvm.xray.typedevent
-    num_intrinsics = 7441
+    num_intrinsics = 7460
 #if defined(_MSC_VER) && defined(setjmp_undefined_for_msvc)
 // let's return it to _setjmp state
 #  pragma pop_macro("setjmp")

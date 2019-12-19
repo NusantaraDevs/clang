@@ -163,6 +163,13 @@ struct WriteDispatcher<IdentifierInfo*> {
   }
 };
 template <>
+struct WriteDispatcher<const IdentifierInfo*> {
+  template <class BasicWriter, class... Args>
+  static void write(BasicWriter &W, Args &&... args) {
+    return W.writeIdentifier(std::forward<Args>(args)...);
+  }
+};
+template <>
 struct WriteDispatcher<NamedDecl*> {
   template <class BasicWriter, class... Args>
   static void write(BasicWriter &W, Args &&... args) {
@@ -494,6 +501,18 @@ struct PackOptionalValue<const FunctionDecl*> {
   }
 };
 template <>
+struct PackOptionalValue<IdentifierInfo*> {
+  static IdentifierInfo* pack(Optional<IdentifierInfo*> value) {
+    return value ? *value : nullptr;
+  }
+};
+template <>
+struct PackOptionalValue<const IdentifierInfo*> {
+  static const IdentifierInfo* pack(Optional<const IdentifierInfo*> value) {
+    return value ? *value : nullptr;
+  }
+};
+template <>
 struct PackOptionalValue<NamedDecl*> {
   static NamedDecl* pack(Optional<NamedDecl*> value) {
     return value ? *value : nullptr;
@@ -657,28 +676,100 @@ protected:
 public:
   Impl &asImpl() { return static_cast<Impl&>(*this); }
   void writeArraySizeModifier(ArrayType::ArraySizeModifier value) {
-    asImpl().writeUInt32(uint32_t(value));
+    asImpl().writeEnum(value);
   }
   void writeAttrKind(attr::Kind value) {
-    asImpl().writeUInt32(uint32_t(value));
+    asImpl().writeEnum(value);
   }
   void writeAutoTypeKeyword(AutoTypeKeyword value) {
-    asImpl().writeUInt32(uint32_t(value));
+    asImpl().writeEnum(value);
   }
   void writeBuiltinTypeKind(BuiltinType::Kind value) {
-    asImpl().writeUInt32(uint32_t(value));
+    asImpl().writeEnum(value);
   }
   void writeCXXRecordDeclRef(const CXXRecordDecl* value) {
     asImpl().writeDeclRef(value);
   }
   void writeCallingConv(CallingConv value) {
-    asImpl().writeUInt32(uint32_t(value));
+    asImpl().writeEnum(value);
+  }
+  void writeDeclarationName(DeclarationName node) {
+    auto &&subW = asImpl().writeObject();
+    DeclarationName::NameKind kind = (node.getNameKind());
+    subW.find("kind").writeDeclarationNameKind(kind);
+    switch (kind) {
+    case DeclarationName::Identifier: {
+    const IdentifierInfo* identifier = ( node.getAsIdentifierInfo() );
+    subW.find("identifier").writeIdentifier(identifier);
+    return;
+    }
+
+    case DeclarationName::ObjCMultiArgSelector: {
+    Selector selector = ( node.getObjCSelector() );
+    subW.find("selector").writeSelector(selector);
+    return;
+    }
+
+    case DeclarationName::CXXConstructorName: {
+    QualType type = ( node.getCXXNameType() );
+    subW.find("type").writeQualType(type);
+    return;
+    }
+
+    case DeclarationName::CXXDestructorName: {
+    QualType type = ( node.getCXXNameType() );
+    subW.find("type").writeQualType(type);
+    return;
+    }
+
+    case DeclarationName::CXXConversionFunctionName: {
+    QualType type = ( node.getCXXNameType() );
+    subW.find("type").writeQualType(type);
+    return;
+    }
+
+    case DeclarationName::CXXDeductionGuideName: {
+    const TemplateDecl* declaration = ( node.getCXXDeductionGuideTemplate() );
+    subW.find("declaration").writeTemplateDeclRef(declaration);
+    return;
+    }
+
+    case DeclarationName::CXXOperatorName: {
+    OverloadedOperatorKind operatorKind = ( node.getCXXOverloadedOperator() );
+    subW.find("operatorKind").writeOverloadedOperatorKind(operatorKind);
+    return;
+    }
+
+    case DeclarationName::CXXLiteralOperatorName: {
+    const IdentifierInfo* identifier = ( node.getCXXLiteralIdentifier() );
+    subW.find("identifier").writeIdentifier(identifier);
+    return;
+    }
+
+    case DeclarationName::CXXUsingDirective: {
+    return;
+    }
+
+    case DeclarationName::ObjCZeroArgSelector: {
+    Selector selector = ( node.getObjCSelector() );
+    subW.find("selector").writeSelector(selector);
+    return;
+    }
+
+    case DeclarationName::ObjCOneArgSelector: {
+    Selector selector = ( node.getObjCSelector() );
+    subW.find("selector").writeSelector(selector);
+    return;
+    }
+
+    }
+    llvm_unreachable("bad DeclarationName::NameKind");
   }
   void writeDeclarationNameKind(DeclarationName::NameKind value) {
-    asImpl().writeUInt32(uint32_t(value));
+    asImpl().writeEnum(value);
   }
   void writeElaboratedTypeKeyword(ElaboratedTypeKeyword value) {
-    asImpl().writeUInt32(uint32_t(value));
+    asImpl().writeEnum(value);
   }
   void writeExprRef(const Expr* value) {
     asImpl().writeStmtRef(value);
@@ -696,7 +787,7 @@ public:
     asImpl().writeDeclRef(value);
   }
   void writeNestedNameSpecifierKind(NestedNameSpecifier::SpecifierKind value) {
-    asImpl().writeUInt32(uint32_t(value));
+    asImpl().writeEnum(value);
   }
   void writeObjCProtocolDeclRef(const ObjCProtocolDecl* value) {
     asImpl().writeDeclRef(value);
@@ -705,22 +796,171 @@ public:
     asImpl().writeDeclRef(value);
   }
   void writeOverloadedOperatorKind(OverloadedOperatorKind value) {
-    asImpl().writeUInt32(uint32_t(value));
+    asImpl().writeEnum(value);
   }
   void writeRefQualifierKind(RefQualifierKind value) {
-    asImpl().writeUInt32(uint32_t(value));
+    asImpl().writeEnum(value);
   }
   void writeTagDeclRef(const TagDecl* value) {
     asImpl().writeDeclRef(value);
   }
+  void writeTemplateArgument(TemplateArgument node) {
+    auto &&subW = asImpl().writeObject();
+    TemplateArgument::ArgKind kind = (node.getKind());
+    subW.find("kind").writeTemplateArgumentKind(kind);
+    switch (kind) {
+    case TemplateArgument::Null: {
+    return;
+    }
+
+    case TemplateArgument::Type: {
+    QualType type = ( node.getAsType() );
+    subW.find("type").writeQualType(type);
+    return;
+    }
+
+    case TemplateArgument::Declaration: {
+    const ValueDecl* declaration = ( node.getAsDecl() );
+    subW.find("declaration").writeValueDeclRef(declaration);
+    QualType parameterType = ( node.getParamTypeForDecl() );
+    subW.find("parameterType").writeQualType(parameterType);
+    return;
+    }
+
+    case TemplateArgument::NullPtr: {
+    QualType type = ( node.getNullPtrType() );
+    subW.find("type").writeQualType(type);
+    return;
+    }
+
+    case TemplateArgument::Integral: {
+    llvm::APSInt value = ( node.getAsIntegral() );
+    subW.find("value").writeAPSInt(value);
+    QualType type = ( node.getIntegralType() );
+    subW.find("type").writeQualType(type);
+    return;
+    }
+
+    case TemplateArgument::Template: {
+    TemplateName name = ( node.getAsTemplateOrTemplatePattern() );
+    subW.find("name").writeTemplateName(name);
+    return;
+    }
+
+    case TemplateArgument::TemplateExpansion: {
+    TemplateName name = ( node.getAsTemplateOrTemplatePattern() );
+    subW.find("name").writeTemplateName(name);
+    llvm::Optional<uint32_t> numExpansions = (
+      // Translate unsigned -> uint32_t just in case.
+      node.getNumTemplateExpansions().map(
+        [](unsigned i) { return uint32_t(i); })
+    );
+    subW.find("numExpansions").writeOptional(numExpansions);
+    return;
+    }
+
+    case TemplateArgument::Expression: {
+    const Expr* expression = ( node.getAsExpr() );
+    subW.find("expression").writeExprRef(expression);
+    return;
+    }
+
+    case TemplateArgument::Pack: {
+    llvm::ArrayRef<TemplateArgument> elements = ( node.pack_elements() );
+    subW.find("elements").writeArray(elements);
+    return;
+    }
+
+    }
+    llvm_unreachable("bad TemplateArgument::ArgKind");
+  }
   void writeTemplateArgumentKind(TemplateArgument::ArgKind value) {
-    asImpl().writeUInt32(uint32_t(value));
+    asImpl().writeEnum(value);
   }
   void writeTemplateDeclRef(const TemplateDecl* value) {
     asImpl().writeDeclRef(value);
   }
+  void writeTemplateName(TemplateName node) {
+    auto &&subW = asImpl().writeObject();
+    TemplateName::NameKind kind = (node.getKind());
+    subW.find("kind").writeTemplateNameKind(kind);
+    switch (kind) {
+    case TemplateName::Template: {
+    const TemplateDecl* declaration = ( node.getAsTemplateDecl() );
+    subW.find("declaration").writeTemplateDeclRef(declaration);
+    return;
+    }
+
+    case TemplateName::OverloadedTemplate: {
+    llvm::ArrayRef<const NamedDecl*> overloads = ( node.getAsOverloadedTemplate()->decls() );
+    subW.find("overloads").writeArray(overloads);
+    return;
+    }
+
+    case TemplateName::AssumedTemplate: {
+    DeclarationName name = ( node.getAsAssumedTemplateName()->getDeclName() );
+    subW.find("name").writeDeclarationName(name);
+    return;
+    }
+
+    case TemplateName::QualifiedTemplate: {
+    
+    auto qtn = node.getAsQualifiedTemplateName();
+  
+    NestedNameSpecifier * qualifier = ( qtn->getQualifier() );
+    subW.find("qualifier").writeNestedNameSpecifier(qualifier);
+    bool hasTemplateKeyword = ( qtn->hasTemplateKeyword() );
+    subW.find("hasTemplateKeyword").writeBool(hasTemplateKeyword);
+    const TemplateDecl* declaration = ( qtn->getTemplateDecl() );
+    subW.find("declaration").writeTemplateDeclRef(declaration);
+    return;
+    }
+
+    case TemplateName::DependentTemplate: {
+    
+    auto dtn = node.getAsDependentTemplateName();
+  
+    NestedNameSpecifier * qualifier = ( dtn->getQualifier() );
+    subW.find("qualifier").writeNestedNameSpecifier(qualifier);
+    llvm::Optional<const IdentifierInfo*> identifier = ( makeOptionalFromPointer(
+                    dtn->isIdentifier()
+                      ? dtn->getIdentifier()
+                      : nullptr) );
+    subW.find("identifier").writeOptional(identifier);
+    if ( !identifier ) {
+    OverloadedOperatorKind operatorKind = ( dtn->getOperator() );
+    subW.find("operatorKind").writeOverloadedOperatorKind(operatorKind);
+    }
+    return;
+    }
+
+    case TemplateName::SubstTemplateTemplateParm: {
+    
+    auto parm = node.getAsSubstTemplateTemplateParm();
+  
+    const TemplateTemplateParmDecl* parameter = ( parm->getParameter() );
+    subW.find("parameter").writeTemplateTemplateParmDeclRef(parameter);
+    TemplateName replacement = ( parm->getReplacement() );
+    subW.find("replacement").writeTemplateName(replacement);
+    return;
+    }
+
+    case TemplateName::SubstTemplateTemplateParmPack: {
+    
+    auto parm = node.getAsSubstTemplateTemplateParmPack();
+  
+    const TemplateTemplateParmDecl* parameterPack = ( parm->getParameterPack() );
+    subW.find("parameterPack").writeTemplateTemplateParmDeclRef(parameterPack);
+    TemplateArgument argumentPack = ( parm->getArgumentPack() );
+    subW.find("argumentPack").writeTemplateArgument(argumentPack);
+    return;
+    }
+
+    }
+    llvm_unreachable("bad TemplateName::NameKind");
+  }
   void writeTemplateNameKind(TemplateName::NameKind value) {
-    asImpl().writeUInt32(uint32_t(value));
+    asImpl().writeEnum(value);
   }
   void writeTemplateTemplateParmDeclRef(const TemplateTemplateParmDecl* value) {
     asImpl().writeDeclRef(value);
@@ -729,13 +969,13 @@ public:
     asImpl().writeDeclRef(value);
   }
   void writeUnaryTypeTransformKind(UnaryTransformType::UTTKind value) {
-    asImpl().writeUInt32(uint32_t(value));
+    asImpl().writeEnum(value);
   }
   void writeValueDeclRef(const ValueDecl* value) {
     asImpl().writeDeclRef(value);
   }
   void writeVectorKind(VectorType::VectorKind value) {
-    asImpl().writeUInt32(uint32_t(value));
+    asImpl().writeEnum(value);
   }
 };
 

@@ -365,6 +365,12 @@ struct UnpackOptionalValue<FunctionDecl*> {
   }
 };
 template <>
+struct UnpackOptionalValue<IdentifierInfo*> {
+  static Optional<IdentifierInfo*> unpack(IdentifierInfo* value) {
+    return value ? llvm::Optional<IdentifierInfo*>(value) : llvm::None;
+  }
+};
+template <>
 struct UnpackOptionalValue<NamedDecl*> {
   static Optional<NamedDecl*> unpack(NamedDecl* value) {
     return value ? llvm::Optional<NamedDecl*>(value) : llvm::None;
@@ -464,28 +470,115 @@ public:
   ASTContext &getASTContext() { return C; }
   Impl &asImpl() { return static_cast<Impl&>(*this); }
   ArrayType::ArraySizeModifier readArraySizeModifier() {
-    return ArrayType::ArraySizeModifier(asImpl().readUInt32());
+    return asImpl().template readEnum<ArrayType::ArraySizeModifier>();
   }
   attr::Kind readAttrKind() {
-    return attr::Kind(asImpl().readUInt32());
+    return asImpl().template readEnum<attr::Kind>();
   }
   AutoTypeKeyword readAutoTypeKeyword() {
-    return AutoTypeKeyword(asImpl().readUInt32());
+    return asImpl().template readEnum<AutoTypeKeyword>();
   }
   BuiltinType::Kind readBuiltinTypeKind() {
-    return BuiltinType::Kind(asImpl().readUInt32());
+    return asImpl().template readEnum<BuiltinType::Kind>();
   }
   CXXRecordDecl* readCXXRecordDeclRef() {
     return cast_or_null<CXXRecordDecl>(asImpl().readDeclRef());
   }
   CallingConv readCallingConv() {
-    return CallingConv(asImpl().readUInt32());
+    return asImpl().template readEnum<CallingConv>();
+  }
+  DeclarationName readDeclarationName() {
+    auto &ctx = asImpl().getASTContext();
+    auto &&subR = asImpl().readObject();
+    DeclarationName::NameKind kind = subR.find("kind").readDeclarationNameKind();
+    switch (kind) {
+    case DeclarationName::Identifier: {
+    IdentifierInfo* identifier = subR.find("identifier").readIdentifier();
+    
+    return DeclarationName(identifier);
+  
+    }
+
+    case DeclarationName::ObjCMultiArgSelector: {
+    Selector selector = subR.find("selector").readSelector();
+    
+      return DeclarationName(selector);
+    
+    }
+
+    case DeclarationName::CXXConstructorName: {
+    QualType type = subR.find("type").readQualType();
+    
+      return ctx.DeclarationNames.getCXXConstructorName(
+               ctx.getCanonicalType(type));
+    
+    }
+
+    case DeclarationName::CXXDestructorName: {
+    QualType type = subR.find("type").readQualType();
+    
+      return ctx.DeclarationNames.getCXXDestructorName(
+               ctx.getCanonicalType(type));
+    
+    }
+
+    case DeclarationName::CXXConversionFunctionName: {
+    QualType type = subR.find("type").readQualType();
+    
+      return ctx.DeclarationNames.getCXXConversionFunctionName(
+               ctx.getCanonicalType(type));
+    
+    }
+
+    case DeclarationName::CXXDeductionGuideName: {
+    TemplateDecl* declaration = subR.find("declaration").readTemplateDeclRef();
+    
+    return ctx.DeclarationNames.getCXXDeductionGuideName(declaration);
+  
+    }
+
+    case DeclarationName::CXXOperatorName: {
+    OverloadedOperatorKind operatorKind = subR.find("operatorKind").readOverloadedOperatorKind();
+    
+    return ctx.DeclarationNames.getCXXOperatorName(operatorKind);
+  
+    }
+
+    case DeclarationName::CXXLiteralOperatorName: {
+    IdentifierInfo* identifier = subR.find("identifier").readIdentifier();
+    
+    return ctx.DeclarationNames.getCXXLiteralOperatorName(identifier);
+  
+    }
+
+    case DeclarationName::CXXUsingDirective: {
+    
+    return DeclarationName::getUsingDirectiveName();
+  
+    }
+
+    case DeclarationName::ObjCZeroArgSelector: {
+    Selector selector = subR.find("selector").readSelector();
+    
+      return DeclarationName(selector);
+    
+    }
+
+    case DeclarationName::ObjCOneArgSelector: {
+    Selector selector = subR.find("selector").readSelector();
+    
+      return DeclarationName(selector);
+    
+    }
+
+    }
+    llvm_unreachable("bad DeclarationName::NameKind");
   }
   DeclarationName::NameKind readDeclarationNameKind() {
-    return DeclarationName::NameKind(asImpl().readUInt32());
+    return asImpl().template readEnum<DeclarationName::NameKind>();
   }
   ElaboratedTypeKeyword readElaboratedTypeKeyword() {
-    return ElaboratedTypeKeyword(asImpl().readUInt32());
+    return asImpl().template readEnum<ElaboratedTypeKeyword>();
   }
   Expr* readExprRef() {
     return cast_or_null<Expr>(asImpl().readStmtRef());
@@ -503,7 +596,7 @@ public:
     return cast_or_null<NamespaceDecl>(asImpl().readDeclRef());
   }
   NestedNameSpecifier::SpecifierKind readNestedNameSpecifierKind() {
-    return NestedNameSpecifier::SpecifierKind(asImpl().readUInt32());
+    return asImpl().template readEnum<NestedNameSpecifier::SpecifierKind>();
   }
   ObjCProtocolDecl* readObjCProtocolDeclRef() {
     return cast_or_null<ObjCProtocolDecl>(asImpl().readDeclRef());
@@ -512,22 +605,181 @@ public:
     return cast_or_null<ObjCTypeParamDecl>(asImpl().readDeclRef());
   }
   OverloadedOperatorKind readOverloadedOperatorKind() {
-    return OverloadedOperatorKind(asImpl().readUInt32());
+    return asImpl().template readEnum<OverloadedOperatorKind>();
   }
   RefQualifierKind readRefQualifierKind() {
-    return RefQualifierKind(asImpl().readUInt32());
+    return asImpl().template readEnum<RefQualifierKind>();
   }
   TagDecl* readTagDeclRef() {
     return cast_or_null<TagDecl>(asImpl().readDeclRef());
   }
+  TemplateArgument readTemplateArgument() {
+    auto &ctx = asImpl().getASTContext();
+    auto &&subR = asImpl().readObject();
+    TemplateArgument::ArgKind kind = subR.find("kind").readTemplateArgumentKind();
+    switch (kind) {
+    case TemplateArgument::Null: {
+    
+    return TemplateArgument();
+  
+    }
+
+    case TemplateArgument::Type: {
+    QualType type = subR.find("type").readQualType();
+    
+    return TemplateArgument(type);
+  
+    }
+
+    case TemplateArgument::Declaration: {
+    ValueDecl* declaration = subR.find("declaration").readValueDeclRef();
+    QualType parameterType = subR.find("parameterType").readQualType();
+    
+    return TemplateArgument(declaration, parameterType);
+  
+    }
+
+    case TemplateArgument::NullPtr: {
+    QualType type = subR.find("type").readQualType();
+    
+    return TemplateArgument(type, /*nullptr*/ true);
+  
+    }
+
+    case TemplateArgument::Integral: {
+    llvm::APSInt value = subR.find("value").readAPSInt();
+    QualType type = subR.find("type").readQualType();
+    
+    return TemplateArgument(ctx, value, type);
+  
+    }
+
+    case TemplateArgument::Template: {
+    TemplateName name = subR.find("name").readTemplateName();
+    
+    return TemplateArgument(name);
+  
+    }
+
+    case TemplateArgument::TemplateExpansion: {
+    TemplateName name = subR.find("name").readTemplateName();
+    llvm::Optional<uint32_t> numExpansions = subR.find("numExpansions").template readOptional<uint32_t>();
+    
+    auto numExpansionsUnsigned =
+      numExpansions.map([](uint32_t i) { return unsigned(i); });
+    return TemplateArgument(name, numExpansionsUnsigned);
+  
+    }
+
+    case TemplateArgument::Expression: {
+    Expr* expression = subR.find("expression").readExprRef();
+    
+    return TemplateArgument(expression);
+  
+    }
+
+    case TemplateArgument::Pack: {
+    llvm::SmallVector<TemplateArgument, 8> elements_buffer_0;
+    llvm::ArrayRef<TemplateArgument> elements = subR.find("elements").template readArray<TemplateArgument>(elements_buffer_0);
+    
+    // Copy the pack into the ASTContext.
+    TemplateArgument *ctxElements = new (ctx) TemplateArgument[elements.size()];
+    for (size_t i = 0, e = elements.size(); i != e; ++i)
+      ctxElements[i] = elements[i];
+    return TemplateArgument(llvm::makeArrayRef(ctxElements, elements.size()));
+  
+    }
+
+    }
+    llvm_unreachable("bad TemplateArgument::ArgKind");
+  }
   TemplateArgument::ArgKind readTemplateArgumentKind() {
-    return TemplateArgument::ArgKind(asImpl().readUInt32());
+    return asImpl().template readEnum<TemplateArgument::ArgKind>();
   }
   TemplateDecl* readTemplateDeclRef() {
     return cast_or_null<TemplateDecl>(asImpl().readDeclRef());
   }
+  TemplateName readTemplateName() {
+    auto &ctx = asImpl().getASTContext();
+    auto &&subR = asImpl().readObject();
+    TemplateName::NameKind kind = subR.find("kind").readTemplateNameKind();
+    switch (kind) {
+    case TemplateName::Template: {
+    TemplateDecl* declaration = subR.find("declaration").readTemplateDeclRef();
+    
+    return TemplateName(declaration);
+  
+    }
+
+    case TemplateName::OverloadedTemplate: {
+    llvm::SmallVector<NamedDecl*, 8> overloads_buffer_0;
+    llvm::ArrayRef<NamedDecl*> overloads = subR.find("overloads").template readArray<NamedDecl*>(overloads_buffer_0);
+    
+    // Copy into an UnresolvedSet to satisfy the interface.
+    UnresolvedSet<8> overloadSet;
+    for (auto overload : overloads) {
+      overloadSet.addDecl(overload);
+    }
+
+    return ctx.getOverloadedTemplateName(overloadSet.begin(),
+                                         overloadSet.end());
+  
+    }
+
+    case TemplateName::AssumedTemplate: {
+    DeclarationName name = subR.find("name").readDeclarationName();
+    
+    return ctx.getAssumedTemplateName(name);
+  
+    }
+
+    case TemplateName::QualifiedTemplate: {
+    NestedNameSpecifier * qualifier = subR.find("qualifier").readNestedNameSpecifier();
+    bool hasTemplateKeyword = subR.find("hasTemplateKeyword").readBool();
+    TemplateDecl* declaration = subR.find("declaration").readTemplateDeclRef();
+    
+    return ctx.getQualifiedTemplateName(qualifier, hasTemplateKeyword,
+                                        declaration);
+  
+    }
+
+    case TemplateName::DependentTemplate: {
+    NestedNameSpecifier * qualifier = subR.find("qualifier").readNestedNameSpecifier();
+    llvm::Optional<IdentifierInfo*> identifier = subR.find("identifier").template readOptional<IdentifierInfo*>();
+    llvm::Optional<OverloadedOperatorKind> operatorKind;
+    if ( !identifier ) {
+      operatorKind.emplace(subR.find("operatorKind").readOverloadedOperatorKind());
+    }
+    
+    if (identifier) {
+      return ctx.getDependentTemplateName(qualifier, *identifier);
+    } else {
+      return ctx.getDependentTemplateName(qualifier, *operatorKind);
+    }
+  
+    }
+
+    case TemplateName::SubstTemplateTemplateParm: {
+    TemplateTemplateParmDecl* parameter = subR.find("parameter").readTemplateTemplateParmDeclRef();
+    TemplateName replacement = subR.find("replacement").readTemplateName();
+    
+    return ctx.getSubstTemplateTemplateParm(parameter, replacement);
+  
+    }
+
+    case TemplateName::SubstTemplateTemplateParmPack: {
+    TemplateTemplateParmDecl* parameterPack = subR.find("parameterPack").readTemplateTemplateParmDeclRef();
+    TemplateArgument argumentPack = subR.find("argumentPack").readTemplateArgument();
+    
+    return ctx.getSubstTemplateTemplateParmPack(parameterPack, argumentPack);
+  
+    }
+
+    }
+    llvm_unreachable("bad TemplateName::NameKind");
+  }
   TemplateName::NameKind readTemplateNameKind() {
-    return TemplateName::NameKind(asImpl().readUInt32());
+    return asImpl().template readEnum<TemplateName::NameKind>();
   }
   TemplateTemplateParmDecl* readTemplateTemplateParmDeclRef() {
     return cast_or_null<TemplateTemplateParmDecl>(asImpl().readDeclRef());
@@ -536,13 +788,13 @@ public:
     return cast_or_null<TemplateTypeParmDecl>(asImpl().readDeclRef());
   }
   UnaryTransformType::UTTKind readUnaryTypeTransformKind() {
-    return UnaryTransformType::UTTKind(asImpl().readUInt32());
+    return asImpl().template readEnum<UnaryTransformType::UTTKind>();
   }
   ValueDecl* readValueDeclRef() {
     return cast_or_null<ValueDecl>(asImpl().readDeclRef());
   }
   VectorType::VectorKind readVectorKind() {
-    return VectorType::VectorKind(asImpl().readUInt32());
+    return asImpl().template readEnum<VectorType::VectorKind>();
   }
 };
 

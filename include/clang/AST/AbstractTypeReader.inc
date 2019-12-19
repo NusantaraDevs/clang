@@ -153,8 +153,8 @@ public:
     
     return ctx.getDependentSizedArrayType(elementType, size, sizeModifier,
                                           indexQualifiers.getCVRQualifiers(),
-                                    			SourceRange(leftBracketLoc,
-                                    									rightBracketLoc));
+                                          SourceRange(leftBracketLoc,
+                                                      rightBracketLoc));
   
   }
 
@@ -181,7 +181,7 @@ public:
     return ctx.getVariableArrayType(elementType, size, sizeModifier,
                                     indexQualifiers.getCVRQualifiers(),
                                     SourceRange(leftBracketLoc,
-                                    						rightBracketLoc));
+                                                rightBracketLoc));
   
   }
 
@@ -213,24 +213,25 @@ public:
     auto &ctx = R.getASTContext();
     BuiltinType::Kind kind = R.find("kind").readBuiltinTypeKind();
     
-		switch (kind) {
+      switch (kind) {
 #define IMAGE_TYPE(IMGTYPE, ID, SINGLETON_ID, ACCESS, SUFFIX) \
-		case BuiltinType::ID: return ctx.SINGLETON_ID;
+      case BuiltinType::ID: return ctx.SINGLETON_ID;
 #include "clang/Basic/OpenCLImageTypes.def"
 
 #define EXT_OPAQUE_TYPE(EXTTYPE, ID, EXT) \
-		case BuiltinType::ID: return ctx.ID##Ty;
+      case BuiltinType::ID: return ctx.ID##Ty;
 #include "clang/Basic/OpenCLExtensionTypes.def"
 
 #define SVE_TYPE(NAME, ID, SINGLETON_ID) \
-		case BuiltinType::ID: return ctx.SINGLETON_ID;
+      case BuiltinType::ID: return ctx.SINGLETON_ID;
 #include "clang/Basic/AArch64SVEACLETypes.def"
 
 #define BUILTIN_TYPE(ID, SINGLETON_ID) \
-		case BuiltinType::ID: return ctx.SINGLETON_ID;
+      case BuiltinType::ID: return ctx.SINGLETON_ID;
 #include "clang/AST/BuiltinTypes.def"
-		}
-	
+      }
+      llvm_unreachable("unreachable builtin case");
+  
   }
 
   QualType readComplexType() {
@@ -267,8 +268,8 @@ public:
     bool dependent = R.find("dependent").readBool();
     
     return ctx.getDeducedTemplateSpecializationType(
-    						 										makeNullableFromOptional(templateName),
-    						 										deducedType, dependent);
+                                     makeNullableFromOptional(templateName),
+                                     deducedType, dependent);
   
   }
 
@@ -290,11 +291,11 @@ public:
     IdentifierInfo* name = R.find("name").readIdentifier();
     llvm::Optional<QualType> underlyingType = R.find("underlyingType").template readOptional<QualType>();
     
-		QualType canon = (underlyingType
-												? ctx.getCanonicalType(*underlyingType)
-												: QualType());
-		return ctx.getDependentNameType(keyword, qualifier, name, canon);
-	
+    QualType canon = (underlyingType
+                        ? ctx.getCanonicalType(*underlyingType)
+                        : QualType());
+    return ctx.getDependentNameType(keyword, qualifier, name, canon);
+  
   }
 
   QualType readDependentSizedExtVectorType() {
@@ -315,8 +316,8 @@ public:
     llvm::SmallVector<TemplateArgument, 8> templateArguments_buffer_0;
     llvm::ArrayRef<TemplateArgument> templateArguments = R.find("templateArguments").template readArray<TemplateArgument>(templateArguments_buffer_0);
     
-  	return ctx.getDependentTemplateSpecializationType(keyword, qualifier,
-  	                                                  name, templateArguments);
+    return ctx.getDependentTemplateSpecializationType(keyword, qualifier,
+                                                      name, templateArguments);
   
   }
 
@@ -328,19 +329,19 @@ public:
     VectorType::VectorKind vectorKind = R.find("vectorKind").readVectorKind();
     
     return ctx.getDependentVectorType(elementType, size, attributeLoc,
-    																	vectorKind);
+                                      vectorKind);
   
   }
 
   QualType readElaboratedType() {
     auto &ctx = R.getASTContext();
+    ElaboratedTypeKeyword keyword = R.find("keyword").readElaboratedTypeKeyword();
     NestedNameSpecifier * qualifier = R.find("qualifier").readNestedNameSpecifier();
     QualType namedType = R.find("namedType").readQualType();
     llvm::Optional<TagDecl*> ownedTag = R.find("ownedTag").template readOptional<TagDecl*>();
-    ElaboratedTypeKeyword keyword = R.find("keyword").readElaboratedTypeKeyword();
     
     return ctx.getElaboratedType(keyword, qualifier, namedType,
-    													   makePointerFromOptional(ownedTag));
+                                 makePointerFromOptional(ownedTag));
   
   }
 
@@ -446,8 +447,8 @@ public:
     auto &ctx = R.getASTContext();
     QualType pointeeType = R.find("pointeeType").readQualType();
     
-		return ctx.getObjCObjectPointerType(pointeeType);
-	
+    return ctx.getObjCObjectPointerType(pointeeType);
+  
   }
 
   QualType readObjCObjectType() {
@@ -459,18 +460,18 @@ public:
     llvm::ArrayRef<ObjCProtocolDecl*> qualifiers = R.find("qualifiers").template readArray<ObjCProtocolDecl*>(qualifiers_buffer_0);
     bool isKindOfTypeAsWritten = R.find("isKindOfTypeAsWritten").readBool();
     
-		return ctx.getObjCObjectType(baseType, typeArgsAsWritten, qualifiers,
-																 isKindOfTypeAsWritten);
-	
+    return ctx.getObjCObjectType(baseType, typeArgsAsWritten, qualifiers,
+                                 isKindOfTypeAsWritten);
+  
   }
 
   QualType readObjCInterfaceType() {
     auto &ctx = R.getASTContext();
     Decl* declaration = R.find("declaration").readDeclRef();
     
-		return ctx.getObjCInterfaceType(
-						 cast<ObjCInterfaceDecl>(declaration->getCanonicalDecl()));
-	
+    return ctx.getObjCInterfaceType(
+             cast<ObjCInterfaceDecl>(declaration->getCanonicalDecl()));
+  
   }
 
   QualType readObjCTypeParamType() {
@@ -479,8 +480,8 @@ public:
     llvm::SmallVector<ObjCProtocolDecl*, 8> qualifiers_buffer_0;
     llvm::ArrayRef<ObjCProtocolDecl*> qualifiers = R.find("qualifiers").template readArray<ObjCProtocolDecl*>(qualifiers_buffer_0);
     
-		return ctx.getObjCTypeParamType(declaration, qualifiers);
-	
+    return ctx.getObjCTypeParamType(declaration, qualifiers);
+  
   }
 
   QualType readPackExpansionType() {
@@ -488,7 +489,7 @@ public:
     QualType pattern = R.find("pattern").readQualType();
     llvm::Optional<uint32_t> numExpansions = R.find("numExpansions").template readOptional<uint32_t>();
     
-  	return ctx.getPackExpansionType(pattern, numExpansions);
+    return ctx.getPackExpansionType(pattern, numExpansions);
   
   }
 
@@ -505,8 +506,8 @@ public:
     QualType elementType = R.find("elementType").readQualType();
     bool isReadOnly = R.find("isReadOnly").readBool();
     
-		return ctx.getPipeType(elementType, isReadOnly);
-	
+    return ctx.getPipeType(elementType, isReadOnly);
+  
   }
 
   QualType readPointerType() {
@@ -538,8 +539,8 @@ public:
     QualType replacedParameter = R.find("replacedParameter").readQualType();
     TemplateArgument replacementPack = R.find("replacementPack").readTemplateArgument();
     
-  	return ctx.getSubstTemplateTypeParmPackType(
-                 				cast<TemplateTypeParmType>(replacedParameter),
+    return ctx.getSubstTemplateTypeParmPackType(
+                         cast<TemplateTypeParmType>(replacedParameter),
                         replacementPack);
   
   }
@@ -549,7 +550,7 @@ public:
     QualType replacedParameter = R.find("replacedParameter").readQualType();
     QualType replacementType = R.find("replacementType").readQualType();
     
-  	// The call to getCanonicalType here existed in ASTReader.cpp, too.
+    // The call to getCanonicalType here existed in ASTReader.cpp, too.
     return ctx.getSubstTemplateTypeParmType(
         cast<TemplateTypeParmType>(replacedParameter),
         ctx.getCanonicalType(replacementType));
@@ -572,7 +573,7 @@ public:
     bool dependent = R.find("dependent").readBool();
     Decl* declaration = R.find("declaration").readDeclRef();
     
-  	auto record = cast<RecordDecl>(declaration);
+    auto record = cast<RecordDecl>(declaration);
     QualType result = ctx.getRecordType(record);
     const_cast<Type*>(result.getTypePtr())->setDependent(dependent);
     return result;
@@ -593,8 +594,8 @@ public:
                                                           templateArguments);
     } else {
       result = ctx.getTemplateSpecializationType(templateName,
-      																					 templateArguments,
-      																					 *underlyingType);
+                                                 templateArguments,
+                                                 *underlyingType);
     }
     const_cast<Type*>(result.getTypePtr())->setDependent(dependent);
     return result;
@@ -608,8 +609,8 @@ public:
     bool isParameterPack = R.find("isParameterPack").readBool();
     llvm::Optional<TemplateTypeParmDecl*> declaration = R.find("declaration").template readOptional<TemplateTypeParmDecl*>();
     
-  	return ctx.getTemplateTypeParmType(depth, index, isParameterPack,
-  																		 makePointerFromOptional(declaration));
+    return ctx.getTemplateTypeParmType(depth, index, isParameterPack,
+                                       makePointerFromOptional(declaration));
   
   }
 
@@ -634,9 +635,9 @@ public:
     Decl* declaration = R.find("declaration").readDeclRef();
     llvm::Optional<QualType> canonicalType = R.find("canonicalType").template readOptional<QualType>();
     
-  	QualType finalCanonicalType =
-  		canonicalType ? ctx.getCanonicalType(*canonicalType)
-  								  : QualType();
+    QualType finalCanonicalType =
+      canonicalType ? ctx.getCanonicalType(*canonicalType)
+                    : QualType();
     return ctx.getTypedefType(cast<TypedefNameDecl>(declaration),
                               finalCanonicalType);
   
