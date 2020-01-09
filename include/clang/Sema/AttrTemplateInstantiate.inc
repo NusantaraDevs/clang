@@ -63,6 +63,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       }
         return new (C) AcquireCapabilityAttr(C, *A, tempInstArgs, A->args_size());
     }
+    case attr::AcquireHandle: {
+      const auto *A = cast<AcquireHandleAttr>(At);
+      return A->clone(C);
+    }
     case attr::AcquiredAfter: {
       const auto *A = cast<AcquiredAfterAttr>(At);
       auto *tempInstArgs = new (C, 16) Expr *[A->args_size()];
@@ -1087,6 +1091,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       }
         return new (C) ReleaseCapabilityAttr(C, *A, tempInstArgs, A->args_size());
     }
+    case attr::ReleaseHandle: {
+      const auto *A = cast<ReleaseHandleAttr>(At);
+      return A->clone(C);
+    }
     case attr::RenderScriptKernel: {
       const auto *A = cast<RenderScriptKernelAttr>(At);
       return A->clone(C);
@@ -1291,6 +1299,10 @@ Attr *instantiateTemplateAttribute(const Attr *At, ASTContext &C, Sema &S,
       const auto *A = cast<UnusedAttr>(At);
       return A->clone(C);
     }
+    case attr::UseHandle: {
+      const auto *A = cast<UseHandleAttr>(At);
+      return A->clone(C);
+    }
     case attr::Used: {
       const auto *A = cast<UsedAttr>(At);
       return A->clone(C);
@@ -1400,6 +1412,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return A->clone(C);
     }
     case attr::AcquireCapability: {
+      return nullptr;
+    }
+    case attr::AcquireHandle: {
       return nullptr;
     }
     case attr::AcquiredAfter: {
@@ -2079,6 +2094,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
     case attr::ReleaseCapability: {
       return nullptr;
     }
+    case attr::ReleaseHandle: {
+      return nullptr;
+    }
     case attr::RenderScriptKernel: {
       return nullptr;
     }
@@ -2197,6 +2215,9 @@ Attr *instantiateTemplateAttributeForDecl(const Attr *At,
       return nullptr;
     }
     case attr::Unused: {
+      return nullptr;
+    }
+    case attr::UseHandle: {
       return nullptr;
     }
     case attr::Used: {

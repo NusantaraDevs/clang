@@ -260,7 +260,6 @@
 #  else  // _BYTE_ORDER == _LITTLE_ENDIAN
 #    define _LIBCPP_BIG_ENDIAN
 #  endif  // _BYTE_ORDER == _LITTLE_ENDIAN
-#  define _LIBCPP_HAS_QUICK_EXIT
 #endif  // __NetBSD__
 
 #if defined(_WIN32)
@@ -354,7 +353,7 @@
 #    if __ANDROID_API__ >= 29
 #      define _LIBCPP_HAS_TIMESPEC_GET
 #    endif
-#  elif defined(__Fuchsia__) || defined(__wasi__)
+#  elif defined(__Fuchsia__) || defined(__wasi__) || defined(__NetBSD__)
 #    define _LIBCPP_HAS_ALIGNED_ALLOC
 #    define _LIBCPP_HAS_QUICK_EXIT
 #    define _LIBCPP_HAS_TIMESPEC_GET
@@ -1301,7 +1300,7 @@ _LIBCPP_FUNC_VIS extern "C" void __sanitizer_annotate_contiguous_container(
 #  define _LIBCPP_FALLTHROUGH() [[fallthrough]]
 #elif __has_cpp_attribute(clang::fallthrough)
 #  define _LIBCPP_FALLTHROUGH() [[clang::fallthrough]]
-#elif __has_attribute(fallthough) || _GNUC_VER >= 700
+#elif __has_attribute(fallthrough) || _GNUC_VER >= 700
 #  define _LIBCPP_FALLTHROUGH() __attribute__((__fallthrough__))
 #else
 #  define _LIBCPP_FALLTHROUGH() ((void)0)

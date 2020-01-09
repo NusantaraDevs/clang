@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "AS 1"
-.TH AS 1 "2019-12-19" "binutils-2.33.50" "GNU Development Tools"
+.TH AS 1 "2020-01-09" "binutils-2.33.50" "GNU Development Tools"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -445,7 +445,10 @@ as [\fB\-a\fR[\fBcdghlns\fR][=\fIfile\fR]] [\fB\-\-alternate\fR] [\fB\-D\fR]
  [\fB\-\-[no\-]trampolines\fR]
 .PP
 \&\fITarget Z80 options:\fR
-  [\fB\-z80\fR] [\fB\-r800\fR]
+  [\fB\-z80\fR]|[\fB\-z180\fR]|[\fB\-r800\fR]|[\fB\-ez80\fR]|[\fB\-ez80\-adl\fR]
+  [\fB\-strict\fR]|[\fB\-full\fR]
+  [\fB\-with\-inst=\fR\fI\s-1INST\s0\fR\fB[,...]\fR] [\fB\-Wnins\fR \fI\s-1INST\s0\fR\fB[,...]\fR]
+  [\fB\-without\-inst=\fR\fI\s-1INST\s0\fR\fB[,...]\fR] [\fB\-Fins\fR \fI\s-1INST\s0\fR\fB[,...]\fR]
   [ \fB\-ignore\-undocumented\-instructions\fR] [\fB\-Wnud\fR]
   [ \fB\-ignore\-unportable\-instructions\fR] [\fB\-Wnup\fR]
   [ \fB\-warn\-undocumented\-instructions\fR] [\fB\-Wud\fR]
@@ -2770,6 +2773,49 @@ Assemble for Z80 processor.
 .IP "\fB\-r800\fR" 4
 .IX Item "-r800"
 Assemble for R800 processor.
+.IP "\fB\-z180\fR" 4
+.IX Item "-z180"
+Assemble for Z180 processor.
+.IP "\fB\-ez80\fR" 4
+.IX Item "-ez80"
+Assemble for eZ80 processor in Z80 memory mode by default.
+.IP "\fB\-ez80\-adl\fR" 4
+.IX Item "-ez80-adl"
+Assemble for eZ80 processor in \s-1ADL\s0 memory mode by default.
+.ie n .IP "\fB\f(CB""\-colonless""\fB\fR" 4
+.el .IP "\fB\f(CB\-colonless\fB\fR" 4
+.IX Item "-colonless"
+Accept colonless labels. All names at line begin are treated as labels.
+.ie n .IP "\fB\f(CB""\-sdcc""\fB\fR" 4
+.el .IP "\fB\f(CB\-sdcc\fB\fR" 4
+.IX Item "-sdcc"
+Accept assembler code produces by \s-1SDCC.\s0
+.ie n .IP "\fB\f(CB""\-strict""\fB\fR" 4
+.el .IP "\fB\f(CB\-strict\fB\fR" 4
+.IX Item "-strict"
+Accept documented instructions only.
+.ie n .IP "\fB\f(CB""\-full""\fB\fR" 4
+.el .IP "\fB\f(CB\-full\fB\fR" 4
+.IX Item "-full"
+Accept all known Z80 instructions.
+.ie n .IP "\fB\f(CB""\-with\-inst=INST[,...]""\fB\fR" 4
+.el .IP "\fB\f(CB\-with\-inst=INST[,...]\fB\fR" 4
+.IX Item "-with-inst=INST[,...]"
+.PD 0
+.ie n .IP "\fB\f(CB""\-Wnins INST[,...]""\fB\fR" 4
+.el .IP "\fB\f(CB\-Wnins INST[,...]\fB\fR" 4
+.IX Item "-Wnins INST[,...]"
+.PD
+Enable specified undocumented instruction(s).
+.ie n .IP "\fB\f(CB""\-without\-inst=INST[,...]""\fB\fR" 4
+.el .IP "\fB\f(CB\-without\-inst=INST[,...]\fB\fR" 4
+.IX Item "-without-inst=INST[,...]"
+.PD 0
+.ie n .IP "\fB\f(CB""\-Fins INST[,...]""\fB\fR" 4
+.el .IP "\fB\f(CB\-Fins INST[,...]\fB\fR" 4
+.IX Item "-Fins INST[,...]"
+.PD
+Disable specified undocumented instruction(s).
 .IP "\fB\-ignore\-undocumented\-instructions\fR" 4
 .IX Item "-ignore-undocumented-instructions"
 .PD 0
@@ -2812,12 +2858,36 @@ Treat all undocumented instructions as errors.
 .IX Item "-Fup"
 .PD
 Treat undocumented Z80 instructions that do not work on R800 as errors.
+.PP
+Folowing undocumented instructions may be enabled/disabled by
+\&\f(CW\*(C`\-with\-inst\*(C'\fR/\f(CW\*(C`\-without\-inst\*(C'\fR:
+.ie n .IP "\fB\f(CB""idx\-reg\-halves""\fB\fR" 4
+.el .IP "\fB\f(CBidx\-reg\-halves\fB\fR" 4
+.IX Item "idx-reg-halves"
+All operations with halves of index registers (\s-1IXL, IXH, IYL, IYH\s0).
+.ie n .IP "\fB\f(CB""sli""\fB\fR" 4
+.el .IP "\fB\f(CBsli\fB\fR" 4
+.IX Item "sli"
+\&\s-1SLI\s0 or \s-1SLL\s0 instruction.
+.ie n .IP "\fB\f(CB""op\-ii\-ld""\fB\fR" 4
+.el .IP "\fB\f(CBop\-ii\-ld\fB\fR" 4
+.IX Item "op-ii-ld"
+Istructions like \f(CW\*(C`<op> (<ii>+<d>),<r>\*(C'\fR, where \f(CW\*(C`<op>\*(C'\fR
+is shift or bit manipulation instruction (\s-1RLC, SLA, SET, RES...\s0).
+.ie n .IP "\fB\f(CB""in\-f\-c""\fB\fR" 4
+.el .IP "\fB\f(CBin\-f\-c\fB\fR" 4
+.IX Item "in-f-c"
+Instruction \f(CW\*(C`IN F,(C)\*(C'\fR.
+.ie n .IP "\fB\f(CB""out\-c\-0""\fB\fR" 4
+.el .IP "\fB\f(CBout\-c\-0\fB\fR" 4
+.IX Item "out-c-0"
+Instruction \f(CW\*(C`OUT (C),0\*(C'\fR
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
 \&\fBgcc\fR\|(1), \fBld\fR\|(1), and the Info entries for \fIbinutils\fR and \fIld\fR.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright (c) 1991\-2019 Free Software Foundation, Inc.
+Copyright (c) 1991\-2020 Free Software Foundation, Inc.
 .PP
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the \s-1GNU\s0 Free Documentation License, Version 1.3

@@ -46,6 +46,10 @@
     const auto *SA = cast<AcquireCapabilityAttr>(A); (void)SA;
     OS << " " << A->getSpelling();
   }
+  void VisitAcquireHandleAttr(const AcquireHandleAttr *A) {
+    const auto *SA = cast<AcquireHandleAttr>(A); (void)SA;
+    OS << " \"" << SA->getHandleType() << "\"";
+  }
   void VisitAddressSpaceAttr(const AddressSpaceAttr *A) {
     const auto *SA = cast<AddressSpaceAttr>(A); (void)SA;
     OS << " " << SA->getAddressSpace();
@@ -655,6 +659,10 @@
     const auto *SA = cast<ReleaseCapabilityAttr>(A); (void)SA;
     OS << " " << A->getSpelling();
   }
+  void VisitReleaseHandleAttr(const ReleaseHandleAttr *A) {
+    const auto *SA = cast<ReleaseHandleAttr>(A); (void)SA;
+    OS << " \"" << SA->getHandleType() << "\"";
+  }
   void VisitReqdWorkGroupSizeAttr(const ReqdWorkGroupSizeAttr *A) {
     const auto *SA = cast<ReqdWorkGroupSizeAttr>(A); (void)SA;
     OS << " " << SA->getXDim();
@@ -782,6 +790,10 @@
   }
   void VisitUnusedAttr(const UnusedAttr *A) {
     OS << " " << A->getSpelling();
+  }
+  void VisitUseHandleAttr(const UseHandleAttr *A) {
+    const auto *SA = cast<UseHandleAttr>(A); (void)SA;
+    OS << " \"" << SA->getHandleType() << "\"";
   }
   void VisitUuidAttr(const UuidAttr *A) {
     const auto *SA = cast<UuidAttr>(A); (void)SA;

@@ -106,6 +106,15 @@
     New->setImplicit(isImplicit);
     break;
   }
+  case attr::AcquireHandle: {
+    bool isInherited = Record.readInt();
+    bool isImplicit = Record.readInt();
+    std::string handleType= Record.readString();
+    New = new (Context) AcquireHandleAttr(Context, Info, handleType);
+    cast<InheritableAttr>(New)->setInherited(isInherited);
+    New->setImplicit(isImplicit);
+    break;
+  }
   case attr::AcquiredAfter: {
     bool isInherited = Record.readInt();
     bool isImplicit = Record.readInt();
@@ -2097,6 +2106,15 @@
     New->setImplicit(isImplicit);
     break;
   }
+  case attr::ReleaseHandle: {
+    bool isInherited = Record.readInt();
+    bool isImplicit = Record.readInt();
+    std::string handleType= Record.readString();
+    New = new (Context) ReleaseHandleAttr(Context, Info, handleType);
+    cast<InheritableAttr>(New)->setInherited(isInherited);
+    New->setImplicit(isImplicit);
+    break;
+  }
   case attr::RenderScriptKernel: {
     bool isImplicit = Record.readInt();
     New = new (Context) RenderScriptKernelAttr(Context, Info);
@@ -2441,6 +2459,15 @@
     bool isInherited = Record.readInt();
     bool isImplicit = Record.readInt();
     New = new (Context) UnusedAttr(Context, Info);
+    cast<InheritableAttr>(New)->setInherited(isInherited);
+    New->setImplicit(isImplicit);
+    break;
+  }
+  case attr::UseHandle: {
+    bool isInherited = Record.readInt();
+    bool isImplicit = Record.readInt();
+    std::string handleType= Record.readString();
+    New = new (Context) UseHandleAttr(Context, Info, handleType);
     cast<InheritableAttr>(New)->setInherited(isInherited);
     New->setImplicit(isImplicit);
     break;

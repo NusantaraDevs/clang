@@ -6,14 +6,6 @@
 |*                                                                            *|
 \*===----------------------------------------------------------------------===*/
 
-// VisualStudio defines setjmp as _setjmp
-#if defined(_MSC_VER) && defined(setjmp) && \
-                         !defined(setjmp_undefined_for_msvc)
-#  pragma push_macro("setjmp")
-#  undef setjmp
-#  define setjmp_undefined_for_msvc
-#endif
-
 // Enum values for intrinsics
     addressofreturnaddress = 1,                    // llvm.addressofreturnaddress
     adjust_trampoline,                         // llvm.adjust.trampoline
@@ -172,7 +164,6 @@
     log,                                       // llvm.log
     log10,                                     // llvm.log10
     log2,                                      // llvm.log2
-    longjmp,                                   // llvm.longjmp
     loop_decrement,                            // llvm.loop.decrement
     loop_decrement_reg,                        // llvm.loop.decrement.reg
     lrint,                                     // llvm.lrint
@@ -245,11 +236,9 @@
     round,                                     // llvm.round
     sadd_sat,                                  // llvm.sadd.sat
     sadd_with_overflow,                        // llvm.sadd.with.overflow
+    sdiv_fix,                                  // llvm.sdiv.fix
     set_loop_iterations,                       // llvm.set.loop.iterations
-    setjmp,                                    // llvm.setjmp
     sideeffect,                                // llvm.sideeffect
-    siglongjmp,                                // llvm.siglongjmp
-    sigsetjmp,                                 // llvm.sigsetjmp
     sin,                                       // llvm.sin
     smul_fix,                                  // llvm.smul.fix
     smul_fix_sat,                              // llvm.smul.fix.sat
@@ -272,6 +261,7 @@
     type_test,                                 // llvm.type.test
     uadd_sat,                                  // llvm.uadd.sat
     uadd_with_overflow,                        // llvm.uadd.with.overflow
+    udiv_fix,                                  // llvm.udiv.fix
     umul_fix,                                  // llvm.umul.fix
     umul_fix_sat,                              // llvm.umul.fix.sat
     umul_with_overflow,                        // llvm.umul.with.overflow
@@ -284,10 +274,4 @@
     write_register,                            // llvm.write_register
     xray_customevent,                          // llvm.xray.customevent
     xray_typedevent,                           // llvm.xray.typedevent
-    num_intrinsics = 7460
-#if defined(_MSC_VER) && defined(setjmp_undefined_for_msvc)
-// let's return it to _setjmp state
-#  pragma pop_macro("setjmp")
-#  undef setjmp_undefined_for_msvc
-#endif
-
+    num_intrinsics = 7544

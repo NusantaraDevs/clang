@@ -589,6 +589,66 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::AcquireCapability; }
 };
 
+class AcquireHandleAttr : public InheritableAttr {
+unsigned handleTypeLength;
+char *handleType;
+
+public:
+  static AcquireHandleAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) AcquireHandleAttr(Ctx, CommonInfo, HandleType);
+    A->setImplicit(true);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static AcquireHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) AcquireHandleAttr(Ctx, CommonInfo, HandleType);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static AcquireHandleAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef HandleType, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return CreateImplicit(Ctx, HandleType, I);
+  }
+  static AcquireHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return Create(Ctx, HandleType, I);
+  }
+  AcquireHandleAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , llvm::StringRef HandleType
+             )
+    : InheritableAttr(Ctx, CommonInfo, attr::AcquireHandle, false, false)
+              , handleTypeLength(HandleType.size()),handleType(new (Ctx, 1) char[handleTypeLength])
+  {
+      if (!HandleType.empty())
+        std::memcpy(handleType, HandleType.data(), handleTypeLength);
+  }
+
+  AcquireHandleAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  llvm::StringRef getHandleType() const {
+    return llvm::StringRef(handleType, handleTypeLength);
+  }
+  unsigned getHandleTypeLength() const {
+    return handleTypeLength;
+  }
+  void setHandleType(ASTContext &C, llvm::StringRef S) {
+    handleTypeLength = S.size();
+    this->handleType = new (C, 1) char [handleTypeLength];
+    if (!S.empty())
+      std::memcpy(this->handleType, S.data(), handleTypeLength);
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::AcquireHandle; }
+};
+
 class AcquiredAfterAttr : public InheritableAttr {
   unsigned args_Size;
   Expr * *args_;
@@ -12671,6 +12731,66 @@ public:
   static bool classof(const Attr *A) { return A->getKind() == attr::ReleaseCapability; }
 };
 
+class ReleaseHandleAttr : public InheritableParamAttr {
+unsigned handleTypeLength;
+char *handleType;
+
+public:
+  static ReleaseHandleAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) ReleaseHandleAttr(Ctx, CommonInfo, HandleType);
+    A->setImplicit(true);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static ReleaseHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) ReleaseHandleAttr(Ctx, CommonInfo, HandleType);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static ReleaseHandleAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef HandleType, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return CreateImplicit(Ctx, HandleType, I);
+  }
+  static ReleaseHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return Create(Ctx, HandleType, I);
+  }
+  ReleaseHandleAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , llvm::StringRef HandleType
+             )
+    : InheritableParamAttr(Ctx, CommonInfo, attr::ReleaseHandle, false, false)
+              , handleTypeLength(HandleType.size()),handleType(new (Ctx, 1) char[handleTypeLength])
+  {
+      if (!HandleType.empty())
+        std::memcpy(handleType, HandleType.data(), handleTypeLength);
+  }
+
+  ReleaseHandleAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  llvm::StringRef getHandleType() const {
+    return llvm::StringRef(handleType, handleTypeLength);
+  }
+  unsigned getHandleTypeLength() const {
+    return handleTypeLength;
+  }
+  void setHandleType(ASTContext &C, llvm::StringRef S) {
+    handleTypeLength = S.size();
+    this->handleType = new (C, 1) char [handleTypeLength];
+    if (!S.empty())
+      std::memcpy(this->handleType, S.data(), handleTypeLength);
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::ReleaseHandle; }
+};
+
 class RenderScriptKernelAttr : public Attr {
 public:
   static RenderScriptKernelAttr *CreateImplicit(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
@@ -14920,6 +15040,66 @@ public:
 
 
   static bool classof(const Attr *A) { return A->getKind() == attr::Unused; }
+};
+
+class UseHandleAttr : public InheritableParamAttr {
+unsigned handleTypeLength;
+char *handleType;
+
+public:
+  static UseHandleAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) UseHandleAttr(Ctx, CommonInfo, HandleType);
+    A->setImplicit(true);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static UseHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, const AttributeCommonInfo &CommonInfo = {SourceRange{}}) {
+    auto *A = new (Ctx) UseHandleAttr(Ctx, CommonInfo, HandleType);
+    if (!A->isAttributeSpellingListCalculated() && !A->getAttrName())
+      A->setAttributeSpellingListIndex(0);
+    return A;
+  }
+
+  static UseHandleAttr *CreateImplicit(ASTContext &Ctx, llvm::StringRef HandleType, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return CreateImplicit(Ctx, HandleType, I);
+  }
+  static UseHandleAttr *Create(ASTContext &Ctx, llvm::StringRef HandleType, SourceRange Range, AttributeCommonInfo::Syntax Syntax) {
+    AttributeCommonInfo I(Range, NoSemaHandlerAttribute, Syntax);
+    return Create(Ctx, HandleType, I);
+  }
+  UseHandleAttr(ASTContext &Ctx, const AttributeCommonInfo &CommonInfo
+              , llvm::StringRef HandleType
+             )
+    : InheritableParamAttr(Ctx, CommonInfo, attr::UseHandle, false, false)
+              , handleTypeLength(HandleType.size()),handleType(new (Ctx, 1) char[handleTypeLength])
+  {
+      if (!HandleType.empty())
+        std::memcpy(handleType, HandleType.data(), handleTypeLength);
+  }
+
+  UseHandleAttr *clone(ASTContext &C) const;
+  void printPretty(raw_ostream &OS,
+                   const PrintingPolicy &Policy) const;
+  const char *getSpelling() const;
+  llvm::StringRef getHandleType() const {
+    return llvm::StringRef(handleType, handleTypeLength);
+  }
+  unsigned getHandleTypeLength() const {
+    return handleTypeLength;
+  }
+  void setHandleType(ASTContext &C, llvm::StringRef S) {
+    handleTypeLength = S.size();
+    this->handleType = new (C, 1) char [handleTypeLength];
+    if (!S.empty())
+      std::memcpy(this->handleType, S.data(), handleTypeLength);
+  }
+
+
+
+  static bool classof(const Attr *A) { return A->getKind() == attr::UseHandle; }
 };
 
 class UsedAttr : public InheritableAttr {

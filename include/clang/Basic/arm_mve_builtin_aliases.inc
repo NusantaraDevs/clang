@@ -1924,6 +1924,102 @@ case ARM::BI__builtin_arm_mve_vqrdmulhq_s32:
   return AliasName == "vqrdmulhq_s32" || AliasName == "vqrdmulhq";
 case ARM::BI__builtin_arm_mve_vqrdmulhq_s8:
   return AliasName == "vqrdmulhq_s8" || AliasName == "vqrdmulhq";
+case ARM::BI__builtin_arm_mve_vqrshlq_m_n_s16:
+  return AliasName == "vqrshlq_m_n_s16" || AliasName == "vqrshlq_m_n";
+case ARM::BI__builtin_arm_mve_vqrshlq_m_n_s32:
+  return AliasName == "vqrshlq_m_n_s32" || AliasName == "vqrshlq_m_n";
+case ARM::BI__builtin_arm_mve_vqrshlq_m_n_s8:
+  return AliasName == "vqrshlq_m_n_s8" || AliasName == "vqrshlq_m_n";
+case ARM::BI__builtin_arm_mve_vqrshlq_m_n_u16:
+  return AliasName == "vqrshlq_m_n_u16" || AliasName == "vqrshlq_m_n";
+case ARM::BI__builtin_arm_mve_vqrshlq_m_n_u32:
+  return AliasName == "vqrshlq_m_n_u32" || AliasName == "vqrshlq_m_n";
+case ARM::BI__builtin_arm_mve_vqrshlq_m_n_u8:
+  return AliasName == "vqrshlq_m_n_u8" || AliasName == "vqrshlq_m_n";
+case ARM::BI__builtin_arm_mve_vqrshlq_m_s16:
+  return AliasName == "vqrshlq_m_s16" || AliasName == "vqrshlq_m";
+case ARM::BI__builtin_arm_mve_vqrshlq_m_s32:
+  return AliasName == "vqrshlq_m_s32" || AliasName == "vqrshlq_m";
+case ARM::BI__builtin_arm_mve_vqrshlq_m_s8:
+  return AliasName == "vqrshlq_m_s8" || AliasName == "vqrshlq_m";
+case ARM::BI__builtin_arm_mve_vqrshlq_m_u16:
+  return AliasName == "vqrshlq_m_u16" || AliasName == "vqrshlq_m";
+case ARM::BI__builtin_arm_mve_vqrshlq_m_u32:
+  return AliasName == "vqrshlq_m_u32" || AliasName == "vqrshlq_m";
+case ARM::BI__builtin_arm_mve_vqrshlq_m_u8:
+  return AliasName == "vqrshlq_m_u8" || AliasName == "vqrshlq_m";
+case ARM::BI__builtin_arm_mve_vqrshlq_n_s16:
+  return AliasName == "vqrshlq_n_s16" || AliasName == "vqrshlq";
+case ARM::BI__builtin_arm_mve_vqrshlq_n_s32:
+  return AliasName == "vqrshlq_n_s32" || AliasName == "vqrshlq";
+case ARM::BI__builtin_arm_mve_vqrshlq_n_s8:
+  return AliasName == "vqrshlq_n_s8" || AliasName == "vqrshlq";
+case ARM::BI__builtin_arm_mve_vqrshlq_n_u16:
+  return AliasName == "vqrshlq_n_u16" || AliasName == "vqrshlq";
+case ARM::BI__builtin_arm_mve_vqrshlq_n_u32:
+  return AliasName == "vqrshlq_n_u32" || AliasName == "vqrshlq";
+case ARM::BI__builtin_arm_mve_vqrshlq_n_u8:
+  return AliasName == "vqrshlq_n_u8" || AliasName == "vqrshlq";
+case ARM::BI__builtin_arm_mve_vqrshlq_s16:
+  return AliasName == "vqrshlq_s16" || AliasName == "vqrshlq";
+case ARM::BI__builtin_arm_mve_vqrshlq_s32:
+  return AliasName == "vqrshlq_s32" || AliasName == "vqrshlq";
+case ARM::BI__builtin_arm_mve_vqrshlq_s8:
+  return AliasName == "vqrshlq_s8" || AliasName == "vqrshlq";
+case ARM::BI__builtin_arm_mve_vqrshlq_u16:
+  return AliasName == "vqrshlq_u16" || AliasName == "vqrshlq";
+case ARM::BI__builtin_arm_mve_vqrshlq_u32:
+  return AliasName == "vqrshlq_u32" || AliasName == "vqrshlq";
+case ARM::BI__builtin_arm_mve_vqrshlq_u8:
+  return AliasName == "vqrshlq_u8" || AliasName == "vqrshlq";
+case ARM::BI__builtin_arm_mve_vqrshrnbq_m_n_s16:
+  return AliasName == "vqrshrnbq_m_n_s16" || AliasName == "vqrshrnbq_m";
+case ARM::BI__builtin_arm_mve_vqrshrnbq_m_n_s32:
+  return AliasName == "vqrshrnbq_m_n_s32" || AliasName == "vqrshrnbq_m";
+case ARM::BI__builtin_arm_mve_vqrshrnbq_m_n_u16:
+  return AliasName == "vqrshrnbq_m_n_u16" || AliasName == "vqrshrnbq_m";
+case ARM::BI__builtin_arm_mve_vqrshrnbq_m_n_u32:
+  return AliasName == "vqrshrnbq_m_n_u32" || AliasName == "vqrshrnbq_m";
+case ARM::BI__builtin_arm_mve_vqrshrnbq_n_s16:
+  return AliasName == "vqrshrnbq_n_s16" || AliasName == "vqrshrnbq";
+case ARM::BI__builtin_arm_mve_vqrshrnbq_n_s32:
+  return AliasName == "vqrshrnbq_n_s32" || AliasName == "vqrshrnbq";
+case ARM::BI__builtin_arm_mve_vqrshrnbq_n_u16:
+  return AliasName == "vqrshrnbq_n_u16" || AliasName == "vqrshrnbq";
+case ARM::BI__builtin_arm_mve_vqrshrnbq_n_u32:
+  return AliasName == "vqrshrnbq_n_u32" || AliasName == "vqrshrnbq";
+case ARM::BI__builtin_arm_mve_vqrshrntq_m_n_s16:
+  return AliasName == "vqrshrntq_m_n_s16" || AliasName == "vqrshrntq_m";
+case ARM::BI__builtin_arm_mve_vqrshrntq_m_n_s32:
+  return AliasName == "vqrshrntq_m_n_s32" || AliasName == "vqrshrntq_m";
+case ARM::BI__builtin_arm_mve_vqrshrntq_m_n_u16:
+  return AliasName == "vqrshrntq_m_n_u16" || AliasName == "vqrshrntq_m";
+case ARM::BI__builtin_arm_mve_vqrshrntq_m_n_u32:
+  return AliasName == "vqrshrntq_m_n_u32" || AliasName == "vqrshrntq_m";
+case ARM::BI__builtin_arm_mve_vqrshrntq_n_s16:
+  return AliasName == "vqrshrntq_n_s16" || AliasName == "vqrshrntq";
+case ARM::BI__builtin_arm_mve_vqrshrntq_n_s32:
+  return AliasName == "vqrshrntq_n_s32" || AliasName == "vqrshrntq";
+case ARM::BI__builtin_arm_mve_vqrshrntq_n_u16:
+  return AliasName == "vqrshrntq_n_u16" || AliasName == "vqrshrntq";
+case ARM::BI__builtin_arm_mve_vqrshrntq_n_u32:
+  return AliasName == "vqrshrntq_n_u32" || AliasName == "vqrshrntq";
+case ARM::BI__builtin_arm_mve_vqrshrunbq_m_n_s16:
+  return AliasName == "vqrshrunbq_m_n_s16" || AliasName == "vqrshrunbq_m";
+case ARM::BI__builtin_arm_mve_vqrshrunbq_m_n_s32:
+  return AliasName == "vqrshrunbq_m_n_s32" || AliasName == "vqrshrunbq_m";
+case ARM::BI__builtin_arm_mve_vqrshrunbq_n_s16:
+  return AliasName == "vqrshrunbq_n_s16" || AliasName == "vqrshrunbq";
+case ARM::BI__builtin_arm_mve_vqrshrunbq_n_s32:
+  return AliasName == "vqrshrunbq_n_s32" || AliasName == "vqrshrunbq";
+case ARM::BI__builtin_arm_mve_vqrshruntq_m_n_s16:
+  return AliasName == "vqrshruntq_m_n_s16" || AliasName == "vqrshruntq_m";
+case ARM::BI__builtin_arm_mve_vqrshruntq_m_n_s32:
+  return AliasName == "vqrshruntq_m_n_s32" || AliasName == "vqrshruntq_m";
+case ARM::BI__builtin_arm_mve_vqrshruntq_n_s16:
+  return AliasName == "vqrshruntq_n_s16" || AliasName == "vqrshruntq";
+case ARM::BI__builtin_arm_mve_vqrshruntq_n_s32:
+  return AliasName == "vqrshruntq_n_s32" || AliasName == "vqrshruntq";
 case ARM::BI__builtin_arm_mve_vqshlq_m_n_s16:
   return AliasName == "vqshlq_m_n_s16" || AliasName == "vqshlq_m_n";
 case ARM::BI__builtin_arm_mve_vqshlq_m_n_s32:
@@ -1936,6 +2032,30 @@ case ARM::BI__builtin_arm_mve_vqshlq_m_n_u32:
   return AliasName == "vqshlq_m_n_u32" || AliasName == "vqshlq_m_n";
 case ARM::BI__builtin_arm_mve_vqshlq_m_n_u8:
   return AliasName == "vqshlq_m_n_u8" || AliasName == "vqshlq_m_n";
+case ARM::BI__builtin_arm_mve_vqshlq_m_r_s16:
+  return AliasName == "vqshlq_m_r_s16" || AliasName == "vqshlq_m_r";
+case ARM::BI__builtin_arm_mve_vqshlq_m_r_s32:
+  return AliasName == "vqshlq_m_r_s32" || AliasName == "vqshlq_m_r";
+case ARM::BI__builtin_arm_mve_vqshlq_m_r_s8:
+  return AliasName == "vqshlq_m_r_s8" || AliasName == "vqshlq_m_r";
+case ARM::BI__builtin_arm_mve_vqshlq_m_r_u16:
+  return AliasName == "vqshlq_m_r_u16" || AliasName == "vqshlq_m_r";
+case ARM::BI__builtin_arm_mve_vqshlq_m_r_u32:
+  return AliasName == "vqshlq_m_r_u32" || AliasName == "vqshlq_m_r";
+case ARM::BI__builtin_arm_mve_vqshlq_m_r_u8:
+  return AliasName == "vqshlq_m_r_u8" || AliasName == "vqshlq_m_r";
+case ARM::BI__builtin_arm_mve_vqshlq_m_s16:
+  return AliasName == "vqshlq_m_s16" || AliasName == "vqshlq_m";
+case ARM::BI__builtin_arm_mve_vqshlq_m_s32:
+  return AliasName == "vqshlq_m_s32" || AliasName == "vqshlq_m";
+case ARM::BI__builtin_arm_mve_vqshlq_m_s8:
+  return AliasName == "vqshlq_m_s8" || AliasName == "vqshlq_m";
+case ARM::BI__builtin_arm_mve_vqshlq_m_u16:
+  return AliasName == "vqshlq_m_u16" || AliasName == "vqshlq_m";
+case ARM::BI__builtin_arm_mve_vqshlq_m_u32:
+  return AliasName == "vqshlq_m_u32" || AliasName == "vqshlq_m";
+case ARM::BI__builtin_arm_mve_vqshlq_m_u8:
+  return AliasName == "vqshlq_m_u8" || AliasName == "vqshlq_m";
 case ARM::BI__builtin_arm_mve_vqshlq_n_s16:
   return AliasName == "vqshlq_n_s16" || AliasName == "vqshlq_n";
 case ARM::BI__builtin_arm_mve_vqshlq_n_s32:
@@ -1948,6 +2068,30 @@ case ARM::BI__builtin_arm_mve_vqshlq_n_u32:
   return AliasName == "vqshlq_n_u32" || AliasName == "vqshlq_n";
 case ARM::BI__builtin_arm_mve_vqshlq_n_u8:
   return AliasName == "vqshlq_n_u8" || AliasName == "vqshlq_n";
+case ARM::BI__builtin_arm_mve_vqshlq_r_s16:
+  return AliasName == "vqshlq_r_s16" || AliasName == "vqshlq_r";
+case ARM::BI__builtin_arm_mve_vqshlq_r_s32:
+  return AliasName == "vqshlq_r_s32" || AliasName == "vqshlq_r";
+case ARM::BI__builtin_arm_mve_vqshlq_r_s8:
+  return AliasName == "vqshlq_r_s8" || AliasName == "vqshlq_r";
+case ARM::BI__builtin_arm_mve_vqshlq_r_u16:
+  return AliasName == "vqshlq_r_u16" || AliasName == "vqshlq_r";
+case ARM::BI__builtin_arm_mve_vqshlq_r_u32:
+  return AliasName == "vqshlq_r_u32" || AliasName == "vqshlq_r";
+case ARM::BI__builtin_arm_mve_vqshlq_r_u8:
+  return AliasName == "vqshlq_r_u8" || AliasName == "vqshlq_r";
+case ARM::BI__builtin_arm_mve_vqshlq_s16:
+  return AliasName == "vqshlq_s16" || AliasName == "vqshlq";
+case ARM::BI__builtin_arm_mve_vqshlq_s32:
+  return AliasName == "vqshlq_s32" || AliasName == "vqshlq";
+case ARM::BI__builtin_arm_mve_vqshlq_s8:
+  return AliasName == "vqshlq_s8" || AliasName == "vqshlq";
+case ARM::BI__builtin_arm_mve_vqshlq_u16:
+  return AliasName == "vqshlq_u16" || AliasName == "vqshlq";
+case ARM::BI__builtin_arm_mve_vqshlq_u32:
+  return AliasName == "vqshlq_u32" || AliasName == "vqshlq";
+case ARM::BI__builtin_arm_mve_vqshlq_u8:
+  return AliasName == "vqshlq_u8" || AliasName == "vqshlq";
 case ARM::BI__builtin_arm_mve_vqshluq_m_n_s16:
   return AliasName == "vqshluq_m_n_s16" || AliasName == "vqshluq_m";
 case ARM::BI__builtin_arm_mve_vqshluq_m_n_s32:
@@ -1960,6 +2104,54 @@ case ARM::BI__builtin_arm_mve_vqshluq_n_s32:
   return AliasName == "vqshluq_n_s32" || AliasName == "vqshluq";
 case ARM::BI__builtin_arm_mve_vqshluq_n_s8:
   return AliasName == "vqshluq_n_s8" || AliasName == "vqshluq";
+case ARM::BI__builtin_arm_mve_vqshrnbq_m_n_s16:
+  return AliasName == "vqshrnbq_m_n_s16" || AliasName == "vqshrnbq_m";
+case ARM::BI__builtin_arm_mve_vqshrnbq_m_n_s32:
+  return AliasName == "vqshrnbq_m_n_s32" || AliasName == "vqshrnbq_m";
+case ARM::BI__builtin_arm_mve_vqshrnbq_m_n_u16:
+  return AliasName == "vqshrnbq_m_n_u16" || AliasName == "vqshrnbq_m";
+case ARM::BI__builtin_arm_mve_vqshrnbq_m_n_u32:
+  return AliasName == "vqshrnbq_m_n_u32" || AliasName == "vqshrnbq_m";
+case ARM::BI__builtin_arm_mve_vqshrnbq_n_s16:
+  return AliasName == "vqshrnbq_n_s16" || AliasName == "vqshrnbq";
+case ARM::BI__builtin_arm_mve_vqshrnbq_n_s32:
+  return AliasName == "vqshrnbq_n_s32" || AliasName == "vqshrnbq";
+case ARM::BI__builtin_arm_mve_vqshrnbq_n_u16:
+  return AliasName == "vqshrnbq_n_u16" || AliasName == "vqshrnbq";
+case ARM::BI__builtin_arm_mve_vqshrnbq_n_u32:
+  return AliasName == "vqshrnbq_n_u32" || AliasName == "vqshrnbq";
+case ARM::BI__builtin_arm_mve_vqshrntq_m_n_s16:
+  return AliasName == "vqshrntq_m_n_s16" || AliasName == "vqshrntq_m";
+case ARM::BI__builtin_arm_mve_vqshrntq_m_n_s32:
+  return AliasName == "vqshrntq_m_n_s32" || AliasName == "vqshrntq_m";
+case ARM::BI__builtin_arm_mve_vqshrntq_m_n_u16:
+  return AliasName == "vqshrntq_m_n_u16" || AliasName == "vqshrntq_m";
+case ARM::BI__builtin_arm_mve_vqshrntq_m_n_u32:
+  return AliasName == "vqshrntq_m_n_u32" || AliasName == "vqshrntq_m";
+case ARM::BI__builtin_arm_mve_vqshrntq_n_s16:
+  return AliasName == "vqshrntq_n_s16" || AliasName == "vqshrntq";
+case ARM::BI__builtin_arm_mve_vqshrntq_n_s32:
+  return AliasName == "vqshrntq_n_s32" || AliasName == "vqshrntq";
+case ARM::BI__builtin_arm_mve_vqshrntq_n_u16:
+  return AliasName == "vqshrntq_n_u16" || AliasName == "vqshrntq";
+case ARM::BI__builtin_arm_mve_vqshrntq_n_u32:
+  return AliasName == "vqshrntq_n_u32" || AliasName == "vqshrntq";
+case ARM::BI__builtin_arm_mve_vqshrunbq_m_n_s16:
+  return AliasName == "vqshrunbq_m_n_s16" || AliasName == "vqshrunbq_m";
+case ARM::BI__builtin_arm_mve_vqshrunbq_m_n_s32:
+  return AliasName == "vqshrunbq_m_n_s32" || AliasName == "vqshrunbq_m";
+case ARM::BI__builtin_arm_mve_vqshrunbq_n_s16:
+  return AliasName == "vqshrunbq_n_s16" || AliasName == "vqshrunbq";
+case ARM::BI__builtin_arm_mve_vqshrunbq_n_s32:
+  return AliasName == "vqshrunbq_n_s32" || AliasName == "vqshrunbq";
+case ARM::BI__builtin_arm_mve_vqshruntq_m_n_s16:
+  return AliasName == "vqshruntq_m_n_s16" || AliasName == "vqshruntq_m";
+case ARM::BI__builtin_arm_mve_vqshruntq_m_n_s32:
+  return AliasName == "vqshruntq_m_n_s32" || AliasName == "vqshruntq_m";
+case ARM::BI__builtin_arm_mve_vqshruntq_n_s16:
+  return AliasName == "vqshruntq_n_s16" || AliasName == "vqshruntq";
+case ARM::BI__builtin_arm_mve_vqshruntq_n_s32:
+  return AliasName == "vqshruntq_n_s32" || AliasName == "vqshruntq";
 case ARM::BI__builtin_arm_mve_vqsubq_m_s16:
   return AliasName == "vqsubq_m_s16" || AliasName == "vqsubq_m";
 case ARM::BI__builtin_arm_mve_vqsubq_m_s32:
@@ -2276,6 +2468,98 @@ case ARM::BI__builtin_arm_mve_vrmulhq_x_u32:
   return AliasName == "vrmulhq_x_u32" || AliasName == "vrmulhq_x";
 case ARM::BI__builtin_arm_mve_vrmulhq_x_u8:
   return AliasName == "vrmulhq_x_u8" || AliasName == "vrmulhq_x";
+case ARM::BI__builtin_arm_mve_vrshlq_m_n_s16:
+  return AliasName == "vrshlq_m_n_s16" || AliasName == "vrshlq_m_n";
+case ARM::BI__builtin_arm_mve_vrshlq_m_n_s32:
+  return AliasName == "vrshlq_m_n_s32" || AliasName == "vrshlq_m_n";
+case ARM::BI__builtin_arm_mve_vrshlq_m_n_s8:
+  return AliasName == "vrshlq_m_n_s8" || AliasName == "vrshlq_m_n";
+case ARM::BI__builtin_arm_mve_vrshlq_m_n_u16:
+  return AliasName == "vrshlq_m_n_u16" || AliasName == "vrshlq_m_n";
+case ARM::BI__builtin_arm_mve_vrshlq_m_n_u32:
+  return AliasName == "vrshlq_m_n_u32" || AliasName == "vrshlq_m_n";
+case ARM::BI__builtin_arm_mve_vrshlq_m_n_u8:
+  return AliasName == "vrshlq_m_n_u8" || AliasName == "vrshlq_m_n";
+case ARM::BI__builtin_arm_mve_vrshlq_m_s16:
+  return AliasName == "vrshlq_m_s16" || AliasName == "vrshlq_m";
+case ARM::BI__builtin_arm_mve_vrshlq_m_s32:
+  return AliasName == "vrshlq_m_s32" || AliasName == "vrshlq_m";
+case ARM::BI__builtin_arm_mve_vrshlq_m_s8:
+  return AliasName == "vrshlq_m_s8" || AliasName == "vrshlq_m";
+case ARM::BI__builtin_arm_mve_vrshlq_m_u16:
+  return AliasName == "vrshlq_m_u16" || AliasName == "vrshlq_m";
+case ARM::BI__builtin_arm_mve_vrshlq_m_u32:
+  return AliasName == "vrshlq_m_u32" || AliasName == "vrshlq_m";
+case ARM::BI__builtin_arm_mve_vrshlq_m_u8:
+  return AliasName == "vrshlq_m_u8" || AliasName == "vrshlq_m";
+case ARM::BI__builtin_arm_mve_vrshlq_n_s16:
+  return AliasName == "vrshlq_n_s16" || AliasName == "vrshlq";
+case ARM::BI__builtin_arm_mve_vrshlq_n_s32:
+  return AliasName == "vrshlq_n_s32" || AliasName == "vrshlq";
+case ARM::BI__builtin_arm_mve_vrshlq_n_s8:
+  return AliasName == "vrshlq_n_s8" || AliasName == "vrshlq";
+case ARM::BI__builtin_arm_mve_vrshlq_n_u16:
+  return AliasName == "vrshlq_n_u16" || AliasName == "vrshlq";
+case ARM::BI__builtin_arm_mve_vrshlq_n_u32:
+  return AliasName == "vrshlq_n_u32" || AliasName == "vrshlq";
+case ARM::BI__builtin_arm_mve_vrshlq_n_u8:
+  return AliasName == "vrshlq_n_u8" || AliasName == "vrshlq";
+case ARM::BI__builtin_arm_mve_vrshlq_s16:
+  return AliasName == "vrshlq_s16" || AliasName == "vrshlq";
+case ARM::BI__builtin_arm_mve_vrshlq_s32:
+  return AliasName == "vrshlq_s32" || AliasName == "vrshlq";
+case ARM::BI__builtin_arm_mve_vrshlq_s8:
+  return AliasName == "vrshlq_s8" || AliasName == "vrshlq";
+case ARM::BI__builtin_arm_mve_vrshlq_u16:
+  return AliasName == "vrshlq_u16" || AliasName == "vrshlq";
+case ARM::BI__builtin_arm_mve_vrshlq_u32:
+  return AliasName == "vrshlq_u32" || AliasName == "vrshlq";
+case ARM::BI__builtin_arm_mve_vrshlq_u8:
+  return AliasName == "vrshlq_u8" || AliasName == "vrshlq";
+case ARM::BI__builtin_arm_mve_vrshlq_x_s16:
+  return AliasName == "vrshlq_x_s16" || AliasName == "vrshlq_x";
+case ARM::BI__builtin_arm_mve_vrshlq_x_s32:
+  return AliasName == "vrshlq_x_s32" || AliasName == "vrshlq_x";
+case ARM::BI__builtin_arm_mve_vrshlq_x_s8:
+  return AliasName == "vrshlq_x_s8" || AliasName == "vrshlq_x";
+case ARM::BI__builtin_arm_mve_vrshlq_x_u16:
+  return AliasName == "vrshlq_x_u16" || AliasName == "vrshlq_x";
+case ARM::BI__builtin_arm_mve_vrshlq_x_u32:
+  return AliasName == "vrshlq_x_u32" || AliasName == "vrshlq_x";
+case ARM::BI__builtin_arm_mve_vrshlq_x_u8:
+  return AliasName == "vrshlq_x_u8" || AliasName == "vrshlq_x";
+case ARM::BI__builtin_arm_mve_vrshrnbq_m_n_s16:
+  return AliasName == "vrshrnbq_m_n_s16" || AliasName == "vrshrnbq_m";
+case ARM::BI__builtin_arm_mve_vrshrnbq_m_n_s32:
+  return AliasName == "vrshrnbq_m_n_s32" || AliasName == "vrshrnbq_m";
+case ARM::BI__builtin_arm_mve_vrshrnbq_m_n_u16:
+  return AliasName == "vrshrnbq_m_n_u16" || AliasName == "vrshrnbq_m";
+case ARM::BI__builtin_arm_mve_vrshrnbq_m_n_u32:
+  return AliasName == "vrshrnbq_m_n_u32" || AliasName == "vrshrnbq_m";
+case ARM::BI__builtin_arm_mve_vrshrnbq_n_s16:
+  return AliasName == "vrshrnbq_n_s16" || AliasName == "vrshrnbq";
+case ARM::BI__builtin_arm_mve_vrshrnbq_n_s32:
+  return AliasName == "vrshrnbq_n_s32" || AliasName == "vrshrnbq";
+case ARM::BI__builtin_arm_mve_vrshrnbq_n_u16:
+  return AliasName == "vrshrnbq_n_u16" || AliasName == "vrshrnbq";
+case ARM::BI__builtin_arm_mve_vrshrnbq_n_u32:
+  return AliasName == "vrshrnbq_n_u32" || AliasName == "vrshrnbq";
+case ARM::BI__builtin_arm_mve_vrshrntq_m_n_s16:
+  return AliasName == "vrshrntq_m_n_s16" || AliasName == "vrshrntq_m";
+case ARM::BI__builtin_arm_mve_vrshrntq_m_n_s32:
+  return AliasName == "vrshrntq_m_n_s32" || AliasName == "vrshrntq_m";
+case ARM::BI__builtin_arm_mve_vrshrntq_m_n_u16:
+  return AliasName == "vrshrntq_m_n_u16" || AliasName == "vrshrntq_m";
+case ARM::BI__builtin_arm_mve_vrshrntq_m_n_u32:
+  return AliasName == "vrshrntq_m_n_u32" || AliasName == "vrshrntq_m";
+case ARM::BI__builtin_arm_mve_vrshrntq_n_s16:
+  return AliasName == "vrshrntq_n_s16" || AliasName == "vrshrntq";
+case ARM::BI__builtin_arm_mve_vrshrntq_n_s32:
+  return AliasName == "vrshrntq_n_s32" || AliasName == "vrshrntq";
+case ARM::BI__builtin_arm_mve_vrshrntq_n_u16:
+  return AliasName == "vrshrntq_n_u16" || AliasName == "vrshrntq";
+case ARM::BI__builtin_arm_mve_vrshrntq_n_u32:
+  return AliasName == "vrshrntq_n_u32" || AliasName == "vrshrntq";
 case ARM::BI__builtin_arm_mve_vrshrq_m_n_s16:
   return AliasName == "vrshrq_m_n_s16" || AliasName == "vrshrq_m";
 case ARM::BI__builtin_arm_mve_vrshrq_m_n_s32:
@@ -2392,6 +2676,30 @@ case ARM::BI__builtin_arm_mve_vshlq_m_n_u32:
   return AliasName == "vshlq_m_n_u32" || AliasName == "vshlq_m_n";
 case ARM::BI__builtin_arm_mve_vshlq_m_n_u8:
   return AliasName == "vshlq_m_n_u8" || AliasName == "vshlq_m_n";
+case ARM::BI__builtin_arm_mve_vshlq_m_r_s16:
+  return AliasName == "vshlq_m_r_s16" || AliasName == "vshlq_m_r";
+case ARM::BI__builtin_arm_mve_vshlq_m_r_s32:
+  return AliasName == "vshlq_m_r_s32" || AliasName == "vshlq_m_r";
+case ARM::BI__builtin_arm_mve_vshlq_m_r_s8:
+  return AliasName == "vshlq_m_r_s8" || AliasName == "vshlq_m_r";
+case ARM::BI__builtin_arm_mve_vshlq_m_r_u16:
+  return AliasName == "vshlq_m_r_u16" || AliasName == "vshlq_m_r";
+case ARM::BI__builtin_arm_mve_vshlq_m_r_u32:
+  return AliasName == "vshlq_m_r_u32" || AliasName == "vshlq_m_r";
+case ARM::BI__builtin_arm_mve_vshlq_m_r_u8:
+  return AliasName == "vshlq_m_r_u8" || AliasName == "vshlq_m_r";
+case ARM::BI__builtin_arm_mve_vshlq_m_s16:
+  return AliasName == "vshlq_m_s16" || AliasName == "vshlq_m";
+case ARM::BI__builtin_arm_mve_vshlq_m_s32:
+  return AliasName == "vshlq_m_s32" || AliasName == "vshlq_m";
+case ARM::BI__builtin_arm_mve_vshlq_m_s8:
+  return AliasName == "vshlq_m_s8" || AliasName == "vshlq_m";
+case ARM::BI__builtin_arm_mve_vshlq_m_u16:
+  return AliasName == "vshlq_m_u16" || AliasName == "vshlq_m";
+case ARM::BI__builtin_arm_mve_vshlq_m_u32:
+  return AliasName == "vshlq_m_u32" || AliasName == "vshlq_m";
+case ARM::BI__builtin_arm_mve_vshlq_m_u8:
+  return AliasName == "vshlq_m_u8" || AliasName == "vshlq_m";
 case ARM::BI__builtin_arm_mve_vshlq_n_s16:
   return AliasName == "vshlq_n_s16" || AliasName == "vshlq_n";
 case ARM::BI__builtin_arm_mve_vshlq_n_s32:
@@ -2404,6 +2712,30 @@ case ARM::BI__builtin_arm_mve_vshlq_n_u32:
   return AliasName == "vshlq_n_u32" || AliasName == "vshlq_n";
 case ARM::BI__builtin_arm_mve_vshlq_n_u8:
   return AliasName == "vshlq_n_u8" || AliasName == "vshlq_n";
+case ARM::BI__builtin_arm_mve_vshlq_r_s16:
+  return AliasName == "vshlq_r_s16" || AliasName == "vshlq_r";
+case ARM::BI__builtin_arm_mve_vshlq_r_s32:
+  return AliasName == "vshlq_r_s32" || AliasName == "vshlq_r";
+case ARM::BI__builtin_arm_mve_vshlq_r_s8:
+  return AliasName == "vshlq_r_s8" || AliasName == "vshlq_r";
+case ARM::BI__builtin_arm_mve_vshlq_r_u16:
+  return AliasName == "vshlq_r_u16" || AliasName == "vshlq_r";
+case ARM::BI__builtin_arm_mve_vshlq_r_u32:
+  return AliasName == "vshlq_r_u32" || AliasName == "vshlq_r";
+case ARM::BI__builtin_arm_mve_vshlq_r_u8:
+  return AliasName == "vshlq_r_u8" || AliasName == "vshlq_r";
+case ARM::BI__builtin_arm_mve_vshlq_s16:
+  return AliasName == "vshlq_s16" || AliasName == "vshlq";
+case ARM::BI__builtin_arm_mve_vshlq_s32:
+  return AliasName == "vshlq_s32" || AliasName == "vshlq";
+case ARM::BI__builtin_arm_mve_vshlq_s8:
+  return AliasName == "vshlq_s8" || AliasName == "vshlq";
+case ARM::BI__builtin_arm_mve_vshlq_u16:
+  return AliasName == "vshlq_u16" || AliasName == "vshlq";
+case ARM::BI__builtin_arm_mve_vshlq_u32:
+  return AliasName == "vshlq_u32" || AliasName == "vshlq";
+case ARM::BI__builtin_arm_mve_vshlq_u8:
+  return AliasName == "vshlq_u8" || AliasName == "vshlq";
 case ARM::BI__builtin_arm_mve_vshlq_x_n_s16:
   return AliasName == "vshlq_x_n_s16" || AliasName == "vshlq_x_n";
 case ARM::BI__builtin_arm_mve_vshlq_x_n_s32:
@@ -2416,6 +2748,50 @@ case ARM::BI__builtin_arm_mve_vshlq_x_n_u32:
   return AliasName == "vshlq_x_n_u32" || AliasName == "vshlq_x_n";
 case ARM::BI__builtin_arm_mve_vshlq_x_n_u8:
   return AliasName == "vshlq_x_n_u8" || AliasName == "vshlq_x_n";
+case ARM::BI__builtin_arm_mve_vshlq_x_s16:
+  return AliasName == "vshlq_x_s16" || AliasName == "vshlq_x";
+case ARM::BI__builtin_arm_mve_vshlq_x_s32:
+  return AliasName == "vshlq_x_s32" || AliasName == "vshlq_x";
+case ARM::BI__builtin_arm_mve_vshlq_x_s8:
+  return AliasName == "vshlq_x_s8" || AliasName == "vshlq_x";
+case ARM::BI__builtin_arm_mve_vshlq_x_u16:
+  return AliasName == "vshlq_x_u16" || AliasName == "vshlq_x";
+case ARM::BI__builtin_arm_mve_vshlq_x_u32:
+  return AliasName == "vshlq_x_u32" || AliasName == "vshlq_x";
+case ARM::BI__builtin_arm_mve_vshlq_x_u8:
+  return AliasName == "vshlq_x_u8" || AliasName == "vshlq_x";
+case ARM::BI__builtin_arm_mve_vshrnbq_m_n_s16:
+  return AliasName == "vshrnbq_m_n_s16" || AliasName == "vshrnbq_m";
+case ARM::BI__builtin_arm_mve_vshrnbq_m_n_s32:
+  return AliasName == "vshrnbq_m_n_s32" || AliasName == "vshrnbq_m";
+case ARM::BI__builtin_arm_mve_vshrnbq_m_n_u16:
+  return AliasName == "vshrnbq_m_n_u16" || AliasName == "vshrnbq_m";
+case ARM::BI__builtin_arm_mve_vshrnbq_m_n_u32:
+  return AliasName == "vshrnbq_m_n_u32" || AliasName == "vshrnbq_m";
+case ARM::BI__builtin_arm_mve_vshrnbq_n_s16:
+  return AliasName == "vshrnbq_n_s16" || AliasName == "vshrnbq";
+case ARM::BI__builtin_arm_mve_vshrnbq_n_s32:
+  return AliasName == "vshrnbq_n_s32" || AliasName == "vshrnbq";
+case ARM::BI__builtin_arm_mve_vshrnbq_n_u16:
+  return AliasName == "vshrnbq_n_u16" || AliasName == "vshrnbq";
+case ARM::BI__builtin_arm_mve_vshrnbq_n_u32:
+  return AliasName == "vshrnbq_n_u32" || AliasName == "vshrnbq";
+case ARM::BI__builtin_arm_mve_vshrntq_m_n_s16:
+  return AliasName == "vshrntq_m_n_s16" || AliasName == "vshrntq_m";
+case ARM::BI__builtin_arm_mve_vshrntq_m_n_s32:
+  return AliasName == "vshrntq_m_n_s32" || AliasName == "vshrntq_m";
+case ARM::BI__builtin_arm_mve_vshrntq_m_n_u16:
+  return AliasName == "vshrntq_m_n_u16" || AliasName == "vshrntq_m";
+case ARM::BI__builtin_arm_mve_vshrntq_m_n_u32:
+  return AliasName == "vshrntq_m_n_u32" || AliasName == "vshrntq_m";
+case ARM::BI__builtin_arm_mve_vshrntq_n_s16:
+  return AliasName == "vshrntq_n_s16" || AliasName == "vshrntq";
+case ARM::BI__builtin_arm_mve_vshrntq_n_s32:
+  return AliasName == "vshrntq_n_s32" || AliasName == "vshrntq";
+case ARM::BI__builtin_arm_mve_vshrntq_n_u16:
+  return AliasName == "vshrntq_n_u16" || AliasName == "vshrntq";
+case ARM::BI__builtin_arm_mve_vshrntq_n_u32:
+  return AliasName == "vshrntq_n_u32" || AliasName == "vshrntq";
 case ARM::BI__builtin_arm_mve_vshrq_m_n_s16:
   return AliasName == "vshrq_m_n_s16" || AliasName == "vshrq_m";
 case ARM::BI__builtin_arm_mve_vshrq_m_n_s32:
@@ -2452,6 +2828,54 @@ case ARM::BI__builtin_arm_mve_vshrq_x_n_u32:
   return AliasName == "vshrq_x_n_u32" || AliasName == "vshrq_x";
 case ARM::BI__builtin_arm_mve_vshrq_x_n_u8:
   return AliasName == "vshrq_x_n_u8" || AliasName == "vshrq_x";
+case ARM::BI__builtin_arm_mve_vsliq_m_n_s16:
+  return AliasName == "vsliq_m_n_s16" || AliasName == "vsliq_m";
+case ARM::BI__builtin_arm_mve_vsliq_m_n_s32:
+  return AliasName == "vsliq_m_n_s32" || AliasName == "vsliq_m";
+case ARM::BI__builtin_arm_mve_vsliq_m_n_s8:
+  return AliasName == "vsliq_m_n_s8" || AliasName == "vsliq_m";
+case ARM::BI__builtin_arm_mve_vsliq_m_n_u16:
+  return AliasName == "vsliq_m_n_u16" || AliasName == "vsliq_m";
+case ARM::BI__builtin_arm_mve_vsliq_m_n_u32:
+  return AliasName == "vsliq_m_n_u32" || AliasName == "vsliq_m";
+case ARM::BI__builtin_arm_mve_vsliq_m_n_u8:
+  return AliasName == "vsliq_m_n_u8" || AliasName == "vsliq_m";
+case ARM::BI__builtin_arm_mve_vsliq_n_s16:
+  return AliasName == "vsliq_n_s16" || AliasName == "vsliq";
+case ARM::BI__builtin_arm_mve_vsliq_n_s32:
+  return AliasName == "vsliq_n_s32" || AliasName == "vsliq";
+case ARM::BI__builtin_arm_mve_vsliq_n_s8:
+  return AliasName == "vsliq_n_s8" || AliasName == "vsliq";
+case ARM::BI__builtin_arm_mve_vsliq_n_u16:
+  return AliasName == "vsliq_n_u16" || AliasName == "vsliq";
+case ARM::BI__builtin_arm_mve_vsliq_n_u32:
+  return AliasName == "vsliq_n_u32" || AliasName == "vsliq";
+case ARM::BI__builtin_arm_mve_vsliq_n_u8:
+  return AliasName == "vsliq_n_u8" || AliasName == "vsliq";
+case ARM::BI__builtin_arm_mve_vsriq_m_n_s16:
+  return AliasName == "vsriq_m_n_s16" || AliasName == "vsriq_m";
+case ARM::BI__builtin_arm_mve_vsriq_m_n_s32:
+  return AliasName == "vsriq_m_n_s32" || AliasName == "vsriq_m";
+case ARM::BI__builtin_arm_mve_vsriq_m_n_s8:
+  return AliasName == "vsriq_m_n_s8" || AliasName == "vsriq_m";
+case ARM::BI__builtin_arm_mve_vsriq_m_n_u16:
+  return AliasName == "vsriq_m_n_u16" || AliasName == "vsriq_m";
+case ARM::BI__builtin_arm_mve_vsriq_m_n_u32:
+  return AliasName == "vsriq_m_n_u32" || AliasName == "vsriq_m";
+case ARM::BI__builtin_arm_mve_vsriq_m_n_u8:
+  return AliasName == "vsriq_m_n_u8" || AliasName == "vsriq_m";
+case ARM::BI__builtin_arm_mve_vsriq_n_s16:
+  return AliasName == "vsriq_n_s16" || AliasName == "vsriq";
+case ARM::BI__builtin_arm_mve_vsriq_n_s32:
+  return AliasName == "vsriq_n_s32" || AliasName == "vsriq";
+case ARM::BI__builtin_arm_mve_vsriq_n_s8:
+  return AliasName == "vsriq_n_s8" || AliasName == "vsriq";
+case ARM::BI__builtin_arm_mve_vsriq_n_u16:
+  return AliasName == "vsriq_n_u16" || AliasName == "vsriq";
+case ARM::BI__builtin_arm_mve_vsriq_n_u32:
+  return AliasName == "vsriq_n_u32" || AliasName == "vsriq";
+case ARM::BI__builtin_arm_mve_vsriq_n_u8:
+  return AliasName == "vsriq_n_u8" || AliasName == "vsriq";
 case ARM::BI__builtin_arm_mve_vst1q_f16:
   return AliasName == "vst1q_f16" || AliasName == "vst1q";
 case ARM::BI__builtin_arm_mve_vst1q_f32:

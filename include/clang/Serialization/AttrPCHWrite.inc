@@ -79,6 +79,13 @@ Record.push_back(SA->getInterrupt());
       Record.AddStmt(Val);
     break;
   }
+  case attr::AcquireHandle: {
+    const auto *SA = cast<AcquireHandleAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.AddString(SA->getHandleType());
+    break;
+  }
   case attr::AcquiredAfter: {
     const auto *SA = cast<AcquiredAfterAttr>(A);
     Record.push_back(SA->isInherited());
@@ -1562,6 +1569,13 @@ Record.push_back(SA->getInterrupt());
       Record.AddStmt(Val);
     break;
   }
+  case attr::ReleaseHandle: {
+    const auto *SA = cast<ReleaseHandleAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.AddString(SA->getHandleType());
+    break;
+  }
   case attr::RenderScriptKernel: {
     Record.push_back(A->isImplicit());
     break;
@@ -1817,6 +1831,13 @@ Record.push_back(SA->getImplicitReason());
     const auto *SA = cast<UnusedAttr>(A);
     Record.push_back(SA->isInherited());
     Record.push_back(A->isImplicit());
+    break;
+  }
+  case attr::UseHandle: {
+    const auto *SA = cast<UseHandleAttr>(A);
+    Record.push_back(SA->isInherited());
+    Record.push_back(A->isImplicit());
+    Record.AddString(SA->getHandleType());
     break;
   }
   case attr::Used: {

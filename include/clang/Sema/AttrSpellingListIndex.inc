@@ -84,6 +84,15 @@
         return 5;
     break;
   }
+  case AT_AcquireHandle: {
+    if (Name == "acquire_handle" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "acquire_handle" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "acquire_handle" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
   case AT_AcquiredAfter: {
     if (Name == "acquired_after" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
@@ -1805,6 +1814,15 @@
         return 7;
     break;
   }
+  case AT_ReleaseHandle: {
+    if (Name == "release_handle" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "release_handle" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "release_handle" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
+    break;
+  }
   case AT_RenderScriptKernel: {
     if (Name == "kernel" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
         return 0;
@@ -2115,6 +2133,15 @@
         return 2;
     if (Name == "maybe_unused" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "")
         return 3;
+    break;
+  }
+  case AT_UseHandle: {
+    if (Name == "use_handle" && getSyntax() == AttributeCommonInfo::AS_GNU && Scope == "")
+        return 0;
+    if (Name == "use_handle" && getSyntax() == AttributeCommonInfo::AS_CXX11 && Scope == "clang")
+        return 1;
+    if (Name == "use_handle" && getSyntax() == AttributeCommonInfo::AS_C2x && Scope == "clang")
+        return 2;
     break;
   }
   case AT_Used: {

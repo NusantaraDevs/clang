@@ -157,7 +157,7 @@ OPTION(prefix_1, "analyzer-opt-analyze-nested-blocks", analyzer_opt_analyze_nest
        "Analyze the definitions of blocks in addition to functions", nullptr, nullptr)
 OPTION(prefix_1, "analyzer-output=", analyzer_output_EQ, Joined, INVALID, analyzer_output, nullptr, CC1Option | NoDriverOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_3, "analyzer-output", _analyzer_output, JoinedOrSeparate, INVALID, INVALID, nullptr, DriverOption, 0,
-       "Static analyzer report output format (html|plist|plist-multi-file|plist-html|text).", nullptr, nullptr)
+       "Static analyzer report output format (html|plist|plist-multi-file|plist-html|sarif|text).", nullptr, nullptr)
 OPTION(prefix_1, "analyzer-output", analyzer_output, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Source Code Analysis - Output Options", nullptr, nullptr)
 OPTION(prefix_1, "analyzer-purge=", analyzer_purge_EQ, Joined, INVALID, analyzer_purge, nullptr, CC1Option | NoDriverOption, 0, nullptr, nullptr, nullptr)
@@ -1566,6 +1566,8 @@ OPTION(prefix_1, "fno-strict-overflow", fno_strict_overflow, Flag, f_Group, INVA
 OPTION(prefix_1, "fno-strict-return", fno_strict_return, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-strict-vtable-pointers", fno_strict_vtable_pointers, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-struct-path-tbaa", fno_struct_path_tbaa, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fno-temp-file", fno_temp_file, Flag, f_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
+       "Directly create compilation output files. This may lead to incorrect incremental builds if the compiler crashes", nullptr, nullptr)
 OPTION(prefix_1, "fno-threadsafe-statics", fno_threadsafe_statics, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Do not emit code to make initialization of local statics thread safe", nullptr, nullptr)
 OPTION(prefix_1, "fno-tls-model", tls_model_fno, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
@@ -2197,6 +2199,8 @@ OPTION(prefix_1, "gno-pubnames", gno_pubnames, Flag, g_flags_Group, INVALID, nul
 OPTION(prefix_1, "gno-record-command-line", gno_record_command_line, Flag, g_flags_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "gno-record-gcc-switches", anonymous_29, Flag, INVALID, gno_record_command_line, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "gno-strict-dwarf", gno_strict_dwarf, Flag, g_flags_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_3, "gpu-max-threads-per-block=", gpu_max_threads_per_block_EQ, Joined, INVALID, INVALID, nullptr, CC1Option, 0,
+       "Default max threads per block for kernel launch bounds for HIP", nullptr, nullptr)
 OPTION(prefix_1, "gpubnames", gpubnames, Flag, g_flags_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_2, "GR-", _SLASH_GR_, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0,
        "Do not emit RTTI data", nullptr, nullptr)
@@ -2794,6 +2798,7 @@ OPTION(prefix_1, "mno-odd-spreg", mno_odd_spreg, Flag, m_mips_Features_Group, IN
 OPTION(prefix_1, "mno-omit-leaf-frame-pointer", mno_omit_leaf_frame_pointer, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-outline", mno_outline, Flag, f_clang_Group, INVALID, nullptr, CC1Option, 0,
        "Disable function outlining (AArch64 only)", nullptr, nullptr)
+OPTION(prefix_1, "mno-packed-stack", mno_packed_stack, Flag, m_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mno-packets", mno_packets, Flag, m_hexagon_Features_Group, INVALID, nullptr, CC1Option, 0,
        "Disable generation of instruction packets", nullptr, nullptr)
 OPTION(prefix_1, "mno-pascal-strings", mno_pascal_strings, Flag, INVALID, fno_pascal_strings, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -2940,6 +2945,8 @@ OPTION(prefix_1, "mreassociate", mreassociate, Flag, INVALID, INVALID, nullptr, 
        "Allow reassociation transformations for floating-point instructions", nullptr, nullptr)
 OPTION(prefix_1, "mrecip=", mrecip_EQ, CommaJoined, m_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mrecip", mrecip, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mrecord-mcount", mrecord_mcount, Flag, m_Group, INVALID, nullptr, CC1Option, 0,
+       "Generate a __mcount_loc section entry for each __fentry__ call.", nullptr, nullptr)
 OPTION(prefix_1, "mred-zone", mred_zone, Flag, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mreference-types", mreference_types, Flag, m_wasm_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mregparm=", mregparm_EQ, Joined, m_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)

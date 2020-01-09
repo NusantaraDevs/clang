@@ -452,6 +452,48 @@ const char *AcquireCapabilityAttr::getSpelling() const {
   }
 }
 
+AcquireHandleAttr *AcquireHandleAttr::clone(ASTContext &C) const {
+  auto *A = new (C) AcquireHandleAttr(C, *this, getHandleType());
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void AcquireHandleAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((acquire_handle(\"" << getHandleType() << "\")))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::acquire_handle(\"" << getHandleType() << "\")]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::acquire_handle(\"" << getHandleType() << "\")]]";
+    break;
+  }
+}
+}
+
+const char *AcquireHandleAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "acquire_handle";
+  case 1:
+    return "acquire_handle";
+  case 2:
+    return "acquire_handle";
+  }
+}
+
 AcquiredAfterAttr *AcquiredAfterAttr::clone(ASTContext &C) const {
   auto *A = new (C) AcquiredAfterAttr(C, *this, args_, args_Size);
   A->Inherited = Inherited;
@@ -9493,6 +9535,48 @@ const char *ReleaseCapabilityAttr::getSpelling() const {
   }
 }
 
+ReleaseHandleAttr *ReleaseHandleAttr::clone(ASTContext &C) const {
+  auto *A = new (C) ReleaseHandleAttr(C, *this, getHandleType());
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void ReleaseHandleAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((release_handle(\"" << getHandleType() << "\")))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::release_handle(\"" << getHandleType() << "\")]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::release_handle(\"" << getHandleType() << "\")]]";
+    break;
+  }
+}
+}
+
+const char *ReleaseHandleAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "release_handle";
+  case 1:
+    return "release_handle";
+  case 2:
+    return "release_handle";
+  }
+}
+
 RenderScriptKernelAttr *RenderScriptKernelAttr::clone(ASTContext &C) const {
   auto *A = new (C) RenderScriptKernelAttr(C, *this);
   A->Inherited = Inherited;
@@ -11127,6 +11211,48 @@ const char *UnusedAttr::getSpelling() const {
   }
 }
 
+UseHandleAttr *UseHandleAttr::clone(ASTContext &C) const {
+  auto *A = new (C) UseHandleAttr(C, *this, getHandleType());
+  A->Inherited = Inherited;
+  A->IsPackExpansion = IsPackExpansion;
+  A->setImplicit(Implicit);
+  return A;
+}
+
+void UseHandleAttr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    break;
+  case 0 : {
+    OS << " __attribute__((use_handle(\"" << getHandleType() << "\")))";
+    break;
+  }
+  case 1 : {
+    OS << " [[clang::use_handle(\"" << getHandleType() << "\")]]";
+    break;
+  }
+  case 2 : {
+    OS << " [[clang::use_handle(\"" << getHandleType() << "\")]]";
+    break;
+  }
+}
+}
+
+const char *UseHandleAttr::getSpelling() const {
+  switch (getAttributeSpellingListIndex()) {
+  default:
+    llvm_unreachable("Unknown attribute spelling!");
+    return "(No spelling)";
+  case 0:
+    return "use_handle";
+  case 1:
+    return "use_handle";
+  case 2:
+    return "use_handle";
+  }
+}
+
 UsedAttr *UsedAttr::clone(ASTContext &C) const {
   auto *A = new (C) UsedAttr(C, *this);
   A->Inherited = Inherited;
@@ -11875,6 +12001,8 @@ const char *Attr::getSpelling() const {
     return cast<AbiTagAttr>(this)->getSpelling();
   case attr::AcquireCapability:
     return cast<AcquireCapabilityAttr>(this)->getSpelling();
+  case attr::AcquireHandle:
+    return cast<AcquireHandleAttr>(this)->getSpelling();
   case attr::AcquiredAfter:
     return cast<AcquiredAfterAttr>(this)->getSpelling();
   case attr::AcquiredBefore:
@@ -12325,6 +12453,8 @@ const char *Attr::getSpelling() const {
     return cast<ReinitializesAttr>(this)->getSpelling();
   case attr::ReleaseCapability:
     return cast<ReleaseCapabilityAttr>(this)->getSpelling();
+  case attr::ReleaseHandle:
+    return cast<ReleaseHandleAttr>(this)->getSpelling();
   case attr::RenderScriptKernel:
     return cast<RenderScriptKernelAttr>(this)->getSpelling();
   case attr::ReqdWorkGroupSize:
@@ -12405,6 +12535,8 @@ const char *Attr::getSpelling() const {
     return cast<UninitializedAttr>(this)->getSpelling();
   case attr::Unused:
     return cast<UnusedAttr>(this)->getSpelling();
+  case attr::UseHandle:
+    return cast<UseHandleAttr>(this)->getSpelling();
   case attr::Used:
     return cast<UsedAttr>(this)->getSpelling();
   case attr::Uuid:
@@ -12467,6 +12599,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<AbiTagAttr>(this)->clone(C);
   case attr::AcquireCapability:
     return cast<AcquireCapabilityAttr>(this)->clone(C);
+  case attr::AcquireHandle:
+    return cast<AcquireHandleAttr>(this)->clone(C);
   case attr::AcquiredAfter:
     return cast<AcquiredAfterAttr>(this)->clone(C);
   case attr::AcquiredBefore:
@@ -12917,6 +13051,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<ReinitializesAttr>(this)->clone(C);
   case attr::ReleaseCapability:
     return cast<ReleaseCapabilityAttr>(this)->clone(C);
+  case attr::ReleaseHandle:
+    return cast<ReleaseHandleAttr>(this)->clone(C);
   case attr::RenderScriptKernel:
     return cast<RenderScriptKernelAttr>(this)->clone(C);
   case attr::ReqdWorkGroupSize:
@@ -12997,6 +13133,8 @@ Attr *Attr::clone(ASTContext &C) const {
     return cast<UninitializedAttr>(this)->clone(C);
   case attr::Unused:
     return cast<UnusedAttr>(this)->clone(C);
+  case attr::UseHandle:
+    return cast<UseHandleAttr>(this)->clone(C);
   case attr::Used:
     return cast<UsedAttr>(this)->clone(C);
   case attr::Uuid:
@@ -13059,6 +13197,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<AbiTagAttr>(this)->printPretty(OS, Policy);
   case attr::AcquireCapability:
     return cast<AcquireCapabilityAttr>(this)->printPretty(OS, Policy);
+  case attr::AcquireHandle:
+    return cast<AcquireHandleAttr>(this)->printPretty(OS, Policy);
   case attr::AcquiredAfter:
     return cast<AcquiredAfterAttr>(this)->printPretty(OS, Policy);
   case attr::AcquiredBefore:
@@ -13509,6 +13649,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<ReinitializesAttr>(this)->printPretty(OS, Policy);
   case attr::ReleaseCapability:
     return cast<ReleaseCapabilityAttr>(this)->printPretty(OS, Policy);
+  case attr::ReleaseHandle:
+    return cast<ReleaseHandleAttr>(this)->printPretty(OS, Policy);
   case attr::RenderScriptKernel:
     return cast<RenderScriptKernelAttr>(this)->printPretty(OS, Policy);
   case attr::ReqdWorkGroupSize:
@@ -13589,6 +13731,8 @@ void Attr::printPretty(raw_ostream &OS, const PrintingPolicy &Policy) const {
     return cast<UninitializedAttr>(this)->printPretty(OS, Policy);
   case attr::Unused:
     return cast<UnusedAttr>(this)->printPretty(OS, Policy);
+  case attr::UseHandle:
+    return cast<UseHandleAttr>(this)->printPretty(OS, Policy);
   case attr::Used:
     return cast<UsedAttr>(this)->printPretty(OS, Policy);
   case attr::Uuid:

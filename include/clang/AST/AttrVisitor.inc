@@ -48,6 +48,10 @@
   bool VisitAcquireCapabilityAttr(AcquireCapabilityAttr *A) {
     return true; 
   }
+  bool TraverseAcquireHandleAttr(AcquireHandleAttr *A);
+  bool VisitAcquireHandleAttr(AcquireHandleAttr *A) {
+    return true; 
+  }
   bool TraverseAcquiredAfterAttr(AcquiredAfterAttr *A);
   bool VisitAcquiredAfterAttr(AcquiredAfterAttr *A) {
     return true; 
@@ -948,6 +952,10 @@
   bool VisitReleaseCapabilityAttr(ReleaseCapabilityAttr *A) {
     return true; 
   }
+  bool TraverseReleaseHandleAttr(ReleaseHandleAttr *A);
+  bool VisitReleaseHandleAttr(ReleaseHandleAttr *A) {
+    return true; 
+  }
   bool TraverseRenderScriptKernelAttr(RenderScriptKernelAttr *A);
   bool VisitRenderScriptKernelAttr(RenderScriptKernelAttr *A) {
     return true; 
@@ -1106,6 +1114,10 @@
   }
   bool TraverseUnusedAttr(UnusedAttr *A);
   bool VisitUnusedAttr(UnusedAttr *A) {
+    return true; 
+  }
+  bool TraverseUseHandleAttr(UseHandleAttr *A);
+  bool VisitUseHandleAttr(UseHandleAttr *A) {
     return true; 
   }
   bool TraverseUsedAttr(UsedAttr *A);
@@ -1286,6 +1298,15 @@ bool VISITORCLASS<Derived>::TraverseAcquireCapabilityAttr(AcquireCapabilityAttr 
         return false;
     }
   }
+  return true;
+}
+
+template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseAcquireHandleAttr(AcquireHandleAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitAcquireHandleAttr(A))
+    return false;
   return true;
 }
 
@@ -3475,6 +3496,15 @@ bool VISITORCLASS<Derived>::TraverseReleaseCapabilityAttr(ReleaseCapabilityAttr 
 }
 
 template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseReleaseHandleAttr(ReleaseHandleAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitReleaseHandleAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
 bool VISITORCLASS<Derived>::TraverseRenderScriptKernelAttr(RenderScriptKernelAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
@@ -3866,6 +3896,15 @@ bool VISITORCLASS<Derived>::TraverseUnusedAttr(UnusedAttr *A) {
 }
 
 template <typename Derived>
+bool VISITORCLASS<Derived>::TraverseUseHandleAttr(UseHandleAttr *A) {
+  if (!getDerived().VisitAttr(A))
+    return false;
+  if (!getDerived().VisitUseHandleAttr(A))
+    return false;
+  return true;
+}
+
+template <typename Derived>
 bool VISITORCLASS<Derived>::TraverseUsedAttr(UsedAttr *A) {
   if (!getDerived().VisitAttr(A))
     return false;
@@ -4056,6 +4095,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseAbiTagAttr(cast<AbiTagAttr>(A));
     case attr::AcquireCapability:
       return getDerived().TraverseAcquireCapabilityAttr(cast<AcquireCapabilityAttr>(A));
+    case attr::AcquireHandle:
+      return getDerived().TraverseAcquireHandleAttr(cast<AcquireHandleAttr>(A));
     case attr::AcquiredAfter:
       return getDerived().TraverseAcquiredAfterAttr(cast<AcquiredAfterAttr>(A));
     case attr::AcquiredBefore:
@@ -4506,6 +4547,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseReinitializesAttr(cast<ReinitializesAttr>(A));
     case attr::ReleaseCapability:
       return getDerived().TraverseReleaseCapabilityAttr(cast<ReleaseCapabilityAttr>(A));
+    case attr::ReleaseHandle:
+      return getDerived().TraverseReleaseHandleAttr(cast<ReleaseHandleAttr>(A));
     case attr::RenderScriptKernel:
       return getDerived().TraverseRenderScriptKernelAttr(cast<RenderScriptKernelAttr>(A));
     case attr::ReqdWorkGroupSize:
@@ -4586,6 +4629,8 @@ bool VISITORCLASS<Derived>::TraverseAttr(Attr *A) {
       return getDerived().TraverseUninitializedAttr(cast<UninitializedAttr>(A));
     case attr::Unused:
       return getDerived().TraverseUnusedAttr(cast<UnusedAttr>(A));
+    case attr::UseHandle:
+      return getDerived().TraverseUseHandleAttr(cast<UseHandleAttr>(A));
     case attr::Used:
       return getDerived().TraverseUsedAttr(cast<UsedAttr>(A));
     case attr::Uuid:

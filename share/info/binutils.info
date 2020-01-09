@@ -1,7 +1,7 @@
 This is binutils.info, produced by makeinfo version 6.5 from
 binutils.texi.
 
-Copyright (C) 1991-2019 Free Software Foundation, Inc.
+Copyright (C) 1991-2020 Free Software Foundation, Inc.
 
    Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -68,6 +68,7 @@ the section entitled "GNU Free Documentation License".
 * elfedit::                     Update ELF header and property of ELF files
 * Common Options::              Command-line options for all utilities
 * Selecting the Target System:: How these utilities determine the target
+* debuginfod::                  Using binutils with debuginfod
 * Reporting Bugs::              Reporting Bugs
 * GNU Free Documentation License::  GNU Free Documentation License
 * Binutils Index::              Binutils Index
@@ -4655,7 +4656,7 @@ described in this manual.
      Display the version number of the program.
 
 
-File: binutils.info,  Node: Selecting the Target System,  Next: Reporting Bugs,  Prev: Common Options,  Up: Top
+File: binutils.info,  Node: Selecting the Target System,  Next: debuginfod,  Prev: Common Options,  Up: Top
 
 17 Selecting the Target System
 ******************************
@@ -4790,9 +4791,28 @@ Ways to specify:
   1. deduced from the input file
 
 
-File: binutils.info,  Node: Reporting Bugs,  Next: GNU Free Documentation License,  Prev: Selecting the Target System,  Up: Top
+File: binutils.info,  Node: debuginfod,  Next: Reporting Bugs,  Prev: Selecting the Target System,  Up: Top
 
-18 Reporting Bugs
+18 debuginfod
+*************
+
+debuginfod is a web service that indexes ELF/DWARF debugging resources
+by build-id and serves them over HTTP.
+
+   Binutils can be built with the debuginfod client library
+'libdebuginfod' using the '--with-debuginfod' configure option.  This
+option is enabled by default if 'libdebuginfod' is installed and found
+at configure time.  This allows 'objdump' and 'readelf' to automatically
+query debuginfod servers for separate debug files when the files are
+otherwise not found.
+
+   debuginfod is packaged with elfutils, starting with version 0.178.
+You can get the latest version from 'https://sourceware.org/elfutils/'.
+
+
+File: binutils.info,  Node: Reporting Bugs,  Next: GNU Free Documentation License,  Prev: debuginfod,  Up: Top
+
+19 Reporting Bugs
 *****************
 
 Your bug reports play an essential role in making the binary utilities
@@ -4815,7 +4835,7 @@ information that enables us to fix the bug.
 
 File: binutils.info,  Node: Bug Criteria,  Next: Bug Reporting,  Up: Reporting Bugs
 
-18.1 Have You Found a Bug?
+19.1 Have You Found a Bug?
 ==========================
 
 If you are not sure whether you have found a bug, here are some
@@ -4833,7 +4853,7 @@ guidelines:
 
 File: binutils.info,  Node: Bug Reporting,  Prev: Bug Criteria,  Up: Reporting Bugs
 
-18.2 How to Report Bugs
+19.2 How to Report Bugs
 =======================
 
 A number of companies and individuals offer support for GNU products.
@@ -5614,6 +5634,7 @@ Binutils Index
 * section information:                   objdump.             (line 239)
 * section sizes:                         size.                (line   6)
 * sections, full contents:               objdump.             (line 480)
+* separate debug files:                  debuginfod.          (line   6)
 * size:                                  size.                (line   6)
 * size display format:                   size.                (line  28)
 * size number format:                    size.                (line  85)
@@ -5653,33 +5674,34 @@ Binutils Index
 
 Tag Table:
 Node: Top1834
-Node: ar3491
-Node: ar cmdline6644
-Node: ar scripts19270
-Node: nm24956
-Node: objcopy37580
-Node: objdump77781
-Node: ranlib109765
-Node: size111364
-Node: strings115333
-Node: strip119705
-Node: c++filt129230
-Ref: c++filt-Footnote-1135092
-Node: addr2line135198
-Node: windmc140877
-Node: windres144536
-Node: dlltool150895
-Node: def file format163892
-Node: readelf166422
-Node: elfedit178996
-Node: Common Options181952
-Node: Selecting the Target System182986
-Node: Target Selection183918
-Node: Architecture Selection185899
-Node: Reporting Bugs186727
-Node: Bug Criteria187506
-Node: Bug Reporting188059
-Node: GNU Free Documentation License194929
-Node: Binutils Index220089
+Node: ar3554
+Node: ar cmdline6707
+Node: ar scripts19333
+Node: nm25019
+Node: objcopy37643
+Node: objdump77844
+Node: ranlib109828
+Node: size111427
+Node: strings115396
+Node: strip119768
+Node: c++filt129293
+Ref: c++filt-Footnote-1135155
+Node: addr2line135261
+Node: windmc140940
+Node: windres144599
+Node: dlltool150958
+Node: def file format163955
+Node: readelf166485
+Node: elfedit179059
+Node: Common Options182015
+Node: Selecting the Target System183049
+Node: Target Selection183977
+Node: Architecture Selection185958
+Node: debuginfod186786
+Node: Reporting Bugs187545
+Node: Bug Criteria188307
+Node: Bug Reporting188860
+Node: GNU Free Documentation License195730
+Node: Binutils Index220890
 
 End Tag Table

@@ -351,6 +351,8 @@
   __interceptor_pwrite64;
   __interceptor_pwritev;
   __interceptor_pwritev64;
+  __interceptor_qsort;
+  __interceptor_qsort_r;
   __interceptor_raise;
   __interceptor_rand_r;
   __interceptor_random_r;
@@ -1585,6 +1587,8 @@
   pwrite64;
   pwritev;
   pwritev64;
+  qsort;
+  qsort_r;
   raise;
   rand_r;
   random_r;

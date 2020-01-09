@@ -17,9 +17,6 @@
 /* Define if LLVM_ENABLE_DUMP is enabled */
 /* #undef LLVM_ENABLE_DUMP */
 
-/* Define if we link Polly to the tools */
-#define LINK_POLLY_INTO_TOOLS
-
 /* Target triple LLVM will generate code for by default */
 #define LLVM_DEFAULT_TARGET_TRIPLE "x86_64-unknown-linux-gnu"
 

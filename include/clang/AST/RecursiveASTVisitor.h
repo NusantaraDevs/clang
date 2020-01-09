@@ -2030,6 +2030,11 @@ bool RecursiveASTVisitor<Derived>::TraverseFunctionHelper(FunctionDecl *D) {
     }
   }
 
+  // Visit the trailing requires clause, if any.
+  if (Expr *TrailingRequiresClause = D->getTrailingRequiresClause()) {
+    TRY_TO(TraverseStmt(TrailingRequiresClause));
+  }
+
   if (CXXConstructorDecl *Ctor = dyn_cast<CXXConstructorDecl>(D)) {
     // Constructor initializers.
     for (auto *I : Ctor->inits()) {
@@ -3378,6 +3383,9 @@ template <typename Derived>
 bool RecursiveASTVisitor<Derived>::VisitOMPNontemporalClause(
     OMPNontemporalClause *C) {
   TRY_TO(VisitOMPClauseList(C));
+  for (auto *E : C->private_refs()) {
+    TRY_TO(TraverseStmt(E));
+  }
   return true;
 }
 

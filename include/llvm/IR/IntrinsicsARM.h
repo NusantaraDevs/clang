@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum ARMIntrinsics : unsigned {
 // Enum values for intrinsics
-    arm_cdp = 1421,                                   // llvm.arm.cdp
+    arm_cdp = 1495,                                   // llvm.arm.cdp
     arm_cdp2,                                  // llvm.arm.cdp2
     arm_clrex,                                 // llvm.arm.clrex
     arm_cls,                                   // llvm.arm.cls
@@ -141,8 +141,18 @@ enum ARMIntrinsics : unsigned {
     arm_mve_vrmulh,                            // llvm.arm.mve.vrmulh
     arm_mve_vrshr_imm,                         // llvm.arm.mve.vrshr.imm
     arm_mve_vrshr_imm_predicated,              // llvm.arm.mve.vrshr.imm.predicated
+    arm_mve_vshl_scalar,                       // llvm.arm.mve.vshl.scalar
+    arm_mve_vshl_scalar_predicated,            // llvm.arm.mve.vshl.scalar.predicated
+    arm_mve_vshl_vector,                       // llvm.arm.mve.vshl.vector
+    arm_mve_vshl_vector_predicated,            // llvm.arm.mve.vshl.vector.predicated
     arm_mve_vshll_imm,                         // llvm.arm.mve.vshll.imm
     arm_mve_vshll_imm_predicated,              // llvm.arm.mve.vshll.imm.predicated
+    arm_mve_vshrn,                             // llvm.arm.mve.vshrn
+    arm_mve_vshrn_predicated,                  // llvm.arm.mve.vshrn.predicated
+    arm_mve_vsli,                              // llvm.arm.mve.vsli
+    arm_mve_vsli_predicated,                   // llvm.arm.mve.vsli.predicated
+    arm_mve_vsri,                              // llvm.arm.mve.vsri
+    arm_mve_vsri_predicated,                   // llvm.arm.mve.vsri.predicated
     arm_mve_vst2q,                             // llvm.arm.mve.vst2q
     arm_mve_vst4q,                             // llvm.arm.mve.vst4q
     arm_mve_vstr_scatter_base,                 // llvm.arm.mve.vstr.scatter.base

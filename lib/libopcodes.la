@@ -5,10 +5,10 @@
 # It is necessary for linking the library.
 
 # The name that we can dlopen(3).
-dlname='libopcodes-2.33.50.20191219.so'
+dlname='libopcodes-2.33.50.20200109.so'
 
 # Names of this library.
-library_names='libopcodes-2.33.50.20191219.so libopcodes-2.33.50.20191219.so libopcodes.so'
+library_names='libopcodes-2.33.50.20200109.so libopcodes-2.33.50.20200109.so libopcodes.so'
 
 # The name of the static archive.
 old_library='libopcodes.a'
