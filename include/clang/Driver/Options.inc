@@ -270,7 +270,7 @@ OPTION(prefix_1, "cfguard", cfguard, Flag, INVALID, INVALID, nullptr, CC1Option 
 OPTION(prefix_2, "cgthreads", _SLASH_cgthreads, Joined, cl_ignored_Group, INVALID, nullptr, CLOption | DriverOption | HelpHidden, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "chain-include", chain_include, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Include and chain a header file after turning it into PCH", "<file>", nullptr)
-OPTION(prefix_1, "cl-denorms-are-zero", cl_denorms_are_zero, Flag, opencl_Group, INVALID, nullptr, CC1Option, 0,
+OPTION(prefix_1, "cl-denorms-are-zero", cl_denorms_are_zero, Flag, opencl_Group, INVALID, nullptr, 0, 0,
        "OpenCL only. Allow denormals to be flushed to zero.", nullptr, nullptr)
 OPTION(prefix_1, "cl-ext=", cl_ext_EQ, CommaJoined, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "OpenCL only. Enable or disable OpenCL extensions. The argument is a comma-separated sequence of one or more extension names, each prefixed by '+' or '-'.", nullptr, nullptr)
@@ -669,7 +669,7 @@ OPTION(prefix_1, "fcompile-resource=", fcompile_resource_EQ, Joined, f_Group, IN
 OPTION(prefix_1, "fcomplete-member-pointers", fcomplete_member_pointers, Flag, f_clang_Group, INVALID, nullptr, CoreOption | CC1Option, 0,
        "Require member pointer base types to be complete if they would be significant under the Microsoft ABI", nullptr, nullptr)
 OPTION(prefix_1, "fconcepts-ts", fconcepts_ts, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
-       "Enable C++ Extensions for Concepts.", nullptr, nullptr)
+       "Enable C++ Extensions for Concepts. (deprecated - use -std=c++2a)", nullptr, nullptr)
 OPTION(prefix_1, "fconst-strings", fconst_strings, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Use a const qualified type for string literals in C and ObjC", nullptr, nullptr)
 OPTION(prefix_1, "fconstant-cfstrings", fconstant_cfstrings, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -703,7 +703,7 @@ OPTION(prefix_1, "fcuda-allow-variadic-functions", fcuda_allow_variadic_function
        "Allow variadic functions in CUDA device code.", nullptr, nullptr)
 OPTION(prefix_1, "fcuda-approx-transcendentals", fcuda_approx_transcendentals, Flag, INVALID, INVALID, nullptr, CC1Option, 0,
        "Use approximate transcendental functions", nullptr, nullptr)
-OPTION(prefix_1, "fcuda-flush-denormals-to-zero", fcuda_flush_denormals_to_zero, Flag, INVALID, INVALID, nullptr, CC1Option, 0,
+OPTION(prefix_1, "fcuda-flush-denormals-to-zero", fcuda_flush_denormals_to_zero, Flag, INVALID, INVALID, nullptr, 0, 0,
        "Flush denormal floating point values to zero in CUDA device mode.", nullptr, nullptr)
 OPTION(prefix_1, "fcuda-include-gpubinary", fcuda_include_gpubinary, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Incorporate CUDA device-side binary into host object file.", nullptr, nullptr)
@@ -760,6 +760,7 @@ OPTION(prefix_1, "fdelayed-template-parsing", fdelayed_template_parsing, Flag, f
        "Parse templated function definitions at the end of the translation unit", nullptr, nullptr)
 OPTION(prefix_1, "fdelete-null-pointer-checks", fdelete_null_pointer_checks, Flag, f_Group, INVALID, nullptr, 0, 0,
        "Treat usage of null pointers as undefined behavior.", nullptr, nullptr)
+OPTION(prefix_1, "fdenormal-fp-math-f32=", fdenormal_fp_math_f32_EQ, Joined, f_Group, INVALID, nullptr, CC1Option | NoDriverOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fdenormal-fp-math=", fdenormal_fp_math_EQ, Joined, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fdepfile-entry=", fdepfile_entry, Joined, f_clang_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fdeprecated-macro", fdeprecated_macro, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
@@ -1231,6 +1232,8 @@ OPTION(prefix_1, "fno-common", fno_common, Flag, f_Group, INVALID, nullptr, CC1O
        "Compile common globals like normal definitions", nullptr, nullptr)
 OPTION(prefix_1, "fno-complete-member-pointers", fno_complete_member_pointers, Flag, f_clang_Group, INVALID, nullptr, CoreOption, 0,
        "Do not require member pointer base types to be complete if they would be significant under the Microsoft ABI", nullptr, nullptr)
+OPTION(prefix_1, "fno-concept-satisfaction-caching", fno_concept_satisfaction_caching, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
+       "Disable satisfaction caching for C++2a Concepts.", nullptr, nullptr)
 OPTION(prefix_1, "fno-const-strings", fno_const_strings, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "Don't use a const qualified type for string literals in C and ObjC", nullptr, nullptr)
 OPTION(prefix_1, "fno-constant-cfstrings", fno_constant_cfstrings, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
@@ -1626,6 +1629,7 @@ OPTION(prefix_1, "fno-working-directory", fno_working_directory, Flag, f_Group, 
 OPTION(prefix_1, "fno-wrapv", fno_wrapv, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-xray-always-emit-customevents", fnoxray_always_emit_customevents, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-xray-always-emit-typedevents", fnoxray_always_emit_typedevents, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fno-xray-ignore-loops", fno_xray_ignore_loops, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-xray-instrument", fnoxray_instrument, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-zero-initialized-in-bss", fno_zero_initialized_in_bss, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-zvector", fno_zvector, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
@@ -1734,8 +1738,10 @@ OPTION(prefix_1, "fpascal-strings", fpascal_strings, Flag, f_Group, INVALID, nul
        "Recognize and construct Pascal-style string literals", nullptr, nullptr)
 OPTION(prefix_1, "fpass-plugin=", fpass_plugin_EQ, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
        "Load pass plugin from a dynamic shared object file (only with new pass manager).", "<dsopath>", nullptr)
+OPTION(prefix_1, "fpatchable-function-entry-offset=", fpatchable_function_entry_offset_EQ, Joined, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
+       "Generate M NOPs before function entry", "<M>", nullptr)
 OPTION(prefix_1, "fpatchable-function-entry=", fpatchable_function_entry_EQ, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
-       "Generate N NOPs at function entry", nullptr, nullptr)
+       "Generate M NOPs before function entry and N-M NOPs after function entry", "<N,M>", nullptr)
 OPTION(prefix_1, "fpcc-struct-return", fpcc_struct_return, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Override the default ABI to return all structs on the stack", nullptr, nullptr)
 OPTION(prefix_1, "fpch-preprocess", fpch_preprocess, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -2112,11 +2118,13 @@ OPTION(prefix_1, "fxray-always-instrument=", fxray_always_instrument, JoinedOrSe
        "DEPRECATED: Filename defining the whitelist for imbuing the 'always instrument' XRay attribute.", nullptr, nullptr)
 OPTION(prefix_1, "fxray-attr-list=", fxray_attr_list, JoinedOrSeparate, f_Group, INVALID, nullptr, CC1Option, 0,
        "Filename defining the list of functions/types for imbuing XRay attributes.", nullptr, nullptr)
+OPTION(prefix_1, "fxray-ignore-loops", fxray_ignore_loops, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
+       "Don't instrument functions with loops unless they also meet the minimum function size", nullptr, nullptr)
 OPTION(prefix_1, "fxray-instruction-threshold=", fxray_instruction_threshold_EQ, JoinedOrSeparate, f_Group, INVALID, nullptr, CC1Option, 0,
        "Sets the minimum function size to instrument with XRay", nullptr, nullptr)
 OPTION(prefix_1, "fxray-instruction-threshold", fxray_instruction_threshold_, JoinedOrSeparate, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fxray-instrumentation-bundle=", fxray_instrumentation_bundle, JoinedOrSeparate, f_Group, INVALID, nullptr, CC1Option, 0,
-       "Select which XRay instrumentation points to emit. Options: all, none, function, custom. Default is 'all'.", nullptr, nullptr)
+       "Select which XRay instrumentation points to emit. Options: all, none, function-entry, function-exit, function, custom. Default is 'all'.  'function' includes both 'function-entry' and 'function-exit'.", nullptr, nullptr)
 OPTION(prefix_1, "fxray-instrument", fxray_instrument, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
        "Generate XRay instrumentation sleds on function entry and exit", nullptr, nullptr)
 OPTION(prefix_1, "fxray-link-deps", fxray_link_deps, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
@@ -3063,6 +3071,8 @@ OPTION(prefix_1, "mv60", mv60, Flag, m_hexagon_Features_Group, mcpu_EQ, "hexagon
 OPTION(prefix_1, "mv62", mv62, Flag, m_hexagon_Features_Group, mcpu_EQ, "hexagonv62\0", 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mv65", mv65, Flag, m_hexagon_Features_Group, mcpu_EQ, "hexagonv65\0", 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mv66", mv66, Flag, m_hexagon_Features_Group, mcpu_EQ, "hexagonv66\0", 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mv67t", mv67t, Flag, m_hexagon_Features_Group, mcpu_EQ, "hexagonv67t\0", 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "mv67", mv67, Flag, m_hexagon_Features_Group, mcpu_EQ, "hexagonv67\0", 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mvaes", mvaes, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mvirt", mvirt, Flag, m_mips_Features_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "mvpclmulqdq", mvpclmulqdq, Flag, m_x86_Features_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
@@ -3344,6 +3354,7 @@ OPTION(prefix_1, "p", p, Flag, INVALID, INVALID, nullptr, 0, 0, nullptr, nullptr
 OPTION(prefix_2, "Qfast_transcendentals", _SLASH_Qfast_transcendentals, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_2, "QIfist", _SLASH_QIfist, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_2, "Qimprecise_fwaits", _SLASH_Qimprecise_fwaits, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_2, "QIntel-jcc-erratum", _SLASH_QIntel_jcc_erratum, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "Qn", Qn, Flag, INVALID, INVALID, nullptr, CC1Option, 0,
        "Do not emit metadata containing compiler name and version", nullptr, nullptr)
 OPTION(prefix_2, "Qpar-report", _SLASH_Qpar_report, Joined, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)

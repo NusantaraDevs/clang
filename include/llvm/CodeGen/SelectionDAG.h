@@ -600,6 +600,8 @@ public:
                             bool isTarget = false);
   SDValue getShiftAmountConstant(uint64_t Val, EVT VT, const SDLoc &DL,
                                  bool LegalTypes = true);
+  SDValue getVectorIdxConstant(uint64_t Val, const SDLoc &DL,
+                               bool isTarget = false);
 
   SDValue getTargetConstant(uint64_t Val, const SDLoc &DL, EVT VT,
                             bool isOpaque = false) {
@@ -910,6 +912,13 @@ public:
   /// Return an UNDEF node. UNDEF does not have a useful SDLoc.
   SDValue getUNDEF(EVT VT) {
     return getNode(ISD::UNDEF, SDLoc(), VT);
+  }
+
+  /// Return a node that represents the runtime scaling 'MulImm * RuntimeVL'.
+  SDValue getVScale(const SDLoc &DL, EVT VT, APInt MulImm) {
+    assert(MulImm.getMinSignedBits() <= VT.getSizeInBits() &&
+           "Immediate does not fit VT");
+    return getNode(ISD::VSCALE, DL, VT, getConstant(MulImm, DL, VT));
   }
 
   /// Return a GLOBAL_OFFSET_TABLE node. This does not have a useful SDLoc.

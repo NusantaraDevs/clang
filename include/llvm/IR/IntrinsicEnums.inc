@@ -271,7 +271,8 @@
     vaend,                                     // llvm.va_end
     vastart,                                   // llvm.va_start
     var_annotation,                            // llvm.var.annotation
+    vscale,                                    // llvm.vscale
     write_register,                            // llvm.write_register
     xray_customevent,                          // llvm.xray.customevent
     xray_typedevent,                           // llvm.xray.typedevent
-    num_intrinsics = 7551
+    num_intrinsics = 7546

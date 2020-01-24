@@ -1265,6 +1265,12 @@ PREDEFINEDEXPR(PredefinedExpr, Expr)
 PSEUDOOBJECTEXPR(PseudoObjectExpr, Expr)
 #undef PSEUDOOBJECTEXPR
 
+#ifndef REQUIRESEXPR
+#  define REQUIRESEXPR(Type, Base) EXPR(Type, Base)
+#endif
+REQUIRESEXPR(RequiresExpr, Expr)
+#undef REQUIRESEXPR
+
 #ifndef SHUFFLEVECTOREXPR
 #  define SHUFFLEVECTOREXPR(Type, Base) EXPR(Type, Base)
 #endif

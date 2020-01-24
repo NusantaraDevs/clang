@@ -13,7 +13,7 @@ namespace llvm {
 namespace Intrinsic {
 enum AARCH64Intrinsics : unsigned {
 // Enum values for intrinsics
-    aarch64_addg = 268,                              // llvm.aarch64.addg
+    aarch64_addg = 269,                              // llvm.aarch64.addg
     aarch64_clrex,                             // llvm.aarch64.clrex
     aarch64_cls,                               // llvm.aarch64.cls
     aarch64_cls64,                             // llvm.aarch64.cls64
@@ -237,6 +237,13 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sve_asrd,                          // llvm.aarch64.sve.asrd
     aarch64_sve_bic,                           // llvm.aarch64.sve.bic
     aarch64_sve_bic_z,                         // llvm.aarch64.sve.bic.z
+    aarch64_sve_brka,                          // llvm.aarch64.sve.brka
+    aarch64_sve_brka_z,                        // llvm.aarch64.sve.brka.z
+    aarch64_sve_brkb,                          // llvm.aarch64.sve.brkb
+    aarch64_sve_brkb_z,                        // llvm.aarch64.sve.brkb.z
+    aarch64_sve_brkn_z,                        // llvm.aarch64.sve.brkn.z
+    aarch64_sve_brkpa_z,                       // llvm.aarch64.sve.brkpa.z
+    aarch64_sve_brkpb_z,                       // llvm.aarch64.sve.brkpb.z
     aarch64_sve_clasta,                        // llvm.aarch64.sve.clasta
     aarch64_sve_clasta_n,                      // llvm.aarch64.sve.clasta.n
     aarch64_sve_clastb,                        // llvm.aarch64.sve.clastb
@@ -371,12 +378,14 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sve_lasta,                         // llvm.aarch64.sve.lasta
     aarch64_sve_lastb,                         // llvm.aarch64.sve.lastb
     aarch64_sve_ld1_gather,                    // llvm.aarch64.sve.ld1.gather
-    aarch64_sve_ld1_gather_imm,                // llvm.aarch64.sve.ld1.gather.imm
     aarch64_sve_ld1_gather_index,              // llvm.aarch64.sve.ld1.gather.index
+    aarch64_sve_ld1_gather_scalar_offset,      // llvm.aarch64.sve.ld1.gather.scalar.offset
     aarch64_sve_ld1_gather_sxtw,               // llvm.aarch64.sve.ld1.gather.sxtw
     aarch64_sve_ld1_gather_sxtw_index,         // llvm.aarch64.sve.ld1.gather.sxtw.index
     aarch64_sve_ld1_gather_uxtw,               // llvm.aarch64.sve.ld1.gather.uxtw
     aarch64_sve_ld1_gather_uxtw_index,         // llvm.aarch64.sve.ld1.gather.uxtw.index
+    aarch64_sve_ldff1,                         // llvm.aarch64.sve.ldff1
+    aarch64_sve_ldnf1,                         // llvm.aarch64.sve.ldnf1
     aarch64_sve_ldnt1,                         // llvm.aarch64.sve.ldnt1
     aarch64_sve_lsl,                           // llvm.aarch64.sve.lsl
     aarch64_sve_lsl_wide,                      // llvm.aarch64.sve.lsl.wide
@@ -396,6 +405,7 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sve_orr_z,                         // llvm.aarch64.sve.orr.z
     aarch64_sve_orv,                           // llvm.aarch64.sve.orv
     aarch64_sve_pfirst,                        // llvm.aarch64.sve.pfirst
+    aarch64_sve_pmul,                          // llvm.aarch64.sve.pmul
     aarch64_sve_pnext,                         // llvm.aarch64.sve.pnext
     aarch64_sve_ptest_any,                     // llvm.aarch64.sve.ptest.any
     aarch64_sve_ptest_first,                   // llvm.aarch64.sve.ptest.first
@@ -447,6 +457,7 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sve_sqdecw,                        // llvm.aarch64.sve.sqdecw
     aarch64_sve_sqdecw_n32,                    // llvm.aarch64.sve.sqdecw.n32
     aarch64_sve_sqdecw_n64,                    // llvm.aarch64.sve.sqdecw.n64
+    aarch64_sve_sqdmulh,                       // llvm.aarch64.sve.sqdmulh
     aarch64_sve_sqincb_n32,                    // llvm.aarch64.sve.sqincb.n32
     aarch64_sve_sqincb_n64,                    // llvm.aarch64.sve.sqincb.n64
     aarch64_sve_sqincd,                        // llvm.aarch64.sve.sqincd
@@ -461,6 +472,7 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sve_sqincw,                        // llvm.aarch64.sve.sqincw
     aarch64_sve_sqincw_n32,                    // llvm.aarch64.sve.sqincw.n32
     aarch64_sve_sqincw_n64,                    // llvm.aarch64.sve.sqincw.n64
+    aarch64_sve_sqrdmulh,                      // llvm.aarch64.sve.sqrdmulh
     aarch64_sve_sqrshrnb,                      // llvm.aarch64.sve.sqrshrnb
     aarch64_sve_sqrshrnt,                      // llvm.aarch64.sve.sqrshrnt
     aarch64_sve_sqrshrunb,                     // llvm.aarch64.sve.sqrshrunb
@@ -474,8 +486,8 @@ enum AARCH64Intrinsics : unsigned {
     aarch64_sve_sqxtunb,                       // llvm.aarch64.sve.sqxtunb
     aarch64_sve_sqxtunt,                       // llvm.aarch64.sve.sqxtunt
     aarch64_sve_st1_scatter,                   // llvm.aarch64.sve.st1.scatter
-    aarch64_sve_st1_scatter_imm,               // llvm.aarch64.sve.st1.scatter.imm
     aarch64_sve_st1_scatter_index,             // llvm.aarch64.sve.st1.scatter.index
+    aarch64_sve_st1_scatter_scalar_offset,     // llvm.aarch64.sve.st1.scatter.scalar.offset
     aarch64_sve_st1_scatter_sxtw,              // llvm.aarch64.sve.st1.scatter.sxtw
     aarch64_sve_st1_scatter_sxtw_index,        // llvm.aarch64.sve.st1.scatter.sxtw.index
     aarch64_sve_st1_scatter_uxtw,              // llvm.aarch64.sve.st1.scatter.uxtw

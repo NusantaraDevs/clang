@@ -316,6 +316,7 @@ def vt         : SDNode<"ISD::VALUETYPE" , SDTOther   , [], "VTSDNode">;
 def bb         : SDNode<"ISD::BasicBlock", SDTOther   , [], "BasicBlockSDNode">;
 def cond       : SDNode<"ISD::CONDCODE"  , SDTOther   , [], "CondCodeSDNode">;
 def undef      : SDNode<"ISD::UNDEF"     , SDTUNDEF   , []>;
+def vscale     : SDNode<"ISD::VSCALE"    , SDTIntUnaryOp, []>;
 def globaladdr : SDNode<"ISD::GlobalAddress",         SDTPtrLeaf, [],
                         "GlobalAddressSDNode">;
 def tglobaladdr : SDNode<"ISD::TargetGlobalAddress",  SDTPtrLeaf, [],
@@ -715,19 +716,6 @@ class SDNodeXForm<SDNode opc, code xformFunction> {
 }
 
 def NOOP_SDNodeXForm : SDNodeXForm<imm, [{}]>;
-
-//===----------------------------------------------------------------------===//
-// PatPred Subclasses.
-//
-// These allow specifying different sorts of predicates that control whether a
-// node is matched.
-//
-class PatPred;
-
-class CodePatPred<code predicate> : PatPred {
-  code PredicateCode = predicate;
-}
-
 
 //===----------------------------------------------------------------------===//
 // Selection DAG Pattern Fragments.
