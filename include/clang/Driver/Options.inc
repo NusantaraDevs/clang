@@ -1086,6 +1086,8 @@ OPTION(prefix_1, "fmax-errors=", fmax_errors_EQ, Joined, gfortran_Group, INVALID
 OPTION(prefix_1, "fmax-identifier-length", max_identifier_length_f, Flag, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fmax-stack-var-size=", fmax_stack_var_size_EQ, Joined, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fmax-subrecord-length=", fmax_subrecord_length_EQ, Joined, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fmax-tokens", fmax_tokens, Separate, f_Group, INVALID, nullptr, CC1Option, 0,
+       "Max total number of preprocessed tokens for -Wmax-tokens.", nullptr, nullptr)
 OPTION(prefix_1, "fmax-type-align=", fmax_type_align_EQ, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
        "Specify the maximum alignment to enforce on pointers lacking an explicit alignment", nullptr, nullptr)
 OPTION(prefix_1, "fmerge-all-constants", fmerge_all_constants, Flag, f_Group, INVALID, nullptr, CC1Option | CoreOption, 0,
@@ -1254,7 +1256,7 @@ OPTION(prefix_1, "fno-cxx-exceptions", fno_cxx_exceptions, Flag, f_Group, INVALI
 OPTION(prefix_1, "fno-cxx-modules", fno_cxx_modules, Flag, f_Group, INVALID, nullptr, DriverOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-d-lines-as-code", d_lines_as_code_fno, Flag, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-d-lines-as-comments", d_lines_as_comments_fno, Flag, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "fno-data-sections", fno_data_sections, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fno-data-sections", fno_data_sections, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-debug-info-for-profiling", fno_debug_info_for_profiling, Flag, f_Group, INVALID, nullptr, DriverOption, 0,
        "Do not emit extra debug info for sample profiler.", nullptr, nullptr)
 OPTION(prefix_1, "fno-debug-macro", fno_debug_macro, Flag, f_Group, INVALID, nullptr, CoreOption, 0,
@@ -1337,7 +1339,7 @@ OPTION(prefix_1, "fno-free-form", free_form_fno, Flag, gfortran_Group, INVALID, 
 OPTION(prefix_1, "fno-friend-injection", friend_injection_fno, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-frontend-optimize", frontend_optimize_fno, Flag, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-function-attribute-list", function_attribute_list_fno, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "fno-function-sections", fno_function_sections, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fno-function-sections", fno_function_sections, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-gcse-after-reload", gcse_after_reload_fno, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-gcse-las", gcse_las_fno, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-gcse-sm", gcse_sm_fno, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
@@ -1561,7 +1563,7 @@ OPTION(prefix_1, "fno-stack-arrays", stack_arrays_fno, Flag, gfortran_Group, INV
 OPTION(prefix_1, "fno-stack-check", stack_check_fno, Flag, clang_ignored_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-stack-protector", fno_stack_protector, Flag, f_Group, INVALID, nullptr, 0, 0,
        "Disable the use of stack protectors", nullptr, nullptr)
-OPTION(prefix_1, "fno-stack-size-section", fno_stack_size_section, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
+OPTION(prefix_1, "fno-stack-size-section", fno_stack_size_section, Flag, f_Group, INVALID, nullptr, 0, 0,
        "Don't emit section containing metadata on function stack sizes", nullptr, nullptr)
 OPTION(prefix_1, "fno-standalone-debug", fno_standalone_debug, Flag, f_Group, INVALID, nullptr, CoreOption, 0,
        "Limit debug information produced to reduce size of debug binary", nullptr, nullptr)
@@ -1627,10 +1629,10 @@ OPTION(prefix_1, "fno-whole-program-vtables", fno_whole_program_vtables, Flag, f
 OPTION(prefix_1, "fno-whole-program", whole_program_fno, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-working-directory", fno_working_directory, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-wrapv", fno_wrapv, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "fno-xray-always-emit-customevents", fnoxray_always_emit_customevents, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "fno-xray-always-emit-typedevents", fnoxray_always_emit_typedevents, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fno-xray-always-emit-customevents", fno_xray_always_emit_customevents, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fno-xray-always-emit-typedevents", fno_xray_always_emit_typedevents, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-xray-ignore-loops", fno_xray_ignore_loops, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "fno-xray-instrument", fnoxray_instrument, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fno-xray-instrument", fno_xray_instrument, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-zero-initialized-in-bss", fno_zero_initialized_in_bss, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno-zvector", fno_zvector, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fno_modules-validate-input-files-content", fno_modules_validate_input_files_content, Flag, f_Group, INVALID, nullptr, DriverOption, 0, nullptr, nullptr, nullptr)
@@ -1940,7 +1942,7 @@ OPTION(prefix_1, "fshort-enums", fshort_enums, Flag, f_Group, INVALID, nullptr, 
        "Allocate to an enum type only as many bytes as it needs for the declared range of possible values", nullptr, nullptr)
 OPTION(prefix_1, "fshort-wchar", fshort_wchar, Flag, f_Group, INVALID, nullptr, 0, 0,
        "Force wchar_t to be a short unsigned int", nullptr, nullptr)
-OPTION(prefix_1, "fshow-column", fshow_column, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
+OPTION(prefix_1, "fshow-column", fshow_column, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fshow-overloads=", fshow_overloads_EQ, Joined, f_Group, INVALID, nullptr, CC1Option, 0,
        "Which overload candidates to show when overload resolution fails: best|all; defaults to all", nullptr, "best,all")
 OPTION(prefix_1, "fshow-source-location", fshow_source_location, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
@@ -2053,7 +2055,7 @@ OPTION(prefix_1, "ftype-visibility", ftype_visibility, Separate, INVALID, INVALI
 OPTION(prefix_1, "function-alignment", function_alignment, Separate, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
        "default alignment for functions", nullptr, nullptr)
 OPTION(prefix_1, "funderscoring", underscoring_f, Flag, gfortran_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "funique-section-names", funique_section_names, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
+OPTION(prefix_1, "funique-section-names", funique_section_names, Flag, f_Group, INVALID, nullptr, 0, 0,
        "Use unique names for text and data sections (ELF Only)", nullptr, nullptr)
 OPTION(prefix_1, "funit-at-a-time", funit_at_a_time, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "funknown-anytype", funknown_anytype, Flag, INVALID, INVALID, nullptr, CC1Option | NoDriverOption, 0,
@@ -2068,7 +2070,7 @@ OPTION(prefix_1, "funsigned-char", funsigned_char, Flag, f_Group, INVALID, nullp
 OPTION(prefix_1, "funswitch-loops", unswitch_loops_f, Flag, clang_ignored_gcc_optimization_f_Group, INVALID, nullptr, Ignored, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "funwind-tables", funwind_tables, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fuse-cxa-atexit", fuse_cxa_atexit, Flag, f_Group, INVALID, nullptr, 0, 0, nullptr, nullptr, nullptr)
-OPTION(prefix_1, "fuse-init-array", fuse_init_array, Flag, f_Group, INVALID, nullptr, CC1Option, 0,
+OPTION(prefix_1, "fuse-init-array", fuse_init_array, Flag, f_Group, INVALID, nullptr, 0, 0,
        "Use .init_array instead of .ctors", nullptr, nullptr)
 OPTION(prefix_1, "fuse-ld=", fuse_ld_EQ, Joined, f_Group, INVALID, nullptr, CoreOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "fuse-line-directives", fuse_line_directives, Flag, f_Group, INVALID, nullptr, CC1Option, 0, nullptr, nullptr, nullptr)
@@ -2297,6 +2299,8 @@ OPTION(prefix_1, "H", H, Flag, Preprocessor_Group, INVALID, nullptr, CC1Option, 
 OPTION(prefix_2, "H", _SLASH_H, Flag, cl_Group, INVALID, nullptr, CLOption | DriverOption | CLOption, 0, nullptr, nullptr, nullptr)
 OPTION(prefix_1, "I-", I_, Flag, I_Group, INVALID, nullptr, 0, 0,
        "Restrict all prior -I flags to double-quoted inclusion and remove current directory from include path", nullptr, nullptr)
+OPTION(prefix_1, "ibuiltininc", ibuiltininc, Flag, INVALID, INVALID, nullptr, 0, 0,
+       "Enable builtin #include directories even when -nostdinc is used before or after -ibuiltininc. Using -nobuiltininc after the option disables it", nullptr, nullptr)
 OPTION(prefix_1, "idirafter", idirafter, JoinedOrSeparate, clang_i_Group, INVALID, nullptr, CC1Option, 0,
        "Add directory to AFTER include search path", nullptr, nullptr)
 OPTION(prefix_1, "iframeworkwithsysroot", iframeworkwithsysroot, JoinedOrSeparate, clang_i_Group, INVALID, nullptr, CC1Option, 0,
