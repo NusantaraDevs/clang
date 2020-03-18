@@ -53,9 +53,9 @@ check_compiler_version("MSVC" "Visual Studio" ${MSVC_MIN} ${MSVC_SOFT_ERROR})
 # See https://developercommunity.visualstudio.com/content/problem/845933/miscompile-boolean-condition-deduced-to-be-always.html
 # and thread "[llvm-dev] Longstanding failing tests - clang-tidy, MachO, Polly"
 # on llvm-dev Jan 21-23 2020.
-if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" AND
-    19.24 VERSION_LESS_EQUAL CMAKE_CXX_COMPILER_VERSION AND
-    CMAKE_CXX_COMPILER_VERSION VERSION_LESS 19.25)
+if ((${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC) AND
+    (19.24 VERSION_LESS_EQUAL ${CMAKE_CXX_COMPILER_VERSION}) AND
+    (${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 19.25))
   if(LLVM_TEMPORARILY_ALLOW_OLD_TOOLCHAIN)
     message(WARNING "Host Visual Studio version 16.4 is known to miscompile part of LLVM")
   else()
