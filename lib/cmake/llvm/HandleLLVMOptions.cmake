@@ -11,6 +11,7 @@ include(HandleLLVMStdlib)
 include(CheckCCompilerFlag)
 include(CheckCXXCompilerFlag)
 include(CheckSymbolExists)
+include(CMakeDependentOption)
 
 if(CMAKE_LINKER MATCHES "lld-link" OR (WIN32 AND LLVM_USE_LINKER STREQUAL "lld") OR LLVM_ENABLE_LLD)
   set(LINKER_IS_LLD_LINK TRUE)
@@ -95,8 +96,8 @@ if(LLVM_ENABLE_EXPENSIVE_CHECKS)
   endif()
 endif()
 
-if (LLVM_ENABLE_STRICT_IMPLICIT_CONVERSION_TYPESIZE)
-  add_definitions(-DSTRICT_IMPLICIT_CONVERSION_TYPESIZE)
+if (LLVM_ENABLE_STRICT_FIXED_SIZE_VECTORS)
+  add_definitions(-DSTRICT_FIXED_SIZE_VECTORS)
 endif()
 
 string(TOUPPER "${LLVM_ABI_BREAKING_CHECKS}" uppercase_LLVM_ABI_BREAKING_CHECKS)
@@ -194,6 +195,12 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "AIX")
   elseif(CMAKE_CXX_COMPILER_ID MATCHES "XL")
     # XL generates a small number of relocations not of the large model, -bbigtoc is needed.
     append("-Wl,-bbigtoc"
+           CMAKE_EXE_LINKER_FLAGS CMAKE_MODULE_LINKER_FLAGS CMAKE_SHARED_LINKER_FLAGS)
+    # The default behaviour on AIX processes dynamic initialization of non-local variables with
+    # static storage duration even for archive members that are otherwise unreferenced.
+    # Since `--whole-archive` is not used by the LLVM build to keep such initializations for Linux,
+    # we can limit the processing for archive members to only those that are otherwise referenced.
+    append("-bcdtors:mbr"
            CMAKE_EXE_LINKER_FLAGS CMAKE_MODULE_LINKER_FLAGS CMAKE_SHARED_LINKER_FLAGS)
   endif()
 endif()
@@ -728,6 +735,8 @@ if(LLVM_USE_SANITIZER)
     elseif (LLVM_USE_SANITIZER STREQUAL "Thread")
       append_common_sanitizer_flags()
       append("-fsanitize=thread" CMAKE_C_FLAGS CMAKE_CXX_FLAGS)
+    elseif (LLVM_USE_SANITIZER STREQUAL "DataFlow")
+      append("-fsanitize=dataflow" CMAKE_C_FLAGS CMAKE_CXX_FLAGS)
     elseif (LLVM_USE_SANITIZER STREQUAL "Address;Undefined" OR
             LLVM_USE_SANITIZER STREQUAL "Undefined;Address")
       append_common_sanitizer_flags()
@@ -884,6 +893,27 @@ if (LLVM_BUILD_INSTRUMENTED)
   endif()
 endif()
 
+# When using clang-cl with an instrumentation-based tool, add clang's library
+# resource directory to the library search path. Because cmake invokes the
+# linker directly, it isn't sufficient to pass -fsanitize=* to the linker.
+if (CLANG_CL AND (LLVM_BUILD_INSTRUMENTED OR LLVM_USE_SANITIZER))
+  execute_process(
+    COMMAND ${CMAKE_CXX_COMPILER} /clang:-print-resource-dir
+    OUTPUT_VARIABLE clang_resource_dir
+    ERROR_VARIABLE clang_cl_stderr
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_STRIP_TRAILING_WHITESPACE
+    RESULT_VARIABLE clang_cl_exit_code)
+  if (NOT "${clang_cl_exit_code}" STREQUAL "0")
+    message(FATAL_ERROR
+      "Unable to invoke clang-cl to find resource dir: ${clang_cl_stderr}")
+  endif()
+  file(TO_CMAKE_PATH "${clang_resource_dir}" clang_resource_dir)
+  append("/libpath:${clang_resource_dir}/lib/windows"
+    CMAKE_EXE_LINKER_FLAGS
+    CMAKE_SHARED_LINKER_FLAGS)
+endif()
+
 if(LLVM_PROFDATA_FILE AND EXISTS ${LLVM_PROFDATA_FILE})
   if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang" )
     append("-fprofile-instr-use=\"${LLVM_PROFDATA_FILE}\""
@@ -948,12 +978,23 @@ elseif(LLVM_ENABLE_LTO)
   endif()
 endif()
 
+# Set an AIX default for LLVM_EXPORT_SYMBOLS_FOR_PLUGINS based on whether we are
+# doing dynamic linking (see below).
+set(LLVM_EXPORT_SYMBOLS_FOR_PLUGINS_AIX_default OFF)
+if (NOT (BUILD_SHARED_LIBS OR LLVM_LINK_LLVM_DYLIB))
+  set(LLVM_EXPORT_SYMBOLS_FOR_PLUGINS_AIX_default ON)
+endif()
+
 # This option makes utils/extract_symbols.py be used to determine the list of
-# symbols to export from LLVM tools. This is necessary when using MSVC if you
-# want to allow plugins, though note that the plugin has to explicitly link
-# against (exactly one) tool so we can't unilaterally turn on
+# symbols to export from LLVM tools. This is necessary when on AIX or when using
+# MSVC if you want to allow plugins. On AIX we don't show this option, and we
+# enable it by default except when the LLVM libraries are set up for dynamic
+# linking (due to incompatibility). With MSVC, note that the plugin has to
+# explicitly link against (exactly one) tool so we can't unilaterally turn on
 # LLVM_ENABLE_PLUGINS when it's enabled.
-option(LLVM_EXPORT_SYMBOLS_FOR_PLUGINS "Export symbols from LLVM tools so that plugins can import them" OFF)
+CMAKE_DEPENDENT_OPTION(LLVM_EXPORT_SYMBOLS_FOR_PLUGINS
+       "Export symbols from LLVM tools so that plugins can import them" OFF
+       "NOT ${CMAKE_SYSTEM_NAME} MATCHES AIX" ${LLVM_EXPORT_SYMBOLS_FOR_PLUGINS_AIX_default})
 if(BUILD_SHARED_LIBS AND LLVM_EXPORT_SYMBOLS_FOR_PLUGINS)
   message(FATAL_ERROR "BUILD_SHARED_LIBS not compatible with LLVM_EXPORT_SYMBOLS_FOR_PLUGINS")
 endif()
@@ -1019,8 +1060,9 @@ if(macos_signposts_available)
   endif()
 endif()
 
+set(LLVM_SOURCE_PREFIX "" CACHE STRING "Use prefix for sources")
+
 option(LLVM_USE_RELATIVE_PATHS_IN_DEBUG_INFO "Use relative paths in debug info" OFF)
-set(LLVM_SOURCE_PREFIX "" CACHE STRING "Use prefix for sources in debug info")
 
 if(LLVM_USE_RELATIVE_PATHS_IN_DEBUG_INFO)
   check_c_compiler_flag("-fdebug-prefix-map=foo=bar" SUPPORTS_FDEBUG_PREFIX_MAP)
@@ -1032,5 +1074,20 @@ if(LLVM_USE_RELATIVE_PATHS_IN_DEBUG_INFO)
   file(RELATIVE_PATH relative_root "${source_root}" "${CMAKE_BINARY_DIR}")
   append_if(SUPPORTS_FDEBUG_PREFIX_MAP "-fdebug-prefix-map=${CMAKE_BINARY_DIR}=${relative_root}" CMAKE_C_FLAGS CMAKE_CXX_FLAGS)
   append_if(SUPPORTS_FDEBUG_PREFIX_MAP "-fdebug-prefix-map=${source_root}/=${LLVM_SOURCE_PREFIX}" CMAKE_C_FLAGS CMAKE_CXX_FLAGS)
+  add_flag_if_supported("-no-canonical-prefixes" NO_CANONICAL_PREFIXES)
+endif()
+
+option(LLVM_USE_RELATIVE_PATHS_IN_FILES "Use relative paths in sources and debug info" OFF)
+
+if(LLVM_USE_RELATIVE_PATHS_IN_FILES)
+  check_c_compiler_flag("-ffile-prefix-map=foo=bar" SUPPORTS_FFILE_PREFIX_MAP)
+  if(LLVM_ENABLE_PROJECTS_USED)
+    get_filename_component(source_root "${LLVM_MAIN_SRC_DIR}/.." ABSOLUTE)
+  else()
+    set(source_root "${LLVM_MAIN_SRC_DIR}")
+  endif()
+  file(RELATIVE_PATH relative_root "${source_root}" "${CMAKE_BINARY_DIR}")
+  append_if(SUPPORTS_FFILE_PREFIX_MAP "-ffile-prefix-map=${CMAKE_BINARY_DIR}=${relative_root}" CMAKE_C_FLAGS CMAKE_CXX_FLAGS)
+  append_if(SUPPORTS_FFILE_PREFIX_MAP "-ffile-prefix-map=${source_root}/=${LLVM_SOURCE_PREFIX}" CMAKE_C_FLAGS CMAKE_CXX_FLAGS)
   add_flag_if_supported("-no-canonical-prefixes" NO_CANONICAL_PREFIXES)
 endif()

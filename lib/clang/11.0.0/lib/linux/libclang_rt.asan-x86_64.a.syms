@@ -404,6 +404,7 @@
   __interceptor_tsearch;
   __interceptor_ttyname;
   __interceptor_ttyname_r;
+  __interceptor_uname;
   __interceptor_valloc;
   __interceptor_vasprintf;
   __interceptor_vfork;
@@ -491,6 +492,7 @@
   __sanitizer_annotate_contiguous_container;
   __sanitizer_contiguous_container_find_bad_address;
   __sanitizer_cov_8bit_counters_init;
+  __sanitizer_cov_bool_flag_init;
   __sanitizer_cov_dump;
   __sanitizer_cov_pcs_init;
   __sanitizer_cov_reset;
@@ -1565,6 +1567,7 @@
   tsearch;
   ttyname;
   ttyname_r;
+  uname;
   valloc;
   vasprintf;
   vfork;
