@@ -177,6 +177,12 @@
   __interceptor_getnameinfo;
   __interceptor_getpass;
   __interceptor_getpeername;
+  __interceptor_getprotobyname;
+  __interceptor_getprotobyname_r;
+  __interceptor_getprotobynumber;
+  __interceptor_getprotobynumber_r;
+  __interceptor_getprotoent;
+  __interceptor_getprotoent_r;
   __interceptor_getpwent;
   __interceptor_getpwent_r;
   __interceptor_getpwnam;
@@ -252,6 +258,8 @@
   __interceptor_modfl;
   __interceptor_mprobe;
   __interceptor_mprotect;
+  __interceptor_msgrcv;
+  __interceptor_msgsnd;
   __interceptor_munlock;
   __interceptor_munlockall;
   __interceptor_munmap;
@@ -1431,6 +1439,12 @@
   getnameinfo;
   getpass;
   getpeername;
+  getprotobyname;
+  getprotobyname_r;
+  getprotobynumber;
+  getprotobynumber_r;
+  getprotoent;
+  getprotoent_r;
   getpwent;
   getpwent_r;
   getpwnam;
@@ -1505,6 +1519,8 @@
   modfl;
   mprobe;
   mprotect;
+  msgrcv;
+  msgsnd;
   munlock;
   munlockall;
   munmap;
