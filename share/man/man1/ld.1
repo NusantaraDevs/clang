@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "LD 1"
-.TH LD 1 "2020-09-09" "binutils-2.35.50" "GNU Development Tools"
+.TH LD 1 "2020-09-13" "binutils-2.35.50" "GNU Development Tools"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -1252,6 +1252,15 @@ Create separate code \f(CW\*(C`PT_LOAD\*(C'\fR segment header in the object.  Th
 specifies a memory segment that should contain only instructions and must
 be in wholly disjoint pages from any other data.  Don't create separate
 code \f(CW\*(C`PT_LOAD\*(C'\fR segment if \fBnoseparate-code\fR is used.
+.IP "\fBunique-symbol\fR" 4
+.IX Item "unique-symbol"
+.PD 0
+.IP "\fBnounique-symbol\fR" 4
+.IX Item "nounique-symbol"
+.PD
+Avoid duplicated local symbol names in the symbol string table.  Append
+".\f(CW\*(C`number\*(C'\fR" to duplicated local symbol names if \fBunique-symbol\fR
+is used.  \fBnounique-symbol\fR is the default.
 .IP "\fBshstk\fR" 4
 .IX Item "shstk"
 Generate \s-1GNU_PROPERTY_X86_FEATURE_1_SHSTK\s0 in .note.gnu.property section

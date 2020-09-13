@@ -146,7 +146,10 @@ if(LLVM_ENABLE_ZLIB)
   find_package(ZLIB)
 endif()
 
-set(LLVM_LIBXML2_ENABLED 0)
+set(LLVM_ENABLE_LIBXML2 )
+if(LLVM_ENABLE_LIBXML2)
+  find_package(LibXml2)
+endif()
 
 set(LLVM_WITH_Z3 )
 
